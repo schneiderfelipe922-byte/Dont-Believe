@@ -1,0 +1,21 @@
+DON’T BELIEVE — Organização da pasta
+
+Abra index.html para jogar.
+
+javascript/ — código JavaScript do jogo.
+css/ — estilos do jogo.
+assets/sprites-e-idles/ — atlas, sprites, idles, caminhadas e arquivos de origem.
+assets/personagens/ — imagens individuais e retratos dos personagens.
+assets/cenarios/ — mapas, ambientes, piso e portas.
+assets/fontes/ — fontes tipográficas.
+assets/menus/ — imagem do menu.
+assets/fotos/, assets/finais/, assets/references/ — fotografias, finais e referências.
+carrossel/ — apresentação dos personagens, imagens, textos e ZIP original; abra index.html dentro desta pasta.
+documentacao/ — documentação, história e fluxograma.
+previas/ — imagens de prévia do jogo.
+versoes/ — cópias Controle e Dont-Believe, preservadas internamente.
+backups/ — backups anteriores, preservados internamente.
+tests/ — testes existentes, com caminhos atualizados.
+tools/ — ferramentas de geração de arte, com caminhos atualizados.
+
+Nenhum arquivo original foi descartado. Os caminhos do projeto principal foram atualizados.

@@ -1,0 +1,10 @@
+DON’T BELIEVE — CARROSSEL COM A ESTÉTICA DOS POSTS DE REFERÊNCIA
+
+10 PNGs quadrados, 1080x1080 pixels, numerados em ordem.
+Capa, Kali, Mira, Eron, Noah, Tomas, Daty, Inauri, Vigias e Líder dos vigias.
+
+Degradê azul-marinho/roxo, magenta, tipografia branca, indicadores superiores e linhas ramificadas inspirados nas duas referências fornecidas.
+Textos e sprites preservados da versão anterior.
+
+index.html: layout editável. textos.json: conteúdo. assets: sprites e fontes.
+A versão anterior permanece intacta. Nada foi publicado ou alterado no jogo.

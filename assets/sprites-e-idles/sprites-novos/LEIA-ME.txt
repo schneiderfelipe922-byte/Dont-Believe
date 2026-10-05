@@ -1,0 +1,12 @@
+NOVOS SPRITES — DONT BELIEVE
+
+Arquivos finais mais recentes, reunidos em 30/09/2026. Não integrados automaticamente ao jogo.
+
+Kali, Eron, Tomas, vigia e líder: caminhadas corrigidas por código.
+Noah e Mira: sprites do pacote no estilo de Kali.
+Daty e Inauri: SOMENTE idles.
+
+Cada personagem tem idle.png e preview.gif. Personagens com caminhada também têm walk.png.
+Idles: 4 quadros por direção. Caminhadas: 6 quadros por direção.
+Linhas: frente, esquerda, direita, costas.
+Tamanhos e durações constam em manifest.json.
