@@ -1,5 +1,5 @@
 {
-  "integrado_ao_jogo": true,
+  "integrado_ao_jogo": false,
   "ordem_direcoes": [
     "frente",
     "esquerda",
@@ -272,7 +272,5 @@
         ]
       }
     }
-  },
-  "atlas_do_jogo": "assets/sprites-e-idles/sprites.png",
-  "dados_do_jogo": "javascript/character-data.js"
+  }
 }

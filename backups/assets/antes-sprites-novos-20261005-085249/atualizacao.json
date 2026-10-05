@@ -1,0 +1,42 @@
+{
+  "arquivos_atualizados": [
+    "LEIA-ME.txt",
+    "tools/import-characters.py",
+    "javascript/character-data.js",
+    "tests/sprites.test.cjs",
+    "assets/sprites-e-idles/sprites.png",
+    "assets/sprites-e-idles/sprites.zip",
+    "assets/sprites-e-idles/sprites-novos/manifest.json",
+    "assets/sprites-e-idles/sprites-novos/LEIA-ME.txt",
+    "assets/sprites-e-idles/sprites-novos/todos-os-sprites.zip",
+    "previas/personagens-atualizados.png",
+    "previas/jogo-sprites-atualizados.png",
+    "previas/dialogo-sprites-atualizados.png"
+  ],
+  "origens_finais_preservadas": true,
+  "personagens": 9,
+  "quadros_humanos": 312,
+  "testes_aprovados": 53,
+  "caminhada_verificada_no_jogo": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "sha256": {
+    "LEIA-ME.txt": "eb0931bb151019c916c1b6f239c8dbb39ba300b4daea2ed07c3e4c743e2355f7",
+    "tools/import-characters.py": "c793398ef0f57620caff8ff2663fdf754171a8dffe4883e2b067fcaa80667a78",
+    "javascript/character-data.js": "e90226af41ce5fe304eddc348a599ecaaaffe902fed5dc0b66395b2ff5f4c47c",
+    "tests/sprites.test.cjs": "2d5fa5b216373486e3315f681757992a5ede9854360483fb19799122149a0f8e",
+    "assets/sprites-e-idles/sprites.png": "c0de8dd81c0b3931db31fd8d5c727d389a268a2a205b5969d19cc099e54c9a3f",
+    "assets/sprites-e-idles/sprites.zip": "e597590732d68a102e081bda3ff6eb8aba238479861cb70b60ebd4dc58671e10",
+    "assets/sprites-e-idles/sprites-novos/manifest.json": "19e47fa3e7a7dab370915d29d64792ce3da4ae3a5c99079a86b73511c972694f",
+    "assets/sprites-e-idles/sprites-novos/LEIA-ME.txt": "225d22ad5b188b98c6f1ab83d480bb85d2681251b73cbd761395b89b39a86908",
+    "assets/sprites-e-idles/sprites-novos/todos-os-sprites.zip": "65424066d53a206d3ae5db5049d922791fff450885e51b6ac25c4c5346294837",
+    "previas/personagens-atualizados.png": "564031de8478d113e56d6a78d644fd7201a98f8f5bbeef647688fc27b83bfbb1",
+    "previas/jogo-sprites-atualizados.png": "6725849a8d41da3d07387511cc31ce7c407556213ce7361a74de280d3ae726af",
+    "previas/dialogo-sprites-atualizados.png": "430e7ea93575f34a3b97d60e75f0cf1577fda66f277eaa5cb95e09a9f3a2829b"
+  }
+}
