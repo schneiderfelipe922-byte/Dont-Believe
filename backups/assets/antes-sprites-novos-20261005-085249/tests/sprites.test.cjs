@@ -50,32 +50,25 @@ test('os nove personagens humanos têm quatro quadros frontais em loop',()=>{
   assert.deepEqual([0,.5,.9,1.3,1.4].map(t=>sprites.resolve(kind,'down',0,images,t).index),[0,1,2,3,0]);
  }
 });
-test('pais usam os quatro idles novos e não simulam caminhada',()=>{
+test('pais sem animações laterais usam idle frontal e não simulam caminhada',()=>{
  const images={sprites:{width,height}};
  for(const kind of ['daty','inauri']){
   assert.equal(data[kind].idleOnly,true);assert.deepEqual(Object.keys(data[kind].directions),['down']);
-  for(const dir of ['down','up','left','right']){
-   assert.equal(data[kind].idles[dir].frames.length,4);
-   assert.equal(sprites.resolve(kind,dir,0,images,.5).track,data[kind].idles[dir]);
-  }
+  for(const dir of ['down','up','left','right'])assert.equal(sprites.resolve(kind,dir,0,images,.5).track,data[kind].idles.down);
   assert.equal(sprites.resolve(kind,'left',1,images).track.frames.length,1);
  }
 });
-test('os sete personagens percorrem seis quadros nas quatro direções no ritmo do pacote novo',()=>{
+test('Tomas e Líder percorrem seis quadros nas quatro direções e retornam ao idle correto',()=>{
  const images={sprites:{width,height}};
- for(const kind of ['kali','noah','mira','eron','tomas','guard','leader'])for(const dir of ['down','left','right','up']){
+ for(const kind of ['tomas','leader'])for(const dir of ['down','left','right','up']){
   const track=data[kind].directions[dir];assert.equal(track.frames.length,6);
-  let elapsed=0;
   for(let i=0;i<6;i++){
-   const f=sprites.resolve(kind,dir,(elapsed+1)/400,images);
+   const f=sprites.resolve(kind,dir,(i*200+1)/400,images);
    assert.equal(f.index,i);assert.deepEqual(f.rect,track.frames[i]);
    assert.equal(f.rect[3],data[kind].height);
-   elapsed+=track.durations[i];
   }
-  assert.equal(sprites.resolve(kind,dir,(elapsed+1)/400,images).index,0);
+  assert.equal(sprites.resolve(kind,dir,1201/400,images).index,0);
   assert.equal(sprites.resolve(kind,dir,0,images).track,data[kind].idles[dir]);
-  assert.equal(data[kind].idles[dir].frames.length,4);
-  assert.deepEqual(track.anchor,data[kind].idles[dir].anchor,kind+' mantém a origem entre idle e caminhada');
  }
 });
 test('novo Kali anima quatro idles e seis passos em cada direção mantendo 40 px',()=>{
@@ -86,25 +79,10 @@ test('novo Kali anima quatro idles e seis passos em cada direção mantendo 40 p
   assert.equal(walk.frames.length,6);assert.equal(idle.frames.length,4);
   assert.deepEqual([0,.5,.9,1.3,1.4].map(t=>sprites.resolve('kali',dir,0,images,t).index),[0,1,2,3,0]);
   for(let i=0;i<6;i++){
-   const f=sprites.resolve('kali',dir,(i*140+1)/400,images);
+   const f=sprites.resolve('kali',dir,(i*200+1)/400,images);
    assert.equal(f.index,i);assert.equal(f.rect[3],40);
   }
-  assert.equal(sprites.resolve('kali',dir,841/400,images).index,0);
+  assert.equal(sprites.resolve('kali',dir,1201/400,images).index,0);
   assert.equal(sprites.resolve('kali',dir,0,images).track,idle);
- }
-});
-test('o jogo usa as nove fontes finais, suas estaturas e suas durações',()=>{
- const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../assets/sprites-e-idles/sprites-novos/manifest.json'),'utf8'));
- assert.equal(manifest.integrado_ao_jogo,true);
- const aliases={vigia:'guard',lider:'leader'},dirs=['down','left','right','up'];
- for(const [name,source]of Object.entries(manifest.personagens)){
-  const spec=data[aliases[name]||name];
-  assert.equal(spec.sourcePackage,'sprites-novos/'+name);
-  assert.equal(spec.height,source.altura);
-  for(const dir of dirs){
-   assert.deepEqual(spec.idles[dir].durations,source.idle.duracoes_ms);
-   if(source.walk)assert.deepEqual(spec.directions[dir].durations,source.walk.duracoes_ms);
-   else assert.equal(spec.idleOnly,true);
-  }
  }
 });
