@@ -1,0 +1,276 @@
+{
+  "integrado_ao_jogo": false,
+  "ordem_direcoes": [
+    "frente",
+    "esquerda",
+    "direita",
+    "costas"
+  ],
+  "personagens": {
+    "kali": {
+      "altura": 40,
+      "idle": {
+        "arquivo": "kali/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          36,
+          52
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      },
+      "walk": {
+        "arquivo": "kali/walk.png",
+        "quadros_por_direcao": 6,
+        "celula": [
+          36,
+          52
+        ],
+        "duracoes_ms": [
+          140,
+          140,
+          140,
+          140,
+          140,
+          140
+        ]
+      }
+    },
+    "noah": {
+      "altura": 46,
+      "idle": {
+        "arquivo": "noah/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          36,
+          52
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      },
+      "walk": {
+        "arquivo": "noah/walk.png",
+        "quadros_por_direcao": 6,
+        "celula": [
+          36,
+          52
+        ],
+        "duracoes_ms": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ]
+      }
+    },
+    "mira": {
+      "altura": 40,
+      "idle": {
+        "arquivo": "mira/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          36,
+          52
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      },
+      "walk": {
+        "arquivo": "mira/walk.png",
+        "quadros_por_direcao": 6,
+        "celula": [
+          36,
+          52
+        ],
+        "duracoes_ms": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ]
+      }
+    },
+    "eron": {
+      "altura": 46,
+      "idle": {
+        "arquivo": "eron/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          36,
+          52
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      },
+      "walk": {
+        "arquivo": "eron/walk.png",
+        "quadros_por_direcao": 6,
+        "celula": [
+          36,
+          52
+        ],
+        "duracoes_ms": [
+          140,
+          140,
+          140,
+          140,
+          140,
+          140
+        ]
+      }
+    },
+    "tomas": {
+      "altura": 46,
+      "idle": {
+        "arquivo": "tomas/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          48,
+          64
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      },
+      "walk": {
+        "arquivo": "tomas/walk.png",
+        "quadros_por_direcao": 6,
+        "celula": [
+          48,
+          64
+        ],
+        "duracoes_ms": [
+          140,
+          140,
+          140,
+          140,
+          140,
+          140
+        ]
+      }
+    },
+    "vigia": {
+      "altura": 54,
+      "idle": {
+        "arquivo": "vigia/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          48,
+          64
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      },
+      "walk": {
+        "arquivo": "vigia/walk.png",
+        "quadros_por_direcao": 6,
+        "celula": [
+          48,
+          64
+        ],
+        "duracoes_ms": [
+          140,
+          140,
+          140,
+          140,
+          140,
+          140
+        ]
+      }
+    },
+    "lider": {
+      "altura": 54,
+      "idle": {
+        "arquivo": "lider/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          48,
+          64
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      },
+      "walk": {
+        "arquivo": "lider/walk.png",
+        "quadros_por_direcao": 6,
+        "celula": [
+          48,
+          64
+        ],
+        "duracoes_ms": [
+          140,
+          140,
+          140,
+          140,
+          140,
+          140
+        ]
+      }
+    },
+    "daty": {
+      "altura": 40,
+      "idle": {
+        "arquivo": "daty/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          48,
+          64
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      }
+    },
+    "inauri": {
+      "altura": 54,
+      "idle": {
+        "arquivo": "inauri/idle.png",
+        "quadros_por_direcao": 4,
+        "celula": [
+          48,
+          64
+        ],
+        "duracoes_ms": [
+          450,
+          250,
+          450,
+          250
+        ]
+      }
+    }
+  }
+}

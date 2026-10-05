@@ -1,0 +1,92 @@
+[
+  {
+    "key": "kali",
+    "name": "Kali",
+    "role": "O protagonista",
+    "traits": "Sua escolha define sua postura.",
+    "personality": "Cauteloso, solidário ou desafiador: é você quem decide como Kali reage.",
+    "story": "Entre lembranças fragmentadas e as regras do orfanato, Kali procura entender seu passado — e descobrir em quem pode confiar.",
+    "width": 22,
+    "height": 40
+  },
+  {
+    "key": "mira",
+    "name": "Mira",
+    "role": "A voz discreta",
+    "traits": "Tímida. Observadora. Atenta.",
+    "personality": "Fala baixo, percebe os passos no corredor e demora a baixar a guarda.",
+    "story": "Entre livros e desenhos, Mira guarda lembranças de uma vida além dos muros. Ganhar sua confiança é descobrir o que ela ainda tem medo de contar.",
+    "width": 24,
+    "height": 40
+  },
+  {
+    "key": "eron",
+    "name": "Eron",
+    "role": "A saudade que fica",
+    "traits": "Reservado. Leal. Cabisbaixo.",
+    "personality": "Suas respostas são curtas. Seu silêncio, porém, está cheio de lembranças.",
+    "story": "Tomas, seu melhor amigo, desapareceu sem explicação. Eron guarda cartas, uma peça de tabuleiro e a esperança de terminar a partida que ficou para trás.",
+    "width": 28,
+    "height": 46
+  },
+  {
+    "key": "noah",
+    "name": "Noah",
+    "role": "Sempre por perto",
+    "traits": "Comunicativo. Atento. Obediente.",
+    "personality": "Conhece os horários, explica as regras e busca a aprovação dos adultos.",
+    "story": "Noah está no orfanato desde a chegada de Kali. Prestativo e sempre perto dos vigias, encontra segurança em saber exatamente o que esperam dele.",
+    "width": 24,
+    "height": 46
+  },
+  {
+    "key": "tomas",
+    "name": "Tomas",
+    "role": "Uma ausência que pesa",
+    "traits": "Brincalhão. Próximo de Eron.",
+    "personality": "Nas lembranças do amigo, fazia piadas até da sopa e dividia planos para o futuro.",
+    "story": "Seu desaparecimento deixou uma cadeira vazia e muitas perguntas. Cartas e pequenos objetos mantêm viva a história de uma amizade que o orfanato não apagou.",
+    "width": 27,
+    "height": 46
+  },
+  {
+    "key": "daty",
+    "name": "Daty",
+    "role": "A mãe de Kali",
+    "traits": "Protetora. Firme em suas convicções.",
+    "personality": "Mesmo diante do perigo, procura dar ao filho coragem para pensar por si.",
+    "story": "Daty pertence às lembranças de Kali antes do orfanato. Sua voz carrega um conselho: não deixar que outras pessoas decidam no que ele deve acreditar.",
+    "width": 22,
+    "height": 40
+  },
+  {
+    "key": "inauri",
+    "name": "Inauri",
+    "role": "O pai de Kali",
+    "traits": "Vigilante. Protetor. Decidido.",
+    "personality": "Percebe o perigo e age para tentar manter a família a salvo.",
+    "story": "Inauri faz parte do passado que Kali tenta reconstruir. Na memória daquela noite, fica a urgência de um pai que queria dar ao filho uma chance de escapar.",
+    "width": 26,
+    "height": 54
+  },
+  {
+    "key": "vigia",
+    "name": "Vigias",
+    "role": "Os olhos do orfanato",
+    "traits": "Reservados. Objetivos. Questionadores.",
+    "personality": "Observam os movimentos, conferem permissões e esperam respostas diretas.",
+    "story": "Responsáveis pela rotina do orfanato, os vigias fazem a autoridade da Actras aparecer em cada corredor. Até uma conversa pode se transformar em uma pergunta difícil.",
+    "width": 35,
+    "height": 54
+  },
+  {
+    "key": "lider",
+    "name": "Líder dos vigias",
+    "role": "A autoridade da Actras",
+    "traits": "Firme. Controlador. Deliberado.",
+    "personality": "Fala com precisão e transforma suas ordens em pressão sobre as escolhas dos outros.",
+    "story": "À frente dos vigias, representa o poder da Actras. Para Kali, sua presença torna ainda mais urgente uma pergunta: quem tem o direito de decidir no que alguém acredita?",
+    "width": 38,
+    "height": 54
+  }
+]
