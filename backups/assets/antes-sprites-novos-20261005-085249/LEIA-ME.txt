@@ -19,8 +19,3 @@ tests/ — testes existentes, com caminhos atualizados.
 tools/ — ferramentas de geração de arte, com caminhos atualizados.
 
 Nenhum arquivo original foi descartado. Os caminhos do projeto principal foram atualizados.
-
-Sprites atuais: os nove personagens usam os arquivos finais de sprites-novos.
-Kali, Noah, Mira, Eron, Tomas, vigia e líder têm seis quadros de caminhada em quatro direções.
-Daty e Inauri têm somente idles. As estaturas são 40, 46 e 54 pixels.
-Prévia: previas/personagens-atualizados.png.

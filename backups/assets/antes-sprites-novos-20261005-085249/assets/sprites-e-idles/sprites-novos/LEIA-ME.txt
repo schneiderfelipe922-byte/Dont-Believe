@@ -1,6 +1,6 @@
 NOVOS SPRITES — DONT BELIEVE
 
-Arquivos finais mais recentes, reunidos em 30/09/2026. Integrados ao jogo no atlas assets/sprites-e-idles/sprites.png.
+Arquivos finais mais recentes, reunidos em 30/09/2026. Não integrados automaticamente ao jogo.
 
 Kali, Eron, Tomas, vigia e líder: caminhadas corrigidas por código.
 Noah e Mira: sprites do pacote no estilo de Kali.
