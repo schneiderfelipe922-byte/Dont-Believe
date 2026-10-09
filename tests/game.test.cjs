@@ -9,7 +9,7 @@ function boot(configure){
   click(){if(!this.disabled)for(const fn of this.events.click||[])fn({});}
   append(...children){this.children.push(...children);}
   replaceChildren(...children){this.children=children;}
-  setAttribute(){} removeAttribute(){} focus(){} getContext(){return context;}
+  setAttribute(name,value){(this.attributes??={})[name]=value;} removeAttribute(name){delete this.attributes?.[name];} focus(){document.activeElement=this;for(const fn of this.events.focus||[])fn({});} getClientRects(){return this.hidden?[]:[{}];} getContext(){return context;}
   getBoundingClientRect(){return {width:960,height:640};}
   showModal(){this.open=true;} close(){this.open=false;}
   querySelectorAll(selector){return this.children.filter(c=>c.tagName==='button'&&(!selector.includes(':disabled')||!c.disabled));}
@@ -20,7 +20,7 @@ function boot(configure){
  const document={getElementById:get,createElement:tag=>new Element(tag),body:new Element(),hidden:false,querySelector:()=>new Element(),querySelectorAll:()=>[],addEventListener:(n,fn)=>(events[n]??=[]).push(fn)};
  const sandbox={document,console,devicePixelRatio:1,innerWidth:960,performance:{now:()=>0},setTimeout:()=>1,clearTimeout(){},requestAnimationFrame:fn=>{tick=fn;},addEventListener(){},localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)}};
  sandbox.window=sandbox;const c=vm.createContext(sandbox),root=path.resolve(__dirname,'../javascript');
- for(const f of ['story.js','scenery.js','world.js','adventure.js','danger.js','social.js','residents.js','photos.js','character-data.js','character-sprites.js','pixel-art.js','render.js','endings.js'])vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),c,{filename:f});
+ for(const f of ['story.js','scenery.js','world.js','adventure.js','danger.js','social.js','investigation.js','residents.js','photos.js','character-data.js','character-sprites.js','pixel-art.js','render.js','endings.js','dialogue-ui.js','notebook.js'])vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),c,{filename:f});
  c.GameArt={ready:{then(){}},images:{sprites:{width:512,height:509}},urls:{},status:{failed:[]}};
  const story=c.GameStory.initial(),world=c.GameWorld.fresh();story.scene='quarto';configure?.(story,world,c);
  const saveKey='dont-believe.topdown.v2';storage.set(saveKey,JSON.stringify({version:2,story,world}));
@@ -89,11 +89,13 @@ test('aceitar, recolher e entregar um pedido atualiza inventário, relação e s
  pickup.key('KeyE','e');save=pickup.snapshot();assert(save.story.inventory.includes('Livro de capa verde'));
  const deliver=boot((s,w,c)=>{Object.assign(s,save.story);Object.assign(w,save.world);w.player={...c.GameSocial.actorPoint('mira',s,w),dir:'up',step:0};});
  deliver.key('KeyE','e');chooseText(deliver,'Entregar os itens');save=deliver.snapshot();assert.equal(save.story.errands['mira-book'],'done');assert.equal(save.story.mira,2);assert(!save.story.inventory.includes('Livro de capa verde'));
- assert.equal(deliver.get('relationships').children[0].children[0].children[1].textContent,'2 / 9');
+ assert.equal(deliver.get('relationships').children.length,0);
+ assert(!descendants(deliver.get('dialogue')).some(n=>/Mira\s*\+2|2 \/ 9/.test(n.textContent)));
 });
 test('inventário vazio e painel de tarefas oferecem orientação sem bloquear a exploração',()=>{
  const h=boot();h.get('inventory').click();assert.equal(h.get('modal').open,true);assert(h.get('modal-content').children.some(c=>c.tagName==='div'));
- h.get('close-modal').click();h.get('tasks').click();assert.equal(h.get('modal-content').children.filter(c=>c.tagName==='section').length,4);
+ h.get('close-modal').click();h.get('tasks').click();assert.equal(descendants(h.get('modal-content')).filter(c=>c.className==='notebook-requests').length,4);
+ assert.equal(h.get('modal').className,'notebook');
 });
 function descendants(node){return [node,...node.children.flatMap(descendants)];}
 for(const id of ['family','friends'])test('fotografia '+id+': interação, pausa, salvamento e releitura',()=>{
@@ -109,7 +111,7 @@ for(const id of ['family','friends'])test('fotografia '+id+': interação, pausa
  const saved=h.snapshot();h.get('close-modal').click();assert.equal(saved.story.scene,before.story.scene);assert.deepEqual(saved.story.danger,opened.story.danger);assert.deepEqual(saved.world.player,opened.world.player);assert.deepEqual(saved.world.mel,opened.world.mel);
  const name=h.c.GamePhotos.photos[id].name;assert.equal(saved.story.inventory.filter(n=>n===name).length,1);
  h.key('KeyI','i');const view=descendants(h.get('modal-content')).find(n=>n.textContent==='VER FOTOGRAFIA');assert(view);view.click();assert.equal(h.get('modal').className,'photo-memory');
- h.key('Escape');assert.equal(h.get('modal').open,true);assert.equal(h.get('modal-content').children[0].textContent,'Inventário');
+ h.key('Escape');assert.equal(h.get('modal').open,true);assert.equal(h.get('modal').className,'notebook');assert.equal(h.get('modal').dataset.tab,'objects');
  assert.equal(JSON.parse(h.storage.get(h.saveKey)).story.inventory.filter(n=>n===name).length,1);
  const restored=boot((s,w)=>{Object.assign(s,saved.story);Object.assign(w,saved.world);});restored.key('KeyI','i');assert(descendants(restored.get('modal-content')).some(n=>n.textContent==='VER FOTOGRAFIA'));
 });
@@ -119,4 +121,17 @@ test('foto funciona por toque e oferece recuperação de imagem sem perder a lem
  img.events.error[0]();assert.equal(img.hidden,true);assert.equal(retry.hidden,false);retry.click();assert.equal(img.hidden,false);img.events.load[0]();assert.equal(retry.hidden,true);
  all.find(n=>n.textContent==='GUARDAR E CONTINUAR').click();assert.equal(h.get('modal').open,false);
  assert(JSON.parse(h.storage.get(h.saveKey)).story.inventory.includes(h.c.GamePhotos.photos.family.name));
+});
+
+test('diálogo aplica tema, setas trocam a seleção e Enter confirma exatamente uma escolha',()=>{
+ const h=boot((s,w,c)=>{s.scene='altar';w.player={...c.GameWorld.positions.mira,dir:'up',step:0};});
+ h.key('KeyE','e');advancePages(h);
+ assert.equal(h.get('dialogue').dataset.speaker,'mira');
+ const options=h.get('choices').children;assert(options.length>1);
+ const available=options.map((b,i)=>b.disabled?-1:i).filter(i=>i>=0);
+ assert.equal(options[available[0]].dataset.selected,'true');
+ h.key('ArrowDown');assert.equal(options[available[1]].dataset.selected,'true');
+ let actions=0;options[available[1]].events.click=[()=>{actions++;}];h.key('Enter');assert.equal(actions,1);
+ h.key('ArrowUp');assert.equal(options[available[0]].dataset.selected,'true');
+ h.key('Space');assert.equal(actions,1);
 });

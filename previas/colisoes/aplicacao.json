@@ -1,0 +1,37 @@
+{
+  "project": "/Users/Admin/Desktop/dont-believe-5",
+  "backup": "/Users/Admin/Desktop/dont-believe-5/backups/antes-colisoes-2026-10-07",
+  "files": [
+    {
+      "path": "javascript/world.js",
+      "before": "40a5f48d12896bda84aa46a230764100ffcbf96593bb5dbdf7ea407233559f2e",
+      "after": "f8e6490eed63638ee987711638b04fa94ad59c92f537ab8f216c8b5190415345"
+    },
+    {
+      "path": "javascript/scenery.js",
+      "before": "dcee865a28afcbc5565bf2835bae630ee7862c1c11dc55078f303612daeeb228",
+      "after": "740336ea9261b8d503c8d30e4598fac00b48896ace7364a955a90924486637f5"
+    },
+    {
+      "path": "javascript/residents.js",
+      "before": "bd8b4bd8371cb1ec071d46ff97a0888a5fb7e30494b7a275c6d4758b0b356b9c",
+      "after": "c6cb308bdc6b250113cc3cb26e333a38ce57c7b0282c84de1d9e8ee6a003e2a2"
+    },
+    {
+      "path": "javascript/render.js",
+      "before": "3d9138a9a2eb1902b6ac5c3f0a2cd74abcaa33c6972451ff684af403a321672f",
+      "after": "830d8bafa40b9aeb564ef8a5da43470ed2a8a0bae0f65995f318375c0ad10700"
+    },
+    {
+      "path": "tests/render.test.cjs",
+      "before": "fbceec7ceb3d4c4679c40ec9bbc33d8aa6200e1257145e05e7976b8908dca9f3",
+      "after": "46568d4c1d7b86ce2b610029eb35fe5dfbfdcc60e59b46eef18e6fa120ed3151"
+    }
+  ],
+  "added": [
+    "tests/collisions.test.cjs",
+    "tests/endings.test.cjs",
+    "tests/endings-routes.cjs",
+    "tools/playtest-browser.cjs"
+  ]
+}

@@ -178,9 +178,9 @@ const groupReady=s=>!s.flags.eronBetrayed&&s.flags.rescued&&s.eron>=2&&s.flags.e
 const noahReady=s=>!s.flags.eronBetrayed&&s.flags.latchOpen&&s.flags.rescued&&s.eron>=2;
 scene('preparar','Antes que o sino toque outra vez','kali','meeting',4,s=>[
 s.flags.eronBetrayed?'O lugar de Eron na cozinha está vazio. Kali escreveu o nome dele para escapar da própria acusação. Agora terá de escolher um caminho sem sua ajuda.':'— Quem vai sair? — Eron pergunta.\nKali precisa responder com nomes e tarefas. Mira pode orientar os moradores. Eron precisa de um trajeto. Tomas não abrirá a cela por dentro. Noah precisa cumprir o que prometeu.',
-'Você pode voltar aos cômodos, usar os objetos e preparar aliados. O mapa marca os pontos opcionais em azul. O diário explica o que cada rota exige.',
+'Você pode voltar aos cômodos, usar os objetos e preparar aliados. O caderno explica o que cada rota exige. Se precisar, marque um encontro para ver seu caminho no mapa.',
 'Confirmar abaixo inicia o confronto. Até esse momento, você pode mudar de ideia e completar o que estiver faltando. Depois, a Actras fechará o cerco.'],[
- C('Revisar as tarefas e continuar explorando.','preparar',{},s=>plan(s).map(p=>(p.done?'✓ ':'○ ')+p.text).join('\n'),'Preparações abertas. Use E nos personagens e objetos marcados.'),
+ C('Revisar as tarefas e continuar explorando.','preparar',{},s=>plan(s).map(p=>(p.done?'✓ ':'○ ')+p.text).join('\n'),'Preparações abertas. Use E perto das pessoas e objetos; marque um encontro no caderno se precisar de orientação.'),
  C('Estou pronto: seguir para a saída.','confronto',{flags:{committed:true}},s=>'O líder intercepta Kali no corredor. Eron se afasta da passagem para não entregar o plano.\n'+(groupReady(s)?'Seu grupo tem resgate, confiança e um trajeto combinado.':noahReady(s)?'Noah soltou o trinco; Mira e Eron podem alcançar a porta.':'Confira as condições antes de escolher uma fuga. As opções mostram os riscos.'),'IRREVERSÍVEL: encerra a preparação livre. Confira o diário antes.')
 ],'Prepare a fuga e confirme o plano na mesa da cozinha.');
 scene('confronto','O que sua escolha pode cumprir','leader','climax',4,s=>[

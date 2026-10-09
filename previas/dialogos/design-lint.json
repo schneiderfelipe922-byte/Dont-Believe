@@ -1,0 +1,122 @@
+{
+  "findings": [
+    {
+      "severity": "warning",
+      "path": "colors.text",
+      "message": "'text' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.muted",
+      "message": "'muted' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.border",
+      "message": "'border' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.mira",
+      "message": "'mira' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.eron",
+      "message": "'eron' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.noah",
+      "message": "'noah' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.guard",
+      "message": "'guard' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-text",
+      "message": "'dialogue-text' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-choice",
+      "message": "'dialogue-choice' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-paper",
+      "message": "'dialogue-paper' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-kali",
+      "message": "'dialogue-kali' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-noah",
+      "message": "'dialogue-noah' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-mira",
+      "message": "'dialogue-mira' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-eron",
+      "message": "'dialogue-eron' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-vigia",
+      "message": "'dialogue-vigia' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-tomas",
+      "message": "'dialogue-tomas' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-daty",
+      "message": "'dialogue-daty' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "warning",
+      "path": "colors.dialogue-inauri",
+      "message": "'dialogue-inauri' is defined but never referenced by any component.",
+      "rule": "orphaned-tokens"
+    },
+    {
+      "severity": "info",
+      "message": "Design system defines 21 colors, 3 typography scales, 1 rounding level, 2 spacing tokens, 2 components.",
+      "rule": "token-summary"
+    }
+  ],
+  "summary": {
+    "errors": 0,
+    "warnings": 18,
+    "infos": 1
+  }
+}

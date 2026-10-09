@@ -1,0 +1,20 @@
+{
+  "errors": [],
+  "viewports": [
+    "1280x900",
+    "390x844",
+    "844x390"
+  ],
+  "checks": [
+    "fonte local",
+    "consulta sem custo",
+    "atalhos",
+    "abas por teclado",
+    "marcação opcional",
+    "rolagem móvel",
+    "falha de imagem",
+    "redução de movimento",
+    "offline",
+    "foco restaurado"
+  ]
+}

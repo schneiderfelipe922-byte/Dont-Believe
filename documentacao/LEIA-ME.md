@@ -1,3 +1,9 @@
+# Atualização — 09/10/2026
+
+A versão principal está no index.html da raiz. Consulte ../sobre-o-jogo.md para o guia atual, ../historia.md para a história, ../roteiro.md para o roteiro e ../cenas.md para o catálogo. A expansão integra diário ilustrado, escrita Kalam local, memória social, quatro cenas principais e duas conversas opcionais. As relações deixaram de exibir pontuações; marcadores só aparecem quando solicitados.
+
+O conteúdo abaixo registra etapas anteriores e pode mencionar interfaces substituídas.
+
 # DON’T BELIEVE — O Obelisco · 2D Top-Down
 
 Uma aventura de exploração em HTML, CSS e JavaScript puro. Você controla Kali por um orfanato vigiado pela Actras, conversa com moradores, interage com objetos, descobre o altar e toma decisões que levam a seis finais.

@@ -1,0 +1,15 @@
+DIÁLOGOS ILUSTRADOS — 05/10/2026
+
+retratos/: nove idles ilustrados em PNG com transparência, da cabeça às coxas.
+interface/moldura.png: traço da moldura enviada, com transparência real.
+interface/seta.png: seta roxa de escolhas, com transparência real.
+prompts.json: modo image_gen integrado, instruções e poses de geração.
+
+A interface está em css/dialogue.css e javascript/dialogue-ui.js.
+As cores são aplicadas conforme o personagem, mantendo textura e contornos.
+A tipografia Solway é distribuída localmente em assets/fontes com sua licença OFL.
+Estas ilustrações são os retratos das conversas; o atlas de caminhada continua separado.
+Daty e Inauri têm retratos e temas carregados para uso em falas com esses personagens.
+
+Setas: selecionar. Enter, E ou Espaço: confirmar. Números, clique e toque também funcionam.
+Opções bloqueadas não recebem a seleção. Esc volta à exploração quando permitido.

@@ -1,0 +1,14 @@
+{
+  "errors": [],
+  "checks": [
+    "destino em branco",
+    "caixa errada sem custo",
+    "caixa correta",
+    "documento legível",
+    "compartilhar sem denunciar fonte",
+    "escutar sem sinal",
+    "ritmo errado sem bloqueio",
+    "resposta não abre grade",
+    "sinal anotado"
+  ]
+}

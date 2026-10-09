@@ -56,9 +56,9 @@ function walk(a,stops,s,w,dt,occupants){
   const t=a.route[0],dx=t.x-a.x,dy=t.y-a.y,len=Math.hypot(dx,dy);
   if(len<.05){a.route.shift();continue;}
   const step=Math.min(distance,len),nx=a.x+dx/len*step,ny=a.y+dy/len*step;
-  for(const door of M.doors)if(!M.doorOpen(door,s,w)&&!M.doorLocked(door,s,w)&&nx+7>door.x&&nx-7<door.x+door.w&&ny+7>door.y&&ny-7<door.y+door.h){
+  for(const door of M.doors){const box=M.doorBounds(door);if(!M.doorOpen(door,s,w)&&!M.doorLocked(door,s,w)&&nx+7>box.x&&nx-7<box.x+box.w&&ny+7>box.y&&ny-7<box.y+box.h){
    opened=M.toggleDoor(door.id,s,w,occupants).changed||opened;a.doors=M.doors.map(d=>M.doorOpen(d,s,w)?'1':'0').join('');
-  }
+  }}
   const before={x:a.x,y:a.y};M.move(a,dx/len*step,dy/len*step,s,w);const actual=Math.hypot(a.x-before.x,a.y-before.y);
   moved+=actual;distance-=step;face(a,{x:a.x+dx,y:a.y+dy});
   if(actual<step-.01){a.route=[];a.wait=.5;break;}
@@ -67,14 +67,16 @@ function walk(a,stops,s,w,dt,occupants){
  a.step=moved?a.step+moved/20:0;if(!a.route.length){a.wait=3;a.step=0;}
  return moved>0||opened;
 }
-function followEscort(n,e){
+function followEscort(n,e,s,w){
  e.trail.push({x:e.x,y:e.y});let length=0;
  for(let i=e.trail.length-1;i>0;i--)length+=Math.hypot(e.trail[i].x-e.trail[i-1].x,e.trail[i].y-e.trail[i-1].y);
  while(e.trail.length>1){const a=e.trail[0],b=e.trail[1],d=Math.hypot(b.x-a.x,b.y-a.y);if(length-d<56)break;length-=d;e.trail.shift();}
  const a=e.trail[0],b=e.trail[1]||a,d=Math.hypot(b.x-a.x,b.y-a.y),excess=Math.max(0,length-56),ratio=d?Math.min(1,excess/d):0;
  const next={x:a.x+(b.x-a.x)*ratio,y:a.y+(b.y-a.y)*ratio},travel=Math.hypot(next.x-n.x,next.y-n.y);
  if(Math.hypot(next.x-e.x,next.y-e.y)<36){e.yield=true;n.step=0;return;}
- face(n,next);n.x=next.x;n.y=next.y;n.step=travel?n.step+travel/20:0;
+ face(n,next);const before={x:n.x,y:n.y};M.move(n,next.x-n.x,next.y-n.y,s,w);
+ const actual=Math.hypot(n.x-before.x,n.y-before.y);n.step=actual?n.step+actual/20:0;
+ if(actual<travel-.01){e.trail=[{x:n.x,y:n.y},{x:e.x,y:e.y}];e.route=[];e.wait=.5;}
 }
 function update(s,w,dt){
  const actors=ensure(s,w);dt=Math.min(.1,Math.max(0,dt));let changed=false;
@@ -90,7 +92,7 @@ function update(s,w,dt){
   else{e.route=[];e.wait=0;e.yield=false;}
   e.trail=[{x:n.x,y:n.y},{x:e.x,y:e.y}];if(Math.hypot(n.x-e.x,n.y-e.y)>=56)e.yield=false;
  }else{const before={x:e.x,y:e.y};changed=walk(e,spec.stops,s,w,dt,Object.values(actors))||changed;
- if(e.x!==before.x||e.y!==before.y)followEscort(n,e);else n.step=0;}
+ if(e.x!==before.x||e.y!==before.y)followEscort(n,e,s,w);else n.step=0;}
  return changed;
 }
 const normalizeWorld=M.normalizeWorld;M.normalizeWorld=(w,s)=>{normalizeWorld(w,s);normalize(s,w);return w;};

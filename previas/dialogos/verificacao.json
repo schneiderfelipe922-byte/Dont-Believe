@@ -1,0 +1,105 @@
+{
+  "assets": 9,
+  "variants": [
+    {
+      "name": "kali",
+      "painted": true,
+      "accent": "#bc3c48",
+      "filter": "hue-rotate(68deg) saturate(0.85) brightness(0.85) drop-shadow(rgb(102, 102, 102) 0px 0px 1px)"
+    },
+    {
+      "name": "noah",
+      "painted": true,
+      "accent": "#d8d9de",
+      "filter": "grayscale(1) brightness(1.8) drop-shadow(rgb(102, 102, 102) 0px 0px 1px)"
+    },
+    {
+      "name": "mira",
+      "painted": true,
+      "accent": "#242128",
+      "filter": "grayscale(1) brightness(0.34) drop-shadow(rgb(102, 102, 102) 0px 0px 1px)"
+    },
+    {
+      "name": "eron",
+      "painted": true,
+      "accent": "#b570db",
+      "filter": "none"
+    },
+    {
+      "name": "tomas",
+      "painted": true,
+      "accent": "#293b78",
+      "filter": "hue-rotate(-44deg) saturate(0.8) brightness(0.55) drop-shadow(rgb(102, 102, 102) 0px 0px 1px)"
+    },
+    {
+      "name": "vigia",
+      "painted": true,
+      "accent": "#702c40",
+      "filter": "hue-rotate(60deg) saturate(0.9) brightness(0.52) drop-shadow(rgb(102, 102, 102) 0px 0px 1px)"
+    },
+    {
+      "name": "lider",
+      "painted": true,
+      "accent": "#702c40",
+      "filter": "hue-rotate(60deg) saturate(0.9) brightness(0.52) drop-shadow(rgb(102, 102, 102) 0px 0px 1px)"
+    },
+    {
+      "name": "daty",
+      "painted": true,
+      "accent": "#eeeeef",
+      "filter": "grayscale(1) brightness(2) drop-shadow(rgb(102, 102, 102) 0px 0px 1px)"
+    },
+    {
+      "name": "inauri",
+      "painted": true,
+      "accent": "#293b78",
+      "filter": "hue-rotate(-44deg) saturate(0.8) brightness(0.55) drop-shadow(rgb(102, 102, 102) 0px 0px 1px)"
+    }
+  ],
+  "real": [
+    {
+      "scene": "quarto",
+      "name": "Vigia",
+      "theme": "vigia",
+      "illustrated": "true",
+      "textColor": "rgb(255, 255, 255)"
+    },
+    {
+      "scene": "mira",
+      "name": "Mira",
+      "theme": "mira",
+      "illustrated": "true",
+      "textColor": "rgb(255, 255, 255)"
+    },
+    {
+      "scene": "eron",
+      "name": "Eron",
+      "theme": "eron",
+      "illustrated": "true",
+      "textColor": "rgb(255, 255, 255)"
+    },
+    {
+      "scene": "noah",
+      "name": "Noah",
+      "theme": "noah",
+      "illustrated": "true",
+      "textColor": "rgb(255, 255, 255)"
+    },
+    {
+      "scene": "confronto",
+      "name": "Líder",
+      "theme": "lider",
+      "illustrated": "true",
+      "textColor": "rgb(255, 255, 255)"
+    }
+  ],
+  "layout": {
+    "horizontal": false,
+    "scrolls": true,
+    "footerInside": true,
+    "bodyFont": "16px"
+  },
+  "keyboard": "ArrowUp/Down, Enter, E, Tab and Esc passed",
+  "fallback": true,
+  "errors": []
+}

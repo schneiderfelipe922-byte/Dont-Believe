@@ -1,0 +1,269 @@
+--- a/javascript/world.js
++++ b/javascript/world.js
+@@ -54,6 +54,8 @@
+ function target(state,world){if(state.scene==='subsolo'&&world.tunnelOpen)return {...positions.relic,id:'relic',name:'Símbolo do Luzitruismo',objective:'Recupere o símbolo nos arquivos subterrâneos.'};const a=stages[state.scene];return a?{...positions[a[0]],id:a[0],name:a[2],objective:a[1]}:null;}
+ function tile(x,y){return walkAreas.some(a=>x>=a.x&&x<a.x+a.w&&y>=a.y&&y<a.y+a.h)?2:0;}
+ function overlaps(p,x,y,r=7){return x+r>p.x&&x-r<p.x+p.w&&y+r>p.y&&y-r<p.y+p.h;}
++// A folha fechada ocupa toda a sua altura visível, não só o limiar de 8 px.
++function doorBounds(d){return {x:d.x,y:d.art?.[1]??d.y,w:d.w,h:d.y+d.h-(d.art?.[1]??d.y)};}
+ function doorLocked(door,state,world){
+  if(!door.lock)return false;
+  if(door.lock==='exit')return !state?.flags?.latchOpen&&!['portao','disfarce'].includes(state?.scene)&&!state?.flags?.escaped;
+@@ -65,17 +67,17 @@
+  return world?.doors?.[door.id]??!!door.lock;
+ }
+ function walkable(x,y,r=7,state=null,world=null){
+- if(!Number.isFinite(x)||!Number.isFinite(y))return false;
+- for(const [dx,dy] of [[-r,-r],[r,-r],[-r,r],[r,r]])if(!tile(x+dx,y+dy))return false;
+- if(sceneryProps.some(p=>overlaps(p,x,y,r))&&!entranceAreas.some(e=>x-r>=e.x&&x+r<=e.x+e.w&&y>=e.y-r&&y<=e.y+e.h+r))return false;
+- return !world||!doors.some(d=>!doorOpen(d,state,world)&&overlaps(d,x,y,r));
++ if(!Number.isFinite(x)||!Number.isFinite(y)||!Number.isFinite(r)||r<0)return false;
++ for(const dx of [-r,0,r])for(const dy of [-r,0,r])if(!tile(x+dx,y+dy))return false;
++ if(sceneryProps.some(p=>overlaps(p,x,y,r)))return false;
++ return !world||!doors.some(d=>!doorOpen(d,state,world)&&overlaps(doorBounds(d),x,y,r));
+ }
+ function place(p){
+  if(!reachableFloor){
+-  const step=T/2,seed={x:306,y:246},queue=[seed];reachableFloor=new Map([[`${seed.x},${seed.y}`,seed]]);
++  const step=T/4,seed={x:303,y:249},queue=[seed];reachableFloor=new Map([[`${seed.x},${seed.y}`,seed]]);
+   for(let i=0;i<queue.length;i++){const a=queue[i];for(const [dx,dy]of [[step,0],[-step,0],[0,step],[0,-step]]){const b={x:a.x+dx,y:a.y+dy},key=`${b.x},${b.y}`;if(!reachableFloor.has(key)&&walkable(b.x,b.y,7)&&clearWalk(a,b,null,null)){reachableFloor.set(key,b);queue.push(b);}}}
+  }
+- const center={x:(Math.floor(p.x/(T/2))+.5)*(T/2),y:(Math.floor(p.y/(T/2))+.5)*(T/2)};
++ const center={x:(Math.floor(p.x/(T/4))+.5)*(T/4),y:(Math.floor(p.y/(T/4))+.5)*(T/4)};
+  if(walkable(p.x,p.y,7)&&reachableFloor.has(`${center.x},${center.y}`)&&clearWalk(p,center,null,null))return {...p};
+  const room=rooms.find(r=>p.x>=r.x*T&&p.x<(r.x+r.w)*T&&p.y>=r.y*T&&p.y<(r.y+r.h)*T);
+ 
+@@ -84,6 +86,7 @@
+  return {...p,...best};
+ }
+ function move(player,dx,dy,state=null,world=null){
++ if(!Number.isFinite(dx)||!Number.isFinite(dy))return;
+  // Subpassos impedem atravessar paredes/portas em movimentos grandes.
+  const count=Math.ceil(Math.max(Math.abs(dx),Math.abs(dy))/4)||1;
+  for(let i=0;i<count;i++){
+@@ -97,7 +100,7 @@
+  for(let i=1;i<n;i++){
+   const x=a.x+(b.x-a.x)*i/n,y=a.y+(b.y-a.y)*i/n;
+   if(!walkable(x,y,1))return false;
+-  if(world&&doors.some(d=>d.id!==ignoreDoor&&!doorOpen(d,state,world)&&overlaps(d,x,y,1)))return false;
++  if(world&&doors.some(d=>d.id!==ignoreDoor&&!doorOpen(d,state,world)&&overlaps(doorBounds(d),x,y,1)))return false;
+  }
+  return true;
+ }
+@@ -108,21 +111,27 @@
+  if(!door)return {changed:false,text:'Porta não encontrada.'};
+  if(doorLocked(door,state,world))return {changed:false,text:door.lock==='cellOpen'?'A grade está trancada. Procure uma chave, um arame ou uma distração.':door.lock==='tunnel'?'Os arquivos estão trancados. O mecanismo do altar abre a passagem.':'O portão está trancado. Prepare sua fuga ou peça a Noah para soltar o trinco.'};
+  const open=doorOpen(door,state,world);
+- if(open&&[world.player,...actors].some(p=>overlaps(door,p.x,p.y,9)))return {changed:false,text:'Afaste-se da passagem para fechar a porta.'};
++ if(open&&[world.player,...actors].some(p=>overlaps(doorBounds(door),p.x,p.y,9)))return {changed:false,text:'Afaste-se da passagem para fechar a porta.'};
+  world.doors=world.doors||{};world.doors[id]=!open;
+  return {changed:true,text:door.name+(open?' fechada.':' aberta.')};
+ }
+ function path(start,end,state=null,world=null,options={}){
+- const step=T/2,routePoint=(x,y)=>({x:x*step,y:y*step}),cell=p=>[Math.floor(p.x/step),Math.floor(p.y/step)], [sx,sy]=cell(start),[ex,ey]=cell(end),queue=[[sx,sy]],seen=new Map([[`${sx},${sy}`,null]]);
++ if(!start||!end||!walkable(start.x,start.y,7,state,world)||!walkable(end.x,end.y,7,state,world))return [];
++ // A malha de 6 px encontra os corredores estreitos junto às bancadas.
++ const step=T/4,routePoint=(x,y)=>({x:x*step,y:y*step}),cell=p=>[Math.floor(p.x/step),Math.floor(p.y/step)], [sx,sy]=cell(start),[ex,ey]=cell(end),queue=[],seen=new Map();
+  // Rotas atravessam portas que podem ser abertas com E, mas nunca trancas.
+  const routeWorld=world&&options.openDoors!==false?{...world,doors:Object.fromEntries(doors.map(d=>[d.id,true]))}:world;
++ for(const [dx,dy]of [[0,0],[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]]){
++  const x=sx+dx,y=sy+dy,p=routePoint(x+.5,y+.5);
++  if(walkable(p.x,p.y,7,state,routeWorld)&&clearWalk(start,p,state,routeWorld)){queue.push([x,y]);seen.set(`${x},${y}`,null);}
++ }
+  let found=null;
+  for(let i=0;i<queue.length;i++){
+   const [x,y]=queue[i],p=routePoint(x+.5,y+.5);
+-  if(Math.abs(x-ex)+Math.abs(y-ey)<=(options.exact?0:1)&&visible(p,end,state,routeWorld)){found=[x,y];break;}
++  if(Math.abs(x-ex)+Math.abs(y-ey)<=(options.exact?0:1)&&clearWalk(p,end,state,routeWorld)){found=[x,y];break;}
+   for(const [dx,dy]of [[1,0],[-1,0],[0,1],[0,-1]]){
+    const nx=x+dx,ny=y+dy,k=`${nx},${ny}`,next=routePoint(nx+.5,ny+.5);
+-   if(!seen.has(k)&&walkable(next.x,next.y,7,state,routeWorld)&&visible(p,next,state,routeWorld)&&(!options.exact||clearWalk(p,next,state,routeWorld))){
++   if(!seen.has(k)&&walkable(next.x,next.y,7,state,routeWorld)&&clearWalk(p,next,state,routeWorld)){
+     seen.set(k,[x,y]);queue.push([nx,ny]);
+    }
+   }
+@@ -130,7 +139,7 @@
+  if(!found)return [];
+  const result=[];while(found){result.unshift(routePoint(found[0]+.5,found[1]+.5));found=seen.get(found.join(','));}return result;
+ }
+-function blocked(state,world,x,y){const d=doors.find(d=>!doorOpen(d,state,world)&&overlaps(d,x,y));return d?d.name+' fechada. Use E perto da porta.':null;}
++function blocked(state,world,x,y){const d=doors.find(d=>!doorOpen(d,state,world)&&overlaps(doorBounds(d),x,y));return d?d.name+' fechada. Use E perto da porta.':null;}
+ function normalizeWorld(world,state){
+  if(world.mapVersion!=='illustrated-v1'){
+   Object.assign(world.player,remap(world.player));if(world.mel)Object.assign(world.mel,remap(world.mel));
+@@ -224,5 +233,5 @@
+  {x:115,y:674,a:115,b:690,axis:'x',dir:-1,speed:26}
+  ].map(g=>({...g,...place(g)}));}
+ 
+-const api={remap,authoredPoint,walkAreas,place,sceneryProps,entranceAreas,melPoint,normalizeMel,updateMel,doors,passages,doorLocked,doorOpen,doorPoints,toggleDoor,canInteract,normalizeWorld,updateGuard,T,W,H,rooms,grid,props,lights,positions,stages,night,target,tile,walkable,move,roomAt,visible,path,blocked,fresh,guards};root.GameWorld=api;if(typeof module!=='undefined')module.exports=api;
++const api={remap,authoredPoint,walkAreas,place,sceneryProps,entranceAreas,melPoint,normalizeMel,updateMel,doors,doorBounds,passages,doorLocked,doorOpen,doorPoints,toggleDoor,canInteract,normalizeWorld,updateGuard,T,W,H,rooms,grid,props,lights,positions,stages,night,target,tile,walkable,move,roomAt,visible,path,blocked,fresh,guards};root.GameWorld=api;if(typeof module!=='undefined')module.exports=api;
+ })(typeof window!=='undefined'?window:globalThis);
+--- a/javascript/scenery.js
++++ b/javascript/scenery.js
+@@ -10,17 +10,35 @@
+ ];
+ const passageRects=[[286,260,66,100],[730,235,89,128],[1164,240,70,124],[344,401,72,120],[884,396,80,132],[884,628,80,150],[1180,655,70,126],[884,655,366,40]];
+ const blocks={
+- dorm:[[104,40,428,93],[144,120,63, 60],[435,120,58, 60],[104,170,34,106],[498,159,34,118],[180,208,24,35]],
++ dorm:[[104,40,428,93],[144,117,63,68],[435,117,58,68],[104,133,34,147],[498,133,34,147],[180,208,24,35],[206,104,23,41],[316,120,47,30],[146,244,26,33],[478,245,54,32]],
+  study:[[641,42,316,57],[641,98,55,25],[686,126,36,69],[767,119,46,109],[866,120,37,65],[916,99,41,40],[641,161,30,38],[923,184,34,37],[687,213,38,35],[874,211,37,37]],
+- cell:[[1042,44,318, 60],[1042,103,35,61],[1325,99,35,74],[1180,137,70,29],[1042,191,123,62],[1234,191,126,62]],
+- hall:[[94,311,1268,40]],
+- dining:[[96,469,611,42],[135,554,157,82],[516,554,155,82],[135,703,157,81],[516,703,155,81],[344,628,110,142],[96,817,105,51],[606,817,101,51]],
+- kitchen:[[779,470,585,50],[779,517,36,84],[1327,518,37,115],[875,543,167,20],[1081,543,164,20],[894,590,134,20],[1079,590,145,20],[779,599,95,36]],
+- office:[[782,718,261,52],[782,771,25,102],[1017,768,26,105],[854,801,86,28]],
+- archive:[[1107,713,258,47],[1107,760,32,96],[1321,760,44,96],[1187,785,61,49],[1107,850,61,21],[1303,849,62,22]]
++ cell:[[1042,44,318, 60],[1042,103,35,150],[1325,99,35,154],[1180,137,70,29],[1042,191,123,62],[1234,191,126,62]],
++ hall:[[94,311,1268,45]],
++ dining:[[96,469,611,42],[130,548,168,94],[511,548,165,94],[130,710,168,91],[511,710,165,91],[344,556,110,214],[96,817,105,51],[606,817,101,51]],
++ kitchen:[[779,470,585,50],[779,517,36,84],[1327,518,37,115],[875,540,167,28],[1081,540,164,28],[894,589,134,27],[1079,589,145,27],[779,599,95,36]],
++ office:[[782,718,261,52],[782,771,25,102],[1017,768,26,105],[852,795,94,39]],
++ archive:[[1107,713,258,47],[1107,760,32,96],[1321,760,44,96],[1185,784,66,63],[1107,850,61,21],[1303,849,62,22]]
+ };
++// Somente estes vãos recortam as paredes. Móveis na passagem continuam sólidos.
++const wallOpenings={study:[[730,235,89,13]],cell:[[1164,240,70,13]],hall:[[286,311,66,45],[730,311,89,45],[1164,311,70,45]],dining:[[344,469,72,42]],kitchen:[[884,470,80,50]],office:[[884,718,80,52]],archive:[[1180,713,70,47]]};
++const boundaryWalls=[
++ ['dorm',[104,267,428,13],[[286,267,66,13]]],
++ ['study',[641,123,30,125],[]],['study',[933,139,24,109],[]],['study',[641,234,316,14],[[730,234,89,14]]],
++ ['hall',[94,396,1268,15],[[344,396,72,15],[884,396,80,15]]],['hall',[94,356,12,55],[]],['hall',[1350,356,12,55],[]],
++ ['dining',[96,511,15,357],[]],['dining',[690,511,17,357],[]],['dining',[96,852,611,16],[]],
++ ['kitchen',[779,634,585,1],[[884,634,80,1]]],
++ ['office',[782,860,261,13],[]],['archive',[1107,856,258,15],[]]
++];
++function subtract(box,hole){
++ const [x,y,w,h]=box,[hx,hy,hw,hh]=hole,left=Math.max(x,hx),top=Math.max(y,hy),right=Math.min(x+w,hx+hw),bottom=Math.min(y+h,hy+hh);
++ if(left>=right||top>=bottom)return [box];
++ return [[x,y,w,top-y],[x,bottom,w,y+h-bottom],[x,top,left-x,bottom-top],[right,top,x+w-right,bottom-top]].filter(a=>a[2]>0&&a[3]>0);
++}
+ function rooms(T){return layout.map(([id,name,x,y,w,h,floor])=>({id,name,x:x/T,y:y/T,w:w/T,h:h/T,floor}));}
+-function geometry(){return Object.entries(blocks).flatMap(([room,list])=>list.map(([x,y,w,h],i)=>({id:`scenery-${room}-${i}`,room,x,y,w,h,solid:true})));}
++function geometry(){return [...Object.entries(blocks).flatMap(([room,list])=>list.flatMap((box,i)=>{
++ const pieces=i===0?(wallOpenings[room]||[]).reduce((pieces,hole)=>pieces.flatMap(p=>subtract(p,hole)),[box]):[box];
++ return pieces.map(([x,y,w,h],part)=>({id:`scenery-${room}-${i}-${part}`,room,x,y,w,h,solid:true}));
++})),...boundaryWalls.flatMap(([room,box,holes],i)=>holes.reduce((pieces,hole)=>pieces.flatMap(p=>subtract(p,hole)),[box]).map(([x,y,w,h],part)=>({id:`boundary-${room}-${i}-${part}`,room,x,y,w,h,solid:true})))];}
+ function areas(){return [...layout.map(r=>({x:r[2],y:r[3],w:r[4],h:r[5]})),...passageRects.map(([x,y,w,h])=>({x,y,w,h}))];}
+ const sprites={cell:[[28,941,125,97],[172,941,125,97],[315,941,125,97],[456,941,125,97],[600,941,125,97]],archive:[[746,941,129,97],[891,941,129,97],[1034,941,129,97],[1177,941,129,97],[1320,941,129,97]]};
+ function floor(c,image,box){c.save();c.beginPath();c.rect(...box);c.clip();for(let y=box[1];y<box[1]+box[3];y+=12)for(let x=box[0];x<box[0]+box[2];x+=53)c.drawImage(image,894,660,53,12,x,y,53,12);c.restore();}
+@@ -29,6 +47,8 @@
+  floor(c,art.fullMap,[343,403, 73,73]);
+  // Apaga as folhas embutidas sob os quadros dinâmicos, para não reaparecerem abertas.
+  floor(c,art.fullMap,[1164,190,70,73]);floor(c,art.fullMap,[1180,696,70,67]);
++ // O acesso à observação precisa ser um vão visível, igual ao da física.
++ floor(c,art.fullMap,[884,700,80,70]);
+ }
+ function drawDoor(c,d,open,art,progress=open?1:0,closing=false){if(!art.fullMap||!sprites[d.id])return false;const frames=sprites[d.id];const frame=progress<=0?0:progress>=1?3:closing?4:progress<.5?1:2;const source=frames[frame],dest=d.art;
+  c.drawImage(art.fullMap,...source,...dest);return true;
+--- a/javascript/residents.js
++++ b/javascript/residents.js
+@@ -56,9 +56,9 @@
+   const t=a.route[0],dx=t.x-a.x,dy=t.y-a.y,len=Math.hypot(dx,dy);
+   if(len<.05){a.route.shift();continue;}
+   const step=Math.min(distance,len),nx=a.x+dx/len*step,ny=a.y+dy/len*step;
+-  for(const door of M.doors)if(!M.doorOpen(door,s,w)&&!M.doorLocked(door,s,w)&&nx+7>door.x&&nx-7<door.x+door.w&&ny+7>door.y&&ny-7<door.y+door.h){
++  for(const door of M.doors){const box=M.doorBounds(door);if(!M.doorOpen(door,s,w)&&!M.doorLocked(door,s,w)&&nx+7>box.x&&nx-7<box.x+box.w&&ny+7>box.y&&ny-7<box.y+box.h){
+    opened=M.toggleDoor(door.id,s,w,occupants).changed||opened;a.doors=M.doors.map(d=>M.doorOpen(d,s,w)?'1':'0').join('');
+-  }
++  }}
+   const before={x:a.x,y:a.y};M.move(a,dx/len*step,dy/len*step,s,w);const actual=Math.hypot(a.x-before.x,a.y-before.y);
+   moved+=actual;distance-=step;face(a,{x:a.x+dx,y:a.y+dy});
+   if(actual<step-.01){a.route=[];a.wait=.5;break;}
+@@ -67,14 +67,16 @@
+  a.step=moved?a.step+moved/20:0;if(!a.route.length){a.wait=3;a.step=0;}
+  return moved>0||opened;
+ }
+-function followEscort(n,e){
++function followEscort(n,e,s,w){
+  e.trail.push({x:e.x,y:e.y});let length=0;
+  for(let i=e.trail.length-1;i>0;i--)length+=Math.hypot(e.trail[i].x-e.trail[i-1].x,e.trail[i].y-e.trail[i-1].y);
+  while(e.trail.length>1){const a=e.trail[0],b=e.trail[1],d=Math.hypot(b.x-a.x,b.y-a.y);if(length-d<56)break;length-=d;e.trail.shift();}
+  const a=e.trail[0],b=e.trail[1]||a,d=Math.hypot(b.x-a.x,b.y-a.y),excess=Math.max(0,length-56),ratio=d?Math.min(1,excess/d):0;
+  const next={x:a.x+(b.x-a.x)*ratio,y:a.y+(b.y-a.y)*ratio},travel=Math.hypot(next.x-n.x,next.y-n.y);
+  if(Math.hypot(next.x-e.x,next.y-e.y)<36){e.yield=true;n.step=0;return;}
+- face(n,next);n.x=next.x;n.y=next.y;n.step=travel?n.step+travel/20:0;
++ face(n,next);const before={x:n.x,y:n.y};M.move(n,next.x-n.x,next.y-n.y,s,w);
++ const actual=Math.hypot(n.x-before.x,n.y-before.y);n.step=actual?n.step+actual/20:0;
++ if(actual<travel-.01){e.trail=[{x:n.x,y:n.y},{x:e.x,y:e.y}];e.route=[];e.wait=.5;}
+ }
+ function update(s,w,dt){
+  const actors=ensure(s,w);dt=Math.min(.1,Math.max(0,dt));let changed=false;
+@@ -90,7 +92,7 @@
+   else{e.route=[];e.wait=0;e.yield=false;}
+   e.trail=[{x:n.x,y:n.y},{x:e.x,y:e.y}];if(Math.hypot(n.x-e.x,n.y-e.y)>=56)e.yield=false;
+  }else{const before={x:e.x,y:e.y};changed=walk(e,spec.stops,s,w,dt,Object.values(actors))||changed;
+- if(e.x!==before.x||e.y!==before.y)followEscort(n,e);else n.step=0;}
++ if(e.x!==before.x||e.y!==before.y)followEscort(n,e,s,w);else n.step=0;}
+  return changed;
+ }
+ const normalizeWorld=M.normalizeWorld;M.normalizeWorld=(w,s)=>{normalizeWorld(w,s);normalize(s,w);return w;};
+--- a/javascript/render.js
++++ b/javascript/render.js
+@@ -21,8 +21,7 @@
+  if(state.scene==='confinamento')a.push({...p.guardHall,kind:'guard',name:'Vigia'});
+  return a.map((n,i)=>{if(n.kind==='mel'||root.GameResidents&&['mira','eron','noah','guard'].includes(n.kind))return n;const key=n.kind+':'+i,m=world?.actors?.[key];return m&&m.ax===n.x&&m.ay===n.y?{...n,x:n.x+m.dx,y:n.y+m.dy,dir:m.dir,step:m.step}:n;});
+ }
+-function drawChanges(c,state,world){const f=state.flags,t=M.T;
+- for(const d of M.doors){
++function drawDoor(c,d,state,world){
+   const open=M.doorOpen(d,state,world),locked=M.doorLocked(d,state,world);
+   let anim=doorAnimation.get(d.id);if(!anim){anim={value:open?1:0,time:clock};doorAnimation.set(d.id,anim);}const elapsed=Math.max(0,Math.min(100,clock-anim.time));anim.time=clock;anim.value=open?Math.min(1,anim.value+elapsed/320):Math.max(0,anim.value-elapsed/320);
+   if(!scenery.drawDoor(c,d,open,art,anim.value,!open)){c.save();c.translate(d.x,d.y);if(d.vertical)c.rotate(Math.PI/2);
+@@ -32,14 +31,13 @@
+   else{rect(c,3,-12,w-6,20,locked?'#523a46':'#755043');rect(c,5,-10,w-10,3,'#ad8b62');for(let x=10;x<w-8;x+=12)rect(c,x,-7,2,12,'#32232d');rect(c,w/2-3,-5,6,8,locked?'#c78980':'#d7b974');}
+   c.restore();}
+   if(Math.hypot(state._px-d.x-d.w/2,state._py-d.y-d.h/2)<125)label(c,locked?'TRANCADA':open?'ABERTA':'E · ABRIR',d.x+d.w/2,d.y+d.h/2+23,open?'#a7c1a0':'#d1b388',7);
+- }
+-
+ }
++function drawChanges(c,state,world){for(const d of M.doors)drawDoor(c,d,state,world);}
+ function updateActors(state,world,dt){world.animTime=(Number.isFinite(world.animTime)?world.animTime:0)+dt;world.actors=world.actors&&typeof world.actors==='object'?world.actors:{};npcs(state).forEach((n,i)=>{if(n.kind==='mel'||root.GameResidents&&['mira','eron','noah','guard'].includes(n.kind))return;const key=n.kind+':'+i;let a=world.actors[key];if(!a||a.ax!==n.x||a.ay!==n.y)a=world.actors[key]={ax:n.x,ay:n.y,dx:0,dy:0,step:0,dir:'down'};const distance=Math.hypot(world.player.x-n.x-a.dx,world.player.y-n.y-a.dy);if(distance<78){a.step=0;const dx=world.player.x-n.x-a.dx,dy=world.player.y-n.y-a.dy;a.dir=Math.abs(dx)>Math.abs(dy)?(dx>0?'right':'left'):(dy>0?'down':'up');return;}const t=(world.animTime+i*1.3)%8;const tx=n.kind==='guard'||n.kind==='leader'?0:t<2?10:t<5?10:0;const delta=Math.max(-10*dt,Math.min(10*dt,tx-a.dx));if(Math.abs(delta)>.01&&M.walkable(n.x+a.dx+delta,n.y+a.dy,7,state,world)){a.dx+=delta;a.dir=delta>0?'right':'left';a.step+=Math.abs(delta)/8;}else{a.step=0;if(t>6)a.dir='up';}});}
+ function draw(state,world,guards,options={}){
+  clock=options.time||0;const w=canvas.width,h=canvas.height,dpr=options.dpr||1,z=options.zoom||2*dpr;
+  const player=world.player,cam={x:Math.max(0,Math.min(map.width-w/z,player.x-w/z/2)),y:Math.max(0,Math.min(map.height-h/z,player.y-h/z/2))};
+- cam.x=Math.round(cam.x);cam.y=Math.round(cam.y);ctx.imageSmoothingEnabled=false;ctx.fillStyle='#10171a';ctx.fillRect(0,0,w,h);ctx.save();ctx.scale(z,z);ctx.translate(-cam.x,-cam.y);ctx.imageSmoothingEnabled=false;ctx.drawImage(map,0,0);drawChanges(ctx,{...state,_px:player.x,_py:player.y},world);
++ cam.x=Math.round(cam.x);cam.y=Math.round(cam.y);ctx.imageSmoothingEnabled=false;ctx.fillStyle='#10171a';ctx.fillRect(0,0,w,h);ctx.save();ctx.scale(z,z);ctx.translate(-cam.x,-cam.y);ctx.imageSmoothingEnabled=false;ctx.drawImage(map,0,0);
+  // Amber spill from the windows follows the reference's lamplit interiors.
+  for(const room of M.rooms){if(art.fullMap||room.id==='hall')continue;const wx=room.id==='dorm'?280:(room.x+room.w*.53)*M.T,wy=room.id==='dorm'?96:room.y*M.T;ctx.fillStyle='#e18b4514';for(let row=0;row<75;row+=3){const wide=27+row*.30;ctx.fillRect(Math.round(wx-wide),wy+row,Math.round(wide*2),3);}}
+  const cx=400,cy=660;
+@@ -47,8 +45,16 @@
+  if(!art.fullMap){for(let yy=-45;yy<17;yy++){const hw=yy<-14?Math.floor((yy+45)/3):10;rect(ctx,cx-hw,cy+yy,hw*2+1,1,'#241d31');if(hw>1){rect(ctx,cx-hw+1,cy+yy,hw,1,'#aa82c3');rect(ctx,cx+1,cy+yy,hw-1,1,'#694784');}}
+  for(const [xx,yy]of [[-4,-12],[3,0],[-3,9],[2,-24]]){rect(ctx,cx+xx,cy+yy,2,5,'#d3a8e0');rect(ctx,cx+xx-2,cy+yy+2,6,1,'#d3a8e0');}rect(ctx,cx-12,cy+16,25,4,'#c0a772');}
+  if(options.cones&&M.night.has(state.scene))for(const guard of guards){ctx.save();ctx.translate(guard.x,guard.y);ctx.rotate(guard.dir>0?0:Math.PI);ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,guard.range||125+state.suspicion*5,-.5,.5);ctx.closePath();ctx.fillStyle=world.alert>30?'#d1914233':'#ddc78517';ctx.fill();ctx.restore();}
+- const all=npcs(state,world).concat(guards.map(p=>({...p,kind:'guard',dir:p.dir>0?'right':'left',step:p.step||0})),[{...player,kind:'kali',step:player.step}]).sort((a,b)=>a.y-b.y);
+- all.forEach(p=>{sprite(ctx,p.x,p.y,p.kind,p.dir||'down',p.step||0,options.reduced?0:(world.animTime||0)+p.x*.01);if(p.kind==='kali'&&state.flags.cover)rect(ctx,p.x-10,p.y-23,6,4,'#b29063');if(p.name&&Math.hypot(p.x-player.x,p.y-player.y)<100)label(ctx,p.name,p.x,p.y+13,p.kind==='tomas'?'#93b5cf':'#c5b6a5',7);});
++ // Pés determinam a profundidade: a folha da porta oculta quem está atrás.
++ const actors=npcs(state,world).concat(guards.map(p=>({...p,kind:'guard',dir:p.dir>0?'right':'left',step:p.step||0})),[{...player,kind:'kali',step:player.step}]);
++ const layers=actors.map(p=>({y:p.y,actor:p})).concat(M.doors.map(d=>({y:d.y+d.h,door:d})));
++ if(art.fullMap)layers.push(...M.sceneryProps.map(p=>({y:p.y+p.h,scenery:p})));
++ layers.sort((a,b)=>a.y-b.y).forEach(layer=>{
++  if(layer.door){drawDoor(ctx,layer.door,{...state,_px:player.x,_py:player.y},world);return;}
++  if(layer.scenery){const p=layer.scenery;ctx.drawImage(map,p.x,p.y,p.w,p.h,p.x,p.y,p.w,p.h);return;}
++  const p=layer.actor;sprite(ctx,p.x,p.y,p.kind,p.dir||'down',p.step||0,options.reduced?0:(world.animTime||0)+p.x*.01);if(p.kind==='kali'&&state.flags.cover)rect(ctx,p.x-10,p.y-23,6,4,'#b29063');
++ });
++ actors.forEach(p=>{if(p.name&&Math.hypot(p.x-player.x,p.y-player.y)<100)label(ctx,p.name,p.x,p.y+13,p.kind==='tomas'?'#93b5cf':'#c5b6a5',7);});
+  // Ambient darkness is pierced by nearby candles; the player stays legible.
+  const sw=Math.ceil(w/z),sh=Math.ceil(h/z);if(shade.width!==sw||shade.height!==sh){shade.width=sw;shade.height=sh;}
+  sc.globalCompositeOperation='source-over';sc.clearRect(0,0,sw,sh);sc.fillStyle=M.night.has(state.scene)?'rgba(5,6,16,.32)':'rgba(10,6,17,.10)';sc.fillRect(0,0,sw,sh);
+--- a/tests/render.test.cjs
++++ b/tests/render.test.cjs
+@@ -25,3 +25,21 @@
+   pixel.sprite(direct,100,200,kind);assert.deepEqual(scales[0],[scale,scale]);
+  }
+ });
++test('portas e móveis são desenhados entre personagens de acordo com a posição dos pés',()=>{
++ const G=require('../javascript/story.js');require('../javascript/adventure.js');
++ const art={fullMap:{name:'map'},sprites:{name:'sprites'}},calls=[];
++ const gradient={addColorStop(){}};
++ const c=new Proxy({measureText:s=>({width:String(s).length*6}),createRadialGradient:()=>gradient,drawImage(...a){calls.push(a);}},{get:(o,k)=>k in o?o[k]:()=>{}});
++ const make=(width,height)=>({width,height,getContext:()=>c}),renderer=createRenderer(make(960,640),M,make,art),s=G.initial(),w=M.fresh();
++ const d=M.doors[0];
++ for(const y of [d.y-8,d.y+d.h+8]){
++  Object.assign(w.player,{x:d.x+d.w/2,y,dir:'down',step:0});calls.length=0;renderer.draw(s,w,[],{minimap:false,reduced:true});
++  const door=calls.findIndex(a=>a[0]===art.fullMap&&a[1]===28&&a[2]===941);
++  const frame=sprites.resolve('kali','down',0,art),actor=calls.findIndex(a=>a[0]===art.sprites&&a[1]===frame.rect[0]&&a[2]===frame.rect[1]);
++  assert(door>=0&&actor>=0);assert(y<d.y?actor<door:door<actor,'a porta oculta apenas quem está atrás');
++ }
++ const p=M.sceneryProps.find(p=>p.room==='dining'&&p.x===130&&p.y===548);
++ Object.assign(w.player,{x:212,y:540});calls.length=0;renderer.draw(s,w,[],{minimap:false,reduced:true});
++ const furniture=calls.findIndex(a=>a[0]===renderer.map&&a[1]===p.x&&a[2]===p.y&&a[3]===p.w);
++ const frame=sprites.resolve('kali','down',0,art),actor=calls.findIndex(a=>a[0]===art.sprites&&a[1]===frame.rect[0]&&a[2]===frame.rect[1]);assert(furniture>actor);
++});

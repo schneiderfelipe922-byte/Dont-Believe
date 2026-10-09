@@ -1,0 +1,108 @@
+@font-face{font-family:Solway;src:url('../assets/fontes/Solway-Light.ttf') format('truetype');font-weight:300;font-display:swap}
+/* Dialogue owns its illustrated frame, speaker palette and choice state. */
+@font-face{font-family:Solway;src:url('../assets/fontes/Solway-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:Solway;src:url('../assets/fontes/Solway-Medium.ttf') format('truetype');font-weight:500 700;font-display:swap}
+:root{--dialogue-font:Solway,'American Typewriter',Georgia,serif;--dialogue-text:#ffffff;--dialogue-choice:#c852fc;--dialogue-paper:#161417;--dialogue-kali:#bc3c48;--dialogue-noah:#d8d9de;--dialogue-mira:#242128;--dialogue-eron:#b570db;--dialogue-vigia:#702c40;--dialogue-tomas:#293b78;--dialogue-daty:#eeeeef;--dialogue-inauri:#293b78}
+#dialogue{inset:0;max-height:none;padding:0;overflow:hidden;border:0;background:linear-gradient(90deg,#0001 35%,#09070dc4 100%),linear-gradient(0deg,#060509bb,transparent 85%);box-shadow:none;isolation:isolate;font-family:var(--dialogue-font);color:var(--dialogue-text);--dialogue-accent:var(--dialogue-noah);--dialogue-frame-filter:grayscale(1) brightness(1.5)}
+#dialogue[data-speaker=kali]{--dialogue-accent:var(--dialogue-kali);--dialogue-frame-filter:hue-rotate(68deg) saturate(.85) brightness(.85)}
+#dialogue[data-speaker=noah]{--dialogue-accent:var(--dialogue-noah);--dialogue-frame-filter:grayscale(1) brightness(1.8)}
+#dialogue[data-speaker=mira]{--dialogue-accent:var(--dialogue-mira);--dialogue-frame-filter:grayscale(1) brightness(.34)}
+#dialogue[data-speaker=eron]{--dialogue-accent:var(--dialogue-eron);--dialogue-frame-filter:none}
+#dialogue[data-speaker=vigia],#dialogue[data-speaker=lider]{--dialogue-accent:var(--dialogue-vigia);--dialogue-frame-filter:hue-rotate(60deg) saturate(.9) brightness(.52)}
+#dialogue[data-speaker=tomas]{--dialogue-accent:var(--dialogue-tomas);--dialogue-frame-filter:hue-rotate(-44deg) saturate(.8) brightness(.55)}
+#dialogue[data-speaker=daty]{--dialogue-accent:var(--dialogue-daty);--dialogue-frame-filter:grayscale(1) brightness(2)}
+#dialogue[data-speaker=inauri]{--dialogue-accent:var(--dialogue-inauri);--dialogue-frame-filter:hue-rotate(-44deg) saturate(.8) brightness(.55)}
+#dialogue .portrait{position:absolute;right:-1%;bottom:0;top:auto;width:32%;height:97%;max-height:none;border:0;background:none;overflow:visible;z-index:1;mask-image:none;-webkit-mask-image:none;pointer-events:none}
+#dialogue .portrait canvas{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;image-rendering:auto;filter:drop-shadow(0 6px 18px #0009)}
+#dialogue .dialogue-card{position:absolute;left:1.5%;right:26%;bottom:2%;height:min(76%,460px);min-height:0;max-height:none;padding:0;border:0;outline:0;background:none;box-shadow:none;overflow:visible;z-index:2}
+#dialogue .dialogue-card::before{content:'';position:absolute;inset:0;background:url('../assets/dialogos/interface/moldura.png') center/107.5% 133% no-repeat;filter:var(--dialogue-frame-filter) drop-shadow(0 0 1px #666);pointer-events:none;z-index:2}
+#dialogue .dialogue-card::after{content:'';position:absolute;inset:22% 4% 5%;background:var(--dialogue-paper);box-shadow:0 5px 25px #000a;z-index:0;pointer-events:none}
+#dialogue #speaker{position:absolute;left:7.5%;top:5%;width:24%;height:14%;display:flex;align-items:center;justify-content:center;padding:0 4px;background:#0d0c10;font:400 clamp(17px,1.8vw,26px)/1.12 var(--dialogue-font);letter-spacing:0;text-align:center;white-space:normal;color:var(--dialogue-text);z-index:3}
+#dialogue .dialogue-main{position:absolute;inset:30% 7% 8%;display:flex;flex-direction:column;min-height:0;z-index:3}
+#dialogue .dialogue-scroll{overflow:auto;min-height:0;flex:1;padding:0 12px 6px 0;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:var(--dialogue-accent) #0d0c10;overscroll-behavior:contain}
+#dialogue .dialogue-head{position:relative;min-height:0;padding:0 0 7px;margin:0 0 9px;border:0;display:flex;align-items:baseline;gap:10px}
+#dialogue #dialogue-title{font:400 14px/1.4 var(--dialogue-font);letter-spacing:0;margin:0;color:var(--dialogue-text)}
+#dialogue #page-count{position:static;bottom:auto;right:auto;margin-left:auto;font:400 11px/1.4 var(--dialogue-font);color:var(--dialogue-text);opacity:.8}
+#dialogue #dialogue-text{font:300 clamp(16px,1.45vw,19px)/1.6 var(--dialogue-font);color:var(--dialogue-text)}
+#dialogue #dialogue-text p,#dialogue #dialogue-text p.speech{margin:0 0 12px;color:var(--dialogue-text)}
+#dialogue #consequence-list{margin:4px 0 8px;gap:7px}
+#dialogue .consequence-chip{font:400 12px/1.5 var(--dialogue-font);color:var(--dialogue-text);background:#ffffff08;border-left:2px solid var(--dialogue-accent)}
+#dialogue #choices{display:grid;gap:2px;margin:6px 0 0}
+#dialogue .choice{position:relative;display:flex;align-items:flex-start;gap:12px;min-height:44px;padding:10px 8px 10px 33px;font:300 16px/1.45 var(--dialogue-font);color:var(--dialogue-text);border:0;border-radius:0;background:none;box-shadow:none;text-align:left}
+#dialogue .choice::before{content:'';position:absolute;left:4px;top:12px;width:17px;height:19px;background:url('../assets/dialogos/interface/seta.png') center/contain no-repeat;opacity:0}
+#dialogue .choice>span:first-child{font:400 11px/1.8 var(--dialogue-font);color:inherit;min-width:18px;opacity:.8}
+#dialogue .choice>span:last-child{display:none}
+#dialogue .choice small,#dialogue .choice small.choice-hint{font:400 12px/1.5 var(--dialogue-font);color:var(--dialogue-text);opacity:.8;letter-spacing:0;margin-top:5px}
+#dialogue .choice[data-selected=true]{color:var(--dialogue-choice);background:#c852fc08}
+#dialogue .choice[data-selected=true]::before{opacity:1}
+#dialogue .choice:hover:not(:disabled){border:0;background:#c852fc08}
+#dialogue .choice:focus-visible{outline:1px dashed var(--dialogue-choice);outline-offset:-1px}
+#dialogue .choice:disabled{opacity:.63;color:var(--dialogue-text)}
+#dialogue .dialogue-foot{flex-shrink:0;gap:8px 12px;margin:5px 0 0;padding:4px 0 0;align-items:center;flex-wrap:wrap}
+#dialogue .dialogue-foot .plain{min-height:32px;padding:5px 0;border:0;color:var(--dialogue-text);font:400 11px/1.4 var(--dialogue-font)}
+#dialogue #dialogue-extra{margin-right:auto}
+#dialogue #dialogue-note{font:400 8px/1.4 var(--dialogue-font);letter-spacing:.6px;color:var(--dialogue-text);opacity:.7;max-width:50%}
+#dialogue .dialogue-foot kbd{color:var(--dialogue-text);border-color:#ffffff40;font-size:8px}
+#dialogue .dialogue-foot button:focus-visible{outline-color:var(--dialogue-choice)}
+#dialogue .dialogue-scroll::-webkit-scrollbar{width:7px}
+#dialogue .dialogue-scroll::-webkit-scrollbar-track{background:#0d0c10}
+#dialogue .dialogue-scroll::-webkit-scrollbar-thumb{background:var(--dialogue-accent);border:1px solid #9995}
+@media(max-width:700px){
+ #dialogue .portrait{width:46%;height:58%;right:1%;bottom:42%;opacity:1}
+ #dialogue .dialogue-card{left:1%;right:1%;bottom:1%;height:78%;max-height:none}
+ #dialogue #speaker{left:7%;top:5%;width:25%;font-size:17px}
+ #dialogue .dialogue-main{inset:30% 8% 8%}
+ #dialogue .dialogue-scroll{padding-right:7px}
+ #dialogue #dialogue-text{font-size:16px;line-height:1.6}
+ #dialogue #dialogue-title{font-size:12px}
+ #dialogue .choice{font-size:16px;padding:10px 4px 10px 27px;gap:7px;min-height:44px}
+ #dialogue .choice::before{left:2px;width:15px;height:17px}
+ #dialogue .choice small,#dialogue .choice small.choice-hint{font-size:12px}
+ #dialogue .dialogue-foot .plain{font-size:11px;min-height:44px}
+ #dialogue #dialogue-note{order:3;flex-basis:100%;max-width:none;font-size:8px;padding:0}
+}
+@media(max-height:600px) and (min-width:701px){#dialogue .dialogue-card{height:89%}#dialogue .portrait{height:100%}#dialogue #dialogue-text{font-size:16px}}
+@media(forced-colors:active){#dialogue .dialogue-card::after{background:Canvas}#dialogue .dialogue-card::before{filter:grayscale(1)}#dialogue .choice[data-selected=true]{color:Highlight}#dialogue .choice:focus-visible{outline:2px solid Highlight}#dialogue,#dialogue #dialogue-text p,#dialogue #speaker,#dialogue .choice small{color:CanvasText}}
+
+.in-dialogue #mission,.in-dialogue #danger-status{visibility:hidden}
+
+#portrait[data-illustrated=false]{image-rendering:pixelated}
+
+/* Conversas compactas: texto e opções são paginados pelo espaço real. */
+#dialogue{background:linear-gradient(0deg,#06050970,transparent 58%)}
+#dialogue .portrait{width:20%;height:56%;max-height:320px;right:2%;bottom:2%}
+#dialogue .dialogue-card{left:2%;right:auto;width:min(780px,76%);height:min(340px,82%);bottom:2%}
+#dialogue[data-phase=choices] .dialogue-card{height:min(390px,92%)}
+#dialogue .dialogue-main{inset:27% 6% 7%}
+#dialogue .dialogue-scroll{overflow:hidden;padding:0;scrollbar-gutter:auto;display:flex;flex-direction:column;flex:1}
+#dialogue .dialogue-head{flex:none;margin:0 0 8px;padding:0}
+#dialogue #dialogue-text{font-size:18px;line-height:1.5;overflow-wrap:anywhere;flex:none}
+#dialogue #dialogue-text p{margin:0 0 8px}
+#dialogue #dialogue-title{font-size:12px;line-height:1.35}
+#dialogue #page-count{font-size:10px;white-space:nowrap}
+#dialogue #choices{flex:none;gap:2px;margin:4px 0 0}
+#dialogue .choice{font-size:15px;line-height:1.4;padding:7px 6px 7px 28px;gap:7px;overflow-wrap:anywhere}
+#dialogue .choice::before{top:9px;width:14px;height:16px}
+#dialogue .choice small{font-size:12px;line-height:1.4}
+#dialogue .dialogue-foot{flex:none;flex-wrap:nowrap;gap:12px;min-height:36px;margin:4px 0 0;padding:0}
+#dialogue .dialogue-foot .plain{font-size:10px;min-height:36px;white-space:nowrap}
+#dialogue #dialogue-note{font-size:9px;line-height:1.4;letter-spacing:0;max-width:none;margin-left:auto}
+#dialogue #choice-pager{display:flex;justify-content:space-between;flex:none;gap:12px;margin-top:auto}
+#dialogue #choice-pager .plain{font:400 11px/1.3 var(--dialogue-font);min-height:36px;padding:3px 0;color:var(--dialogue-text)}
+#dialogue #speaker{font-size:18px}
+@media(max-width:700px){
+ #dialogue .dialogue-card{left:2%;width:96%;height:min(340px,68%);bottom:2%}
+ #dialogue[data-phase=choices] .dialogue-card{height:min(390px,90%)}
+ #dialogue .portrait{width:26%;height:28%;max-height:180px;bottom:calc(min(340px,68%) - 5px);right:3%}
+ #dialogue[data-phase=choices] .portrait{bottom:calc(min(390px,90%) - 5px);height:20%;max-height:140px}
+ #dialogue .dialogue-main{inset:27% 7% 7%}
+ #dialogue #dialogue-text{font-size:16px;line-height:1.5}
+ #dialogue .choice{font-size:15px;min-height:44px;padding-left:25px}
+ #dialogue .dialogue-foot{gap:8px;min-height:44px}
+ #dialogue .dialogue-foot .plain{min-height:44px;font-size:9px}
+ #dialogue #dialogue-note{order:0;flex-basis:auto;font-size:8px}
+ #dialogue #dialogue-extra{position:absolute;right:0;top:-30%;margin:0;min-height:44px;font-size:10px}
+ #dialogue #choice-pager .plain{min-height:44px}
+ #dialogue #speaker{font-size:16px}
+}
+html.is-fullscreen body.in-dialogue .game-top,html.is-fullscreen body.in-dialogue .game-bottom,html.is-fullscreen body.in-dialogue #touch-controls{display:none}

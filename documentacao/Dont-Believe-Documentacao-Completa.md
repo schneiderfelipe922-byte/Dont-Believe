@@ -1,3 +1,5 @@
+> Registro anterior à expansão de 09/10/2026. O guia atual está em ../sobre-o-jogo.md e os documentos canônicos de continuidade são ../historia.md, ../roteiro.md e ../cenas.md. Relações numéricas e marcadores automáticos descritos neste arquivo foram substituídos pelo diário de Kali e por orientação solicitada.
+
 > Atualização de 25/09/2026: vigia com os novos sprites fornecidos; gata Mel no dormitório com interação de carinho; mapa reestruturado e portas físicas com estado salvo. O atlas ativo agora é `assets/sprites-e-idles/sprites.png` para os oito personagens, e `assets/sprites-e-idles/sprites.zip` reúne os originais atuais. Consulte `LEIA-ME.md` para a estrutura e os testes atuais. As descrições históricas abaixo sobre atlas individuais e exportações antigas foram superadas.
 
 # DON’T BELIEVE — O Obelisco

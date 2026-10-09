@@ -80,6 +80,19 @@ Representa a autoridade institucional da Actras no confronto do roteiro. A escri
 
 ## Continuidade visual
 
-O atlas `assets/sprites-e-idles/sprites.png` é a referência dos personagens: Mira tem cabelo preto e blusa clara; Eron tem cabelo roxo e roupa escura; Kali tem cabelo loiro, chapéu verde e túnica verde; Noah tem cabelo loiro e camisa azul-clara; os vigias usam mantos pretos; Mel é branca.
+O atlas `assets/sprites-e-idles/sprites.png` é a referência dos personagens: Mira tem cabelo preto e blusa clara; Eron tem cabelo roxo e roupa escura; Kali é baixo, tem cabelo longo vermelho, óculos de cantos arredondados, camiseta preta desbotada sobre manga longa branca suja, calça preta larga rasgada e tênis branco; Noah tem cabelo loiro e camisa azul-clara; Tomas tem cabelo longo preto, óculos arredondados, moletom branco sujo e calça preta rasgada; os vigias usam mantos pretos; o líder tem detalhes dourados e bengala de ametista; Daty é baixa, com cabelo castanho ondulado, sobretudo branco com detalhes pretos e calça azul-clara; Inauri é alto, com pouco cabelo, camisa azul-escura e calça branca; Mel é branca.
 
 A prancha `assets/finais/telas-finais-personagens-mel.png` reúne as seis telas conceituais atualizadas, com essas roupas e Mel nos dois finais indicados. O jogo exibe os seis recortes dessa prancha nas telas de final. Os títulos, textos de consequência e botões continuam sendo elementos funcionais da interface.
+
+
+## Poses dos retratos de conversa
+
+As ilustrações em `assets/dialogos/retratos` mantêm essas aparências e usam tinta e lápis no estilo da referência de 05/10/2026. Kali segura a manga oposta, atento; Noah faz um gesto discreto de explicação; Mira mantém as mãos unidas e os ombros recolhidos; Eron segura o braço e olha de modo cabisbaixo; Tomas mantém uma mão perto do peito e outra no bolso; o vigia cruza os braços; o líder apoia as mãos na bengala. Daty leva uma mão ao peito; Inauri segura o antebraço. Os gestos dos pais sugerem acolhimento e presença firme, sem acrescentar acontecimentos ao roteiro. A postura neutra de Kali permite as diferentes decisões do jogador.
+
+## Expansão — 09/10/2026
+
+As mudanças aparecem nas falas e em compromissos cumpridos, sem pontuação social visível. Mira ganha tranquilidade e participação; seu resgate sempre precede falas genéricas. Eron compartilha a lembrança da partida e ensina o sinal de Tomas depois de ser protegido ou receber a carta. Resgate, transferência e denúncia têm prioridade sobre aproximação genérica.
+
+Noah lembra recusas por assunto: uma o torna insistente; recusas distintas tornam sua voz hostil. Repetir o mesmo assunto não duplica a lembrança. Essa pressão nova não cria denúncia automática, e confrontá-lo mantém a possibilidade de exigir reparação concreta. O trinco precisa ser aberto diante de Kali.
+
+A requisição pode ser compartilhada com Eron ou Noah sem revelar Mira. Ambos lembram o documento recebido. A fonte protegida e os pedidos concluídos permanecem no salvamento.

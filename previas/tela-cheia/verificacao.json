@@ -1,0 +1,19 @@
+{
+  "errors": [],
+  "checks": [
+    "API nativa por clique",
+    "F entra e sai",
+    "saída externa atualiza botão",
+    "caderno preservado ao sair",
+    "foto atualizada e reaberta em Objetos",
+    "modo expandido sem API",
+    "pedido nativo recusado usa modo expandido",
+    "Esc sai antes de fechar consulta",
+    "layout em computador, celular e horizontal"
+  ],
+  "viewports": [
+    "1280x900",
+    "390x844",
+    "844x390"
+  ]
+}

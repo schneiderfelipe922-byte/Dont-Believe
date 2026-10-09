@@ -24,3 +24,8 @@ Sprites atuais: os nove personagens usam os arquivos finais de sprites-novos.
 Kali, Noah, Mira, Eron, Tomas, vigia e líder têm seis quadros de caminhada em quatro direções.
 Daty e Inauri têm somente idles. As estaturas são 40, 46 e 54 pixels.
 Prévia: previas/personagens-atualizados.png.
+
+Diálogos ilustrados: assets/dialogos/retratos/ contém nove retratos em pose idle.
+A moldura muda de cor por personagem; falas e nomes brancos, escolha selecionada roxa.
+Nos diálogos, setas escolhem; Enter, E e Espaço confirmam; números, clique e toque também funcionam.
+Abra previas/dialogos/retratos.html para ver todos os retratos novos.

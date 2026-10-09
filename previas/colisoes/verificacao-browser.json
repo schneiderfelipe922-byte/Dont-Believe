@@ -1,0 +1,49 @@
+{
+  "errors": [],
+  "endings": [
+    {
+      "id": "voz",
+      "title": "A Voz",
+      "steps": 37
+    },
+    {
+      "id": "luz",
+      "title": "A Luz",
+      "steps": 37
+    },
+    {
+      "id": "sobrevivente",
+      "title": "Sobrevivente",
+      "steps": 35
+    },
+    {
+      "id": "traicao",
+      "title": "Traição",
+      "steps": 23
+    },
+    {
+      "id": "isolamento",
+      "title": "Isolamento",
+      "steps": 27
+    },
+    {
+      "id": "captura",
+      "title": "Sob Vigilância",
+      "steps": 32
+    }
+  ],
+  "collisionProbes": [
+    "janela-dormitorio",
+    "cadeira-dormitorio",
+    "mesa-sala",
+    "obelisco"
+  ],
+  "doors": [
+    "cell",
+    "archive"
+  ],
+  "viewports": [
+    "1440x1000",
+    "390x844"
+  ]
+}

@@ -34,12 +34,12 @@ function perform(s,op,id,world){
  const actual=current(q.who,s);let text='',changes=[],cost=0;
  if(op==='accept'){
   if(actual?.id!==q.id||s.errands[q.id])return {state:s,error:'Este pedido já foi registrado ou ainda não foi liberado.'};
-  next.errands[q.id]='active';text='Pedido anotado: '+q.title+'. Você pode acompanhar os passos em Tarefas.';
+  next.errands[q.id]='active';text='Pedido anotado: '+q.title+'. Você pode acompanhar os passos em Pedidos, no caderno.';
  }else if(op==='collect'){
   const item=items[id];if(!item||s.errands[q.id]!=='active'||s.inventory.includes(id))return {state:s,error:'Este item não está disponível.'};
   const lock=itemLock(item,s,world);if(lock)return {state:s,error:lock};
   if(!M.canInteract(world.player,item,s,world))return {state:s,error:'Aproxime-se do objeto para recolhê-lo.'};
-  next.inventory.push(id);text=item.type==='chave'?'Você recolhe '+id+'.':'Você guarda '+id+' no inventário. Abra a mochila para ler ou examinar.';cost=1;
+  next.inventory.push(id);text=item.type==='chave'?'Você recolhe '+id+'.':'Você guarda '+id+' no caderno. Abra Objetos para ler ou examinar.';cost=1;
  }else if(op==='deliver'){
   if(s.errands[q.id]!=='active'||!ready(q,s))return {state:s,error:'Você ainda não recolheu todos os itens deste pedido.'};
   if(!(q.who==='guard'?[actorPoint('guard',s,world),M.positions.examiner,...(s.scene==='confinamento'?[M.positions.guardHall]:[])]:[actorPoint(q.who,s,world)]).some(p=>M.canInteract(world.player,p,s,world,62)))return {state:s,error:'Aproxime-se de '+names[q.who]+' para entregar.'};

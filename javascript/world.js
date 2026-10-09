@@ -54,6 +54,8 @@ const night=new Set(['bilhete','eron','explorar','oferta','limiar','questionar',
 function target(state,world){if(state.scene==='subsolo'&&world.tunnelOpen)return {...positions.relic,id:'relic',name:'Símbolo do Luzitruismo',objective:'Recupere o símbolo nos arquivos subterrâneos.'};const a=stages[state.scene];return a?{...positions[a[0]],id:a[0],name:a[2],objective:a[1]}:null;}
 function tile(x,y){return walkAreas.some(a=>x>=a.x&&x<a.x+a.w&&y>=a.y&&y<a.y+a.h)?2:0;}
 function overlaps(p,x,y,r=7){return x+r>p.x&&x-r<p.x+p.w&&y+r>p.y&&y-r<p.y+p.h;}
+// A folha fechada ocupa toda a sua altura visível, não só o limiar de 8 px.
+function doorBounds(d){return {x:d.x,y:d.art?.[1]??d.y,w:d.w,h:d.y+d.h-(d.art?.[1]??d.y)};}
 function doorLocked(door,state,world){
  if(!door.lock)return false;
  if(door.lock==='exit')return !state?.flags?.latchOpen&&!['portao','disfarce'].includes(state?.scene)&&!state?.flags?.escaped;
@@ -65,17 +67,17 @@ function doorOpen(door,state,world){
  return world?.doors?.[door.id]??!!door.lock;
 }
 function walkable(x,y,r=7,state=null,world=null){
- if(!Number.isFinite(x)||!Number.isFinite(y))return false;
- for(const [dx,dy] of [[-r,-r],[r,-r],[-r,r],[r,r]])if(!tile(x+dx,y+dy))return false;
- if(sceneryProps.some(p=>overlaps(p,x,y,r))&&!entranceAreas.some(e=>x-r>=e.x&&x+r<=e.x+e.w&&y>=e.y-r&&y<=e.y+e.h+r))return false;
- return !world||!doors.some(d=>!doorOpen(d,state,world)&&overlaps(d,x,y,r));
+ if(!Number.isFinite(x)||!Number.isFinite(y)||!Number.isFinite(r)||r<0)return false;
+ for(const dx of [-r,0,r])for(const dy of [-r,0,r])if(!tile(x+dx,y+dy))return false;
+ if(sceneryProps.some(p=>overlaps(p,x,y,r)))return false;
+ return !world||!doors.some(d=>!doorOpen(d,state,world)&&overlaps(doorBounds(d),x,y,r));
 }
 function place(p){
  if(!reachableFloor){
-  const step=T/2,seed={x:306,y:246},queue=[seed];reachableFloor=new Map([[`${seed.x},${seed.y}`,seed]]);
+  const step=T/4,seed={x:303,y:249},queue=[seed];reachableFloor=new Map([[`${seed.x},${seed.y}`,seed]]);
   for(let i=0;i<queue.length;i++){const a=queue[i];for(const [dx,dy]of [[step,0],[-step,0],[0,step],[0,-step]]){const b={x:a.x+dx,y:a.y+dy},key=`${b.x},${b.y}`;if(!reachableFloor.has(key)&&walkable(b.x,b.y,7)&&clearWalk(a,b,null,null)){reachableFloor.set(key,b);queue.push(b);}}}
  }
- const center={x:(Math.floor(p.x/(T/2))+.5)*(T/2),y:(Math.floor(p.y/(T/2))+.5)*(T/2)};
+ const center={x:(Math.floor(p.x/(T/4))+.5)*(T/4),y:(Math.floor(p.y/(T/4))+.5)*(T/4)};
  if(walkable(p.x,p.y,7)&&reachableFloor.has(`${center.x},${center.y}`)&&clearWalk(p,center,null,null))return {...p};
  const room=rooms.find(r=>p.x>=r.x*T&&p.x<(r.x+r.w)*T&&p.y>=r.y*T&&p.y<(r.y+r.h)*T);
 
@@ -84,6 +86,7 @@ function place(p){
  return {...p,...best};
 }
 function move(player,dx,dy,state=null,world=null){
+ if(!Number.isFinite(dx)||!Number.isFinite(dy))return;
  // Subpassos impedem atravessar paredes/portas em movimentos grandes.
  const count=Math.ceil(Math.max(Math.abs(dx),Math.abs(dy))/4)||1;
  for(let i=0;i<count;i++){
@@ -97,7 +100,7 @@ function visible(a,b,state=null,world=null,ignoreDoor=null){
  for(let i=1;i<n;i++){
   const x=a.x+(b.x-a.x)*i/n,y=a.y+(b.y-a.y)*i/n;
   if(!walkable(x,y,1))return false;
-  if(world&&doors.some(d=>d.id!==ignoreDoor&&!doorOpen(d,state,world)&&overlaps(d,x,y,1)))return false;
+  if(world&&doors.some(d=>d.id!==ignoreDoor&&!doorOpen(d,state,world)&&overlaps(doorBounds(d),x,y,1)))return false;
  }
  return true;
 }
@@ -108,21 +111,27 @@ function toggleDoor(id,state,world,actors=[]){
  if(!door)return {changed:false,text:'Porta não encontrada.'};
  if(doorLocked(door,state,world))return {changed:false,text:door.lock==='cellOpen'?'A grade está trancada. Procure uma chave, um arame ou uma distração.':door.lock==='tunnel'?'Os arquivos estão trancados. O mecanismo do altar abre a passagem.':'O portão está trancado. Prepare sua fuga ou peça a Noah para soltar o trinco.'};
  const open=doorOpen(door,state,world);
- if(open&&[world.player,...actors].some(p=>overlaps(door,p.x,p.y,9)))return {changed:false,text:'Afaste-se da passagem para fechar a porta.'};
+ if(open&&[world.player,...actors].some(p=>overlaps(doorBounds(door),p.x,p.y,9)))return {changed:false,text:'Afaste-se da passagem para fechar a porta.'};
  world.doors=world.doors||{};world.doors[id]=!open;
  return {changed:true,text:door.name+(open?' fechada.':' aberta.')};
 }
 function path(start,end,state=null,world=null,options={}){
- const step=T/2,routePoint=(x,y)=>({x:x*step,y:y*step}),cell=p=>[Math.floor(p.x/step),Math.floor(p.y/step)], [sx,sy]=cell(start),[ex,ey]=cell(end),queue=[[sx,sy]],seen=new Map([[`${sx},${sy}`,null]]);
+ if(!start||!end||!walkable(start.x,start.y,7,state,world)||!walkable(end.x,end.y,7,state,world))return [];
+ // A malha de 6 px encontra os corredores estreitos junto às bancadas.
+ const step=T/4,routePoint=(x,y)=>({x:x*step,y:y*step}),cell=p=>[Math.floor(p.x/step),Math.floor(p.y/step)], [sx,sy]=cell(start),[ex,ey]=cell(end),queue=[],seen=new Map();
  // Rotas atravessam portas que podem ser abertas com E, mas nunca trancas.
  const routeWorld=world&&options.openDoors!==false?{...world,doors:Object.fromEntries(doors.map(d=>[d.id,true]))}:world;
+ for(const [dx,dy]of [[0,0],[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[-1,1],[1,-1],[1,1]]){
+  const x=sx+dx,y=sy+dy,p=routePoint(x+.5,y+.5);
+  if(walkable(p.x,p.y,7,state,routeWorld)&&clearWalk(start,p,state,routeWorld)){queue.push([x,y]);seen.set(`${x},${y}`,null);}
+ }
  let found=null;
  for(let i=0;i<queue.length;i++){
   const [x,y]=queue[i],p=routePoint(x+.5,y+.5);
-  if(Math.abs(x-ex)+Math.abs(y-ey)<=(options.exact?0:1)&&visible(p,end,state,routeWorld)){found=[x,y];break;}
+  if(Math.abs(x-ex)+Math.abs(y-ey)<=(options.exact?0:1)&&clearWalk(p,end,state,routeWorld)){found=[x,y];break;}
   for(const [dx,dy]of [[1,0],[-1,0],[0,1],[0,-1]]){
    const nx=x+dx,ny=y+dy,k=`${nx},${ny}`,next=routePoint(nx+.5,ny+.5);
-   if(!seen.has(k)&&walkable(next.x,next.y,7,state,routeWorld)&&visible(p,next,state,routeWorld)&&(!options.exact||clearWalk(p,next,state,routeWorld))){
+   if(!seen.has(k)&&walkable(next.x,next.y,7,state,routeWorld)&&clearWalk(p,next,state,routeWorld)){
     seen.set(k,[x,y]);queue.push([nx,ny]);
    }
   }
@@ -130,7 +139,7 @@ function path(start,end,state=null,world=null,options={}){
  if(!found)return [];
  const result=[];while(found){result.unshift(routePoint(found[0]+.5,found[1]+.5));found=seen.get(found.join(','));}return result;
 }
-function blocked(state,world,x,y){const d=doors.find(d=>!doorOpen(d,state,world)&&overlaps(d,x,y));return d?d.name+' fechada. Use E perto da porta.':null;}
+function blocked(state,world,x,y){const d=doors.find(d=>!doorOpen(d,state,world)&&overlaps(doorBounds(d),x,y));return d?d.name+' fechada. Use E perto da porta.':null;}
 function normalizeWorld(world,state){
  if(world.mapVersion!=='illustrated-v1'){
   Object.assign(world.player,remap(world.player));if(world.mel)Object.assign(world.mel,remap(world.mel));
@@ -224,5 +233,5 @@ function guards(){return [
  {x:115,y:674,a:115,b:690,axis:'x',dir:-1,speed:26}
  ].map(g=>({...g,...place(g)}));}
 
-const api={remap,authoredPoint,walkAreas,place,sceneryProps,entranceAreas,melPoint,normalizeMel,updateMel,doors,passages,doorLocked,doorOpen,doorPoints,toggleDoor,canInteract,normalizeWorld,updateGuard,T,W,H,rooms,grid,props,lights,positions,stages,night,target,tile,walkable,move,roomAt,visible,path,blocked,fresh,guards};root.GameWorld=api;if(typeof module!=='undefined')module.exports=api;
+const api={remap,authoredPoint,walkAreas,place,sceneryProps,entranceAreas,melPoint,normalizeMel,updateMel,doors,doorBounds,passages,doorLocked,doorOpen,doorPoints,toggleDoor,canInteract,normalizeWorld,updateGuard,T,W,H,rooms,grid,props,lights,positions,stages,night,target,tile,walkable,move,roomAt,visible,path,blocked,fresh,guards};root.GameWorld=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

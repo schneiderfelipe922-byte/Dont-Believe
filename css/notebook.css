@@ -1,0 +1,57 @@
+@font-face{font-family:Kalam;src:url('../assets/fontes/Kalam-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:Kalam;src:url('../assets/fontes/Kalam-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
+:root{--notebook-ink:#30291f;--notebook-muted:#62513f;--notebook-paper:#eee0c4;--notebook-rule:#8b6f4740;--notebook-accent:#753b30}
+#modal.notebook{width:min(1180px,calc(100vw - 24px));height:min(786px,calc(100dvh - 24px));max-width:none;max-height:none;padding:0;border:0;background:transparent;box-shadow:none;overflow:hidden;color:var(--notebook-ink);font-family:Kalam,Georgia,serif}
+.notebook::backdrop{background:#050809e8}
+#modal.notebook .modal-top{position:absolute;right:4.5%;top:5.8%;margin:0;z-index:4}
+#modal.notebook .modal-top>.eyebrow{display:none}
+#modal.notebook #close-modal{width:44px;height:44px;padding:0;background:#f5e8cf;border:1px solid #6b523d60;color:var(--notebook-ink);font:28px Georgia,serif}
+#modal.notebook #modal-content{height:100%;margin:0}
+.notebook-spread{height:100%;display:grid;grid-template-columns:1fr 1fr;gap:6.3%;padding:8% 7% 7%;background:var(--notebook-paper) url('../assets/diario/caderno-kali.png') center/100% 100% no-repeat;border-radius:3px}
+.notebook[data-art=ready] .notebook-spread{background-color:transparent}
+.notebook[data-art=missing] .notebook-spread{background-image:none;border:8px solid #3e3027}
+.notebook-index,.notebook-page{min-width:0;min-height:0;display:flex;flex-direction:column}
+.notebook-index{padding:0 4% 0 0;overflow:auto;scrollbar-color:#95795e #e5d3b2}
+#modal.notebook h2{font:700 clamp(28px,3.5vw,42px)/1.2 Kalam,Georgia,serif;margin:10px 0 18px;color:var(--notebook-ink)}
+#modal.notebook h3{font:700 28px/1.3 Kalam,Georgia,serif;color:var(--notebook-ink);margin:0 48px 18px 0;padding-bottom:12px;border-bottom:1px solid var(--notebook-rule)}
+#modal.notebook .notebook-chapter{font:400 17px/1.4 Kalam,Georgia,serif;letter-spacing:.3px;color:var(--notebook-muted)}
+#modal.notebook .notebook-intro{font:400 20px/1.6 Kalam,Georgia,serif;max-width:28ch;margin:0 0 24px;color:var(--notebook-ink)}
+.notebook-tabs{display:grid;gap:8px;margin:0 0 22px}
+#modal.notebook .notebook-tab{display:flex;justify-content:space-between;align-items:center;min-height:48px;font:400 22px/1.4 Kalam,Georgia,serif;padding:8px 12px;border:0;border-left:3px solid transparent;background:transparent;color:var(--notebook-ink);text-align:left}
+#modal.notebook .notebook-tab[aria-selected=true]{border-left-color:var(--notebook-accent);background:#753b300b;font-weight:700}
+#modal.notebook kbd{font:400 13px Kalam,Georgia,serif;color:var(--notebook-muted);border-color:#75604466;background:transparent}
+#modal.notebook .notebook-tab:hover,#modal.notebook .notebook-action:hover,#modal.notebook .notebook-map:hover{background:#753b3010;color:#682f25}
+#modal.notebook .notebook-map,#modal.notebook .notebook-action{min-height:44px;padding:7px 0;margin:4px 12px 4px 0;font:400 18px/1.45 Kalam,Georgia,serif;color:var(--notebook-accent);background:transparent;border:0;border-bottom:1px solid #753b3055;letter-spacing:0;text-align:left;white-space:normal}
+#modal.notebook .notebook-margin{font:400 18px/1.6 Kalam,Georgia,serif;color:var(--notebook-muted);margin:24px 0 0;max-width:28ch}
+.notebook-writing{flex:1;overflow:auto;min-height:0;padding-right:14px;overscroll-behavior:contain;scrollbar-color:#8b7052 #e5d3b2;scrollbar-width:thin;scrollbar-gutter:stable}
+#modal.notebook .notebook-entry{padding:0 0 18px;margin:0 0 20px;border-bottom:1px solid var(--notebook-rule);background:transparent;overflow-wrap:anywhere}
+#modal.notebook .notebook-entry h4,#modal.notebook .notebook-entry h5{font:700 22px/1.45 Kalam,Georgia,serif;color:var(--notebook-ink);margin:0 0 8px}
+#modal.notebook .notebook-entry p{font:400 20px/1.6 Kalam,Georgia,serif;margin:0 0 9px;color:var(--notebook-ink);letter-spacing:0}
+#modal.notebook .notebook-entry small{font:400 16px/1.5 Kalam,Georgia,serif;color:var(--notebook-muted)}
+#modal.notebook .notebook-divider,.notebook-requests>h4{font:700 24px/1.4 Kalam,Georgia,serif;color:var(--notebook-accent);margin:14px 0 20px}
+#modal.notebook :focus-visible{outline:2px dashed var(--notebook-accent);outline-offset:3px}
+.notebook-art-probe{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+#relationships{display:none!important}
+.game-top{padding-block:12px}
+#mission{display:none}body.has-tracking #mission{display:flex;max-width:min(460px,calc(100% - 24px));left:12px;right:auto;top:12px;bottom:auto;padding:9px 12px;pointer-events:none}
+body.has-tracking #mission #map-btn{pointer-events:auto}#mission #quest-progress{display:none}
+.game-bottom .tools{gap:14px}.game-bottom .tools button{min-height:44px}
+@media(max-width:700px){
+ #modal.notebook{width:calc(100vw - 10px);height:calc(100dvh - 10px)}
+ .notebook-spread{display:flex;flex-direction:column;gap:0;padding:64px 10% 70px;background-size:200% 100%;background-position:right center}
+ .notebook-index{flex:none;padding:0;overflow:visible}
+ #modal.notebook h2{font-size:25px;margin:0 45px 8px 0}
+ #modal.notebook .notebook-chapter,#modal.notebook .notebook-intro,#modal.notebook .notebook-margin{display:none}
+ .notebook-tabs{display:flex;gap:3px;margin:4px 0 8px;border-bottom:1px solid var(--notebook-rule)}
+ #modal.notebook .notebook-tab{flex:1;justify-content:center;font-size:16px;padding:7px 2px;border-left:0;border-bottom:2px solid transparent;min-height:44px}
+ #modal.notebook .notebook-tab[aria-selected=true]{border-bottom-color:var(--notebook-accent)}
+ #modal.notebook .notebook-tab kbd{display:none}
+ #modal.notebook .notebook-map{font-size:16px;margin:0 12px 8px 0;padding:2px 0;min-height:44px}
+ .notebook-page{flex:1}#modal.notebook h3{font-size:22px;margin:2px 0 10px;padding-bottom:6px}
+ #modal.notebook .notebook-entry p{font-size:18px;line-height:1.6}#modal.notebook .notebook-entry h4,#modal.notebook .notebook-entry h5{font-size:20px}
+ .notebook-writing{padding-right:8px}#modal.notebook .modal-top{top:4%;right:9%}
+ #modal.notebook .notebook-action{font-size:17px}body.has-tracking #mission{top:8px;max-width:calc(100% - 16px)}
+ .tools #save-status{display:none}.tools{width:100%;justify-content:space-between}
+}
+@media(max-height:520px) and (min-width:701px){.notebook-spread{padding:5% 7%}#modal.notebook h2{font-size:28px}#modal.notebook .notebook-intro{font-size:18px;margin-bottom:8px}#modal.notebook .notebook-margin{display:none}.notebook-tabs{gap:0;margin-bottom:8px}}
+@media(forced-colors:active){.notebook-spread{background:Canvas!important;color:CanvasText;border:2px solid CanvasText}#modal.notebook *{color:CanvasText!important}#modal.notebook .notebook-tab[aria-selected=true]{border-color:Highlight}}

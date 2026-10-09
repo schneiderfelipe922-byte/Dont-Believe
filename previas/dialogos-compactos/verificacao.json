@@ -1,0 +1,35 @@
+{
+  "errors": [],
+  "checks": [
+    {
+      "name": "computador",
+      "pages": 6,
+      "allText": true,
+      "scroll": false
+    },
+    {
+      "name": "celular",
+      "pages": 10,
+      "allText": true,
+      "scroll": false
+    },
+    {
+      "name": "tela-cheia",
+      "pages": 6,
+      "allText": true,
+      "scroll": false
+    },
+    {
+      "name": "horizontal",
+      "pages": 10,
+      "allText": true,
+      "scroll": false
+    }
+  ],
+  "options": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ]
+}
