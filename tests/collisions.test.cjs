@@ -43,3 +43,23 @@ test('porta fechada bloqueia toda a folha visível pelo norte, sul e laterais',(
 test('janelas laterais e bordas inferiores das paredes não viram piso',()=>{
  for(const [name,x,y]of [['janela esquerda do dormitório',119,149],['janela direita do dormitório',516,146],['parede da leitura',653,148],['parede lateral da cela',1055,178],['mureta do corredor',600,400],['parede lateral do salão',104,660],['parede inferior do salão',400,862]])assert(!M.walkable(x,y,7),name);
 });
+test('contato com parede, móvel e porta não deixa uma folga dependente do passo',()=>{
+ const s=G.initial(),w=M.fresh();s.flags.cellOpen=true;w.doors.cell=false;
+ const probes=[
+  {x:300,y:155,dx:0,dy:-40,axis:'y',edge:140},
+  {x:160,y:200,dx:-40,dy:0,axis:'x',edge:145},
+  {x:300,y:155,dx:40,dy:0,axis:'x',edge:309},
+  {x:1199,y:300,dx:0,dy:-80,axis:'y',edge:269}
+ ];
+ for(const probe of probes)for(const frames of [1,7,30]){
+  const p={x:probe.x,y:probe.y};
+  for(let i=0;i<frames;i++)M.move(p,probe.dx/frames,probe.dy/frames,s,w);
+  assert(M.walkable(p.x,p.y,7,s,w));
+  assert(Math.abs(p[probe.axis]-probe.edge)<.002,JSON.stringify({probe,frames,p}));
+ }
+});
+test('andar na diagonal desliza junto à parede sem prender nem atravessar os pés',()=>{
+ const s=G.initial(),w=M.fresh(),p={x:240,y:155};
+ M.move(p,40,-40,s,w);
+ assert.equal(p.x,280);assert(Math.abs(p.y-140)<.002);assert(M.walkable(p.x,p.y,7,s,w));
+});

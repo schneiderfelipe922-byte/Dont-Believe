@@ -58,9 +58,9 @@ Reservados, objetivos e questionadores. Observam movimentos, conferem permissõe
 
 ## Mel
 
-Gata branca que circula pelo orfanato. Sua presença oferece um pequeno momento de tranquilidade. Não fala nem participa de diálogos humanos; sua personalidade é sugerida pelo passeio, pelas pausas e pela aceitação do carinho.
+Gata branca de pelagem volumosa e olhos verde-claros que circula pelo orfanato. Sua presença oferece um pequeno momento de tranquilidade. Não fala nem participa de diálogos humanos; sua personalidade é sugerida pelo passeio, pelas pausas e pela aceitação do carinho.
 
-**Interação:** Kali pode fazer carinho. Não exige animação própria nem recompensa de relação.
+**Interação:** Kali pode fazer carinho. O retrato a mostra deitada, ligeiramente esticada, com a cauda curvada. Não oferece recompensa de relação.
 
 **Texto:** “Você faz carinho em Mel. Ela não responde, mas gosta de você.”
 

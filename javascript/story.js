@@ -10,10 +10,10 @@ const scenes = {
     "place": "Estrada • anos atrás",
     "title": "A marca",
     "text": [
-      "A chuva fazia os faróis atrás do carro parecerem uma única luz. Kali segurava o símbolo do Luzitruismo. Sua mãe fechou os dedos dele sobre o metal.",
+      "Naquela noite, a família deixou a casa perto do bosque antes que a Actras a encontrasse. No banco traseiro, Kali segurava o símbolo do Luzitruismo. Sua mãe fechou os dedos dele sobre o metal.",
       "— Se alguém perguntar no que você acredita, a resposta continua sendo sua. Mesmo se precisar guardá-la por um tempo.",
       "O pai olhou o retrovisor. Não respondeu. A batida veio de lado. O vidro, o cinto apertado, a terra entrando pela janela: Kali lembraria disso em pedaços.",
-      "— O menino está vivo. Levem para OldHood.\nA voz não perguntou pelos pais. Kali tentou alcançar a mão da mãe. Alguém o puxou pelo casaco.",
+      "Do lado de fora, Kali voltou ao carro em chamas. Chamou pelos pais. Nenhum dos dois se moveu. O calor o fez recuar.\n— O menino está vivo. Levem para OldHood.\nAlguém o puxou pelo casaco.",
       "O cordão arrebentou. Um homem recolheu o símbolo da lama, embrulhou-o num pano e anotou alguma coisa. Foi a primeira vez que Kali viu uma lembrança de sua família virar um item numa lista."
     ],
     "choices": [
@@ -34,10 +34,10 @@ const scenes = {
     "place": "Dormitório • dia 01",
     "title": "O silêncio tem olhos",
     "text": [
-      "Anos depois, o primeiro sino desperta Kali antes da luz. Aos quatorze anos, ele reconhece o vigia pelo arrastar de uma sola no corredor. Hoje, os passos param cedo demais.",
-      "— Vocês também ouviram alguém sair durante a noite?\nNoah ergue os olhos para a câmera. Eron prende a respiração. Mira passa um dedo pelo pó da mesa, apagando uma marca que Kali não chegou a ler.",
-      "Na chamada da véspera, Tomas respondera pelo dormitório ao lado. Depois do segundo sino, ninguém mais o ouviu.",
-      "A fechadura gira. O vigia olha primeiro para Noah, depois para Kali.\n— Existe algum problema?\nNinguém responde. O adulto deixa a porta aberta, como se esperasse receber um nome."
+      "Aos quatorze anos, Kali conhece o passo de cada vigia. Hoje, um deles para antes do primeiro sino.",
+      "— Alguém ouviu a porta ontem à noite? — pergunta Kali. Noah olha para a câmera. Eron prende a respiração.",
+      "Na chamada de ontem, Tomas respondeu. Depois do segundo sino, ninguém mais o ouviu.",
+      "A fechadura gira. Mira apaga com o dedo um risco na mesa. O vigia olha para Kali. — Algum problema?"
     ],
     "choices": [
       {
@@ -61,7 +61,7 @@ const scenes = {
         "requires": null
       },
       {
-        "label": "“Não é nada importante.”",
+        "label": "“Ouvi passos. Não vi ninguém.”",
         "to": "altar",
         "effect": {
           "mira": 1

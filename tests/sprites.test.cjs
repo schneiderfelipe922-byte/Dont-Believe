@@ -16,7 +16,11 @@ test('vigia tem caminhada em quatro direções e Mel tem pose parada própria',(
  for(const dir of ['down','left','right','up']){
   assert.equal(data.guard.directions[dir].frames.length,6);
   assert.notDeepEqual(sprites.resolve('guard',dir,.01,images).rect,sprites.resolve('guard',dir,.6,images).rect);
-  assert.deepEqual(sprites.resolve('mel',dir,0,images,100).rect,data.mel.idles[dir].frames[0]);
+  assert.equal(data.mel.idles[dir].frames.length,4);
+  assert.equal(data.mel.directions[dir].frames.length,6);
+  assert.deepEqual(sprites.resolve('mel',dir,0,images,0).rect,data.mel.idles[dir].frames[0]);
+  assert.deepEqual(sprites.resolve('mel',dir,0,images,.5).rect,data.mel.idles[dir].frames[1]);
+  assert.deepEqual(data.mel.idles[dir].anchor,data.mel.directions[dir].anchor);
  }
 });
 test('todos os retratos mantêm a pose parada frontal independentemente do tempo',()=>{
@@ -93,7 +97,7 @@ test('novo Kali anima quatro idles e seis passos em cada direção mantendo 40 p
   assert.equal(sprites.resolve('kali',dir,0,images).track,idle);
  }
 });
-test('o jogo usa as nove fontes finais, suas estaturas e suas durações',()=>{
+test('o jogo usa as dez fontes finais, suas estaturas e suas durações',()=>{
  const manifest=JSON.parse(fs.readFileSync(path.join(__dirname,'../assets/sprites-e-idles/sprites-novos/manifest.json'),'utf8'));
  assert.equal(manifest.integrado_ao_jogo,true);
  const aliases={vigia:'guard',lider:'leader'},dirs=['down','left','right','up'];
@@ -105,6 +109,23 @@ test('o jogo usa as nove fontes finais, suas estaturas e suas durações',()=>{
    assert.deepEqual(spec.idles[dir].durations,source.idle.duracoes_ms);
    if(source.walk)assert.deepEqual(spec.directions[dir].durations,source.walk.duracoes_ms);
    else assert.equal(spec.idleOnly,true);
+  }
+ }
+});
+
+test('Mel usa repouso baixo animado e conserva a escala e a base ao caminhar',()=>{
+ assert.equal(data.mel.idleAnimated,true);
+ assert.equal(data.mel.sourcePackage,'sprites-novos/mel');
+ assert.equal(data.mel.sourceHeight,26);
+ const images={sprites:{width,height}};
+ for(const dir of ['down','left','right','up']){
+  const idle=data.mel.idles[dir],walk=data.mel.directions[dir];
+  assert.deepEqual(idle.durations,[450,250,450,250]);assert.deepEqual(walk.durations,[160,160,160,160,160,160]);
+  const boxes=[];
+  for(const [step,time]of [[0,0],[0,.5],[.01,0],[.5,0]]){
+   const c={save(){},restore(){},drawImage(...args){boxes.push(args);}};
+   const f=sprites.resolve('mel',dir,step,images,time);sprites.draw(c,100,200,'mel',dir,step,time,images);
+   const b=boxes.at(-1);assert.equal(b[6]+f.track.anchor[1],200);assert.equal(b[7],f.rect[2]);assert.equal(b[8],f.rect[3]);
   }
  }
 });

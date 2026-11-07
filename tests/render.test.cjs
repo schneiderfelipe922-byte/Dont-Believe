@@ -15,15 +15,11 @@ test('o renderer do cenário aplica as estaturas do atlas e anima idles sem desl
   if(spec.idleAnimated)assert.notDeepEqual(calls[0].slice(1,5),calls[1].slice(1,5),kind);
  }
 });
-test('arte de reserva também mantém baixos, medianos e altos no cenário',()=>{
- const renderer=createRenderer(makeCanvas(960,640),M,makeCanvas,{});
- for(const kind of ['kali','mira','noah','eron','tomas','guard','leader']){
-  const calls=[],c={drawImage(...args){calls.push(args);}};renderer.sprite(c,100,200,kind,'down',0,0);
-  const args=calls[0],scale=data[kind].height/32;
-  assert.equal(args[7],32*scale);assert.equal(args[8],40*scale);assert(Math.abs(args[6]+36*scale-200)<=.5);
-  const scales=[],direct={save(){},restore(){},translate(){},scale(...args){scales.push(args);},fillRect(){}};
-  pixel.sprite(direct,100,200,kind);assert.deepEqual(scales[0],[scale,scale]);
- }
+test('falha ou carregamento do atlas não substitui os personagens por sprites antigos',()=>{
+ const renderer=createRenderer(makeCanvas(960,640),M,makeCanvas,{}),calls=[];
+ const c={drawImage(...args){calls.push(args);}};
+ for(const kind of Object.keys(data))assert.equal(renderer.sprite(c,100,200,kind,'down',0,0),false);
+ assert.deepEqual(calls,[]);
 });
 test('portas e móveis são desenhados entre personagens de acordo com a posição dos pés',()=>{
  const G=require('../javascript/story.js');require('../javascript/adventure.js');
@@ -42,4 +38,20 @@ test('portas e móveis são desenhados entre personagens de acordo com a posiç�
  Object.assign(w.player,{x:212,y:540});calls.length=0;renderer.draw(s,w,[],{minimap:false,reduced:true});
  const furniture=calls.findIndex(a=>a[0]===renderer.map&&a[1]===p.x&&a[2]===p.y&&a[3]===p.w);
  const frame=sprites.resolve('kali','down',0,art),actor=calls.findIndex(a=>a[0]===art.sprites&&a[1]===frame.rect[0]&&a[2]===frame.rect[1]);assert(furniture>actor);
+});
+
+test('cartas e fotografias no chão são desenhadas antes de Kali, mesmo no mesmo ponto',()=>{
+ const G=require('../javascript/story.js');require('../javascript/adventure.js');
+ const gradient={addColorStop(){}},calls=[],art={fullMap:{},sprites:{},pickups:{},bedside:{}};
+ const c=new Proxy({measureText:s=>({width:String(s).length*6}),createRadialGradient:()=>gradient,drawImage(...a){calls.push(a);}},{get:(o,k)=>k in o?o[k]:()=>{}});
+ const make=(width,height)=>({width,height,getContext:()=>c}),renderer=createRenderer(make(960,640),M,make,art),s=G.initial(),w=M.fresh();
+ const oldSocial=global.GameSocial,oldPhotos=global.GamePhotos;
+ global.GameSocial={points:()=>[{x:w.player.x,y:w.player.y,type:'bilhete',name:'Carta no chão'}]};
+ global.GamePhotos={points:()=>[{id:'family',photo:'family',x:w.player.x,y:w.player.y}]};
+ try{
+  calls.length=0;renderer.draw(s,w,[],{minimap:false,reduced:true});
+  const frame=sprites.resolve('kali','down',0,art),actor=calls.findIndex(a=>a[0]===art.sprites&&a[1]===frame.rect[0]&&a[2]===frame.rect[1]);
+  const props=calls.map((a,i)=>a[0]===art.pickups?i:-1).filter(i=>i>=0);
+  assert(props.length>=2);assert(actor>=0);assert(props.every(i=>i<actor),'objetos do chão nunca cobrem Kali');
+ }finally{global.GameSocial=oldSocial;global.GamePhotos=oldPhotos;}
 });

@@ -1,4 +1,4 @@
-"""Import the final character sheets, preserve Mel, and rebuild the runtime atlas."""
+"""Import the final character sheets, including Mel, and rebuild the runtime atlas."""
 from pathlib import Path
 from PIL import Image
 from zipfile import ZipFile, ZIP_DEFLATED
@@ -34,7 +34,7 @@ def import_final_sheets(files, manifest):
                 del files[old]
         width, height = spec['idle']['celula']
         entry = {'height': spec['altura'], 'animation': 'Walking',
-                 'stature': {40: 'short', 46: 'medium', 54: 'tall'}[spec['altura']],
+                 'stature': {26: 'pet', 40: 'short', 46: 'medium', 54: 'tall'}[spec['altura']],
                  'normalize_height': False, 'directions': list(DIRECTIONS),
                  'idle_frames': {}, 'idle_durations': spec['idle']['duracoes_ms'],
                  'walk_durations': {}, 'foot_anchor': [width / 2, height - 2],
@@ -98,7 +98,10 @@ def build():
                 boxes = [frame.getchannel('A').getbbox() for frame in images]
                 shared_box = (min(b[0] for b in boxes), min(b[1] for b in boxes),
                               max(b[2] for b in boxes), max(b[3] for b in boxes))
-                assert shared_box[3] - shared_box[1] == spec['height'], kind + ': changed stature'
+                if kind == 'mel':
+                    assert shared_box[3] - shared_box[1] <= spec['height'], 'Mel: oversized track'
+                else:
+                    assert shared_box[3] - shared_box[1] == spec['height'], kind + ': changed stature'
                 anchor = [spec['foot_anchor'][0] - shared_box[0],
                           spec['foot_anchor'][1] - shared_box[1]]
             if walking:
@@ -165,17 +168,20 @@ def build():
     readme = readme.replace('Não integrados automaticamente ao jogo.',
                             'Integrados ao jogo no atlas assets/sprites-e-idles/sprites.png.')
     (FINAL / 'LEIA-ME.txt').write_text(readme)
+    # A legacy distributable is optional; refresh all maintained source files when present.
     package = FINAL / 'todos-os-sprites.zip'
-    with ZipFile(package) as old_package:
-        package_files = {n: old_package.read(n) for n in old_package.namelist() if not n.endswith('/')}
-    for path in [FINAL / 'manifest.json', FINAL / 'LEIA-ME.txt']:
-        name = path.name
-        matches = [n for n in package_files if n == name or n.endswith('/' + name)]
-        assert len(matches) == 1, 'Ambiguous package file: ' + name
-        package_files[matches[0]] = path.read_bytes()
-    with ZipFile(package, 'w', compression=ZIP_DEFLATED, compresslevel=9) as out:
-        for name, content in package_files.items():
-            out.writestr(name, content)
+    if package.exists():
+        with ZipFile(package) as old_package:
+            package_files = {n: old_package.read(n) for n in old_package.namelist() if not n.endswith('/')}
+        for source in FINAL.rglob('*'):
+            if source.is_file() and source.suffix != '.zip':
+                relative = source.relative_to(FINAL).as_posix()
+                matches = [n for n in package_files if n == relative or n.endswith('/' + relative)]
+                assert len(matches) <= 1, 'Ambiguous package file: ' + relative
+                package_files[matches[0] if matches else relative] = source.read_bytes()
+        with ZipFile(package, 'w', compression=ZIP_DEFLATED, compresslevel=9) as out:
+            for name, content in package_files.items():
+                out.writestr(name, content)
     print(f'{len(data)} characters, {len(packed)} frames, {atlas.width}x{atlas.height}; {ARCHIVE}')
 
 

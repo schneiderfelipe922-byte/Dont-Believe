@@ -1,11 +1,12 @@
 # Contrato de interação — OldHood
 
-Atualizado em 09/10/2026. Fonte: pedido aprovado e módulos carregados pelo index.html da raiz. Idioma pt-BR, salvamento local, funcionamento sem internet.
+Atualizado em 19/10/2026. Fonte: pedido aprovado e módulos carregados pelo index.html da raiz. Idioma pt-BR, salvamento local, funcionamento sem internet.
 
 | Fluxo | Componente | Resultado e recuperação |
 | --- | --- | --- |
 | Conversar | game.js, DialogueUI | Pausa o mundo. Setas selecionam; Enter/E/Espaço, números ou toque confirmam. Prisão, resgate e transferência precedem falas genéricas. |
-| Consultar caderno | notebook.js, modal nativo | J: Investigação; I: Objetos; T: Pedidos. Texto selecionável e rolável, foco visível, abas acessíveis por teclado. |
+| Consultar caderno | notebook.js, modal nativo | J: Investigação; I: Objetos e vigilância; T: Pedidos. Texto selecionável e rolável, foco visível, abas acessíveis por teclado. |
+| Consultar controles | C ou botão no canto | Pausa o mundo. Reúne os comandos, consultas, tela cheia, som, ajuda e retorno ao menu. C fecha; Esc fecha após sair da tela cheia, se ativa. |
 | Usar objeto | Interação no local | Mostrar prova, entregar recurso ou usar ferramenta junto ao alvo correspondente. Consultar objetos não os consome. |
 | Orientar | Marcar no caderno; M | Uma marcação ativa. Caminhos aparecem por solicitação; apagar preserva as pistas. |
 | Aceitar pedido | Conversa pessoal | Registra uma vez e acompanha o pedido escolhido. Não revela pedidos futuros no caderno. |
@@ -17,7 +18,7 @@ Atualizado em 09/10/2026. Fonte: pedido aprovado e módulos carregados pelo inde
 
 As relações têm requisitos internos preservados, sem números, barras ou classificações na interface. A memória registra recusas distintas de Noah, fontes protegidas, documentos compartilhados e compromissos cumpridos. Recusas novas não causam denúncia automática. A reparação de Noah ainda exige abrir o trinco diante de Kali.
 
-A exploração prioriza cenário e interação contextual. Detecção, ferimentos, advertências e prazo permanecem explícitos. Custos, exposição de informação e ações irreversíveis são descritos antes de confirmar. Caderno, diálogos, mapa e fotos pausam o mundo.
+A exploração ocupa a janela com o cenário e a interação contextual. Vigilância, atenção da patrulha, advertências e ferimentos ficam em Objetos no diário. O prazo fica na Investigação. Custos, exposição de informação e ações irreversíveis são descritos antes de confirmar. Caderno, diálogos, mapa e fotos pausam o mundo.
 
 A arte do caderno é local; o HTML apresenta as informações. Kalam Regular e Bold com licença OFL; Solway nas conversas. Duas páginas no computador, uma no celular. Rolagem dentro do papel. Se a imagem falhar, mantém superfície clara. Redução de movimento e controles de toque continuam disponíveis.
 
@@ -65,3 +66,18 @@ Botão ⛶ ou F entra e sai da tela cheia. Esc sai antes de fechar uma consulta 
 Caixa de fala e retratos menores. A medição da área real e da fonte local divide as falas em páginas, incluindo respostas e mudanças da escolha. Não há rolagem nos diálogos. As escolhas são mostradas em grupos paginados; uma opção longa demais é lida integralmente em páginas antes de sua confirmação. Custos e bloqueios são preservados. O número original de cada escolha continua sendo seu atalho. Navegação e leitura não cobram prazo nem executam escolhas. O diário continua rolável.
 
 A fotografia da família foi atualizada pela ferramenta imagegen integrada usando os retratos atuais de Kali, Daty e Inauri. Arte e prompt estão em assets/fotos/; a fotografia anterior foi preservada em backups/antes-tela-cheia-familia-20261009/.
+
+
+## Interface e câmera — 15/10/2026
+
+As faixas superior e inferior foram retiradas da partida. A localização e os comandos estão em C; J/I/T/M continuam funcionando. O minimapa permanente deu lugar ao mapa consultado por M. A câmera mostra mais cenário: escala visual de 1,25 no computador e 1 no celular, independente da densidade de pixels, com limite para preencher a janela sem áreas externas ao mapa. Caixa de fala de até 620 × 260 px; opções até 310 px, mantendo leitura integral e confirmação explícita. Moldura quase monocromática e seleção em pedra, conforme DESIGN.md.
+
+Verificação: 92 testes aprovados. Navegador em computador, Retina, celular e horizontal: faixas ausentes, câmera mais ampla, menu C por tecla e clique, pausa preservada, objetos e vigilância juntos, atalhos e retorno ao menu principal. Leitura integral das cenas em 12 cenários; tela cheia nativa e alternativa; nenhum erro de JavaScript. Evidências em previas/interface-limpa, previas/atualizacao-relatorio e previas/tela-cheia.
+
+
+## Revisão de câmera e leitura — 19/10/2026
+
+A câmera acompanha o corpo de Kali e mostra uma parte do cômodo. O enquadramento mantém a área do mundo consistente entre telas comuns e Retina. C, diário e mapa continuam disponíveis. Na fala, o botão Continuar ocupa o rodapé; as margens internas evitam sobrepor texto e ornamentos da moldura. O texto usa peso regular e tamanho maior; nome, título e contador têm posições distintas. A confirmação de escolhas e o custo de ações mantêm o comportamento anterior.
+
+
+Moldura horizontal (desenho de 19/10): mesma altura na leitura e nas escolhas, faixa de 94–96% da largura e retrato acima da borda direita. Outros assuntos integra o cabeçalho; o rodapé reúne navegação e saída. A paginação de opções reserva espaço para a confirmação sem aumentar a altura.

@@ -33,7 +33,7 @@ test('todas as opções bloqueadas mantêm o diálogo sem execução acidental',
 });
 test('ilustrações usam aliases dos vigias, contêm a figura inteira e permitem reserva',()=>{
  const calls=[],ctx={drawImage(...args){calls.push(args);}},art={width:1024,height:1536};
- assert.equal(UI.speakerKey('guard'),'vigia');assert.equal(UI.speakerKey('leader'),'lider');assert.equal(UI.speakerKey('mel'),'neutral');
+ assert.equal(UI.speakerKey('guard'),'vigia');assert.equal(UI.speakerKey('leader'),'lider');assert.equal(UI.speakerKey('mel'),'mel');
  assert.equal(UI.portrait(ctx,768,1152,'guard',{dialogue_vigia:art}),true);
  assert.deepEqual(calls[0],[art,0,0,768,1152]);assert.equal(ctx.imageSmoothingEnabled,true);
  assert.equal(UI.portrait(ctx,768,1152,'noah',{}),false);assert.equal(UI.portrait(ctx,768,1152,'mel',{}),false);
@@ -47,4 +47,12 @@ test('setas mantêm a escolha visível dentro da caixa sem rolar a página',()=>
  const controller=UI.bindChoices({querySelectorAll:()=>m.buttons,closest:()=>scroll});
  assert.equal(scroll.scrollTop,0);controller.move(1);assert.equal(scroll.scrollTop,20);
  scroll.scrollTop=150;m.buttons[0].getBoundingClientRect=()=>({top:75,bottom:135});controller.move(-1);assert.equal(scroll.scrollTop,125);
+});
+
+test('Mel tem nome e retrato ilustrado horizontal inteiro, com reserva sem arte',()=>{
+ assert.equal(UI.names.mel,'Mel');assert.equal(UI.portraitKeys.mel,'dialogue_mel');
+ const art={width:1536,height:1024},calls=[],ctx={drawImage(...args){calls.push(args);}};
+ assert.equal(UI.portrait(ctx,1152,768,'mel',{dialogue_mel:art}),true);
+ assert.deepEqual(calls[0],[art,0,0,1152,768]);
+ assert.equal(UI.portrait(ctx,1152,768,'mel',{}),false);
 });

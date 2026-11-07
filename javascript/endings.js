@@ -1,8 +1,8 @@
 (function(root){
 'use strict';
 const themes={
- voz:{number:'01',label:'NINGUÉM FICA PARA TRÁS',accent:'#d6ac73',sky:'#463339',light:'#e3ac68',alt:'Kali, Mira e Eron diante dos portões abertos do orfanato.'},
- luz:{number:'02',label:'UM DEPOIS AINDA É POSSÍVEL',accent:'#e6b87f',sky:'#66515b',light:'#efbc80',alt:'Noah segura uma porta enquanto Kali, Mira e Eron alcançam o amanhecer.'},
+ voz:{number:'01',label:'O CAMINHO DOS MORADORES',accent:'#d6ac73',sky:'#463339',light:'#e3ac68',alt:'Kali, Mira e Eron diante dos portões abertos do orfanato.'},
+ luz:{number:'02',label:'UMA PROMESSA CUMPRIDA',accent:'#e6b87f',sky:'#66515b',light:'#efbc80',alt:'Noah segura uma porta enquanto Kali, Mira e Eron alcançam o amanhecer.'},
  sobrevivente:{number:'03',label:'O PREÇO DA LIBERDADE',accent:'#8bada3',sky:'#203237',light:'#93aaa0',alt:'Kali e Mel na floresta, com o orfanato distante atrás das árvores.'},
  traicao:{number:'04',label:'A ÚLTIMA CONFIANÇA',accent:'#cf7371',sky:'#331c2b',light:'#a94b3e',alt:'Noah entre Kali e os adultos de capa preta, diante de uma porta trancada.'},
  isolamento:{number:'05',label:'NINGUÉM SABE ONDE VOCÊ ESTÁ',accent:'#a49ab6',sky:'#242130',light:'#766c91',alt:'Kali e Mel no fim de um corredor estreito, separados da saída por uma sombra.'},

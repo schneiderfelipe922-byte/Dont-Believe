@@ -1,6 +1,6 @@
 (function(root){
 'use strict';
-const people=['kali','noah','mira','eron','tomas','vigia','lider','daty','inauri'];
+const people=['kali','noah','mira','eron','tomas','vigia','lider','daty','inauri','mel'];
 const aliases={guard:'vigia',leader:'lider'};
 function speakerKey(kind){return aliases[kind]||(people.includes(kind)?kind:'neutral');}
 const portraitKeys=Object.fromEntries(people.map(name=>[name,'dialogue_'+name]));
@@ -44,7 +44,7 @@ function bindChoices(container){
  const first=buttons.findIndex(b=>!b.disabled);if(first!==-1)select(first,true);
  return {select,move(delta){if(!buttons.some(b=>!b.disabled))return;for(let step=1;step<=buttons.length;step++){const next=(current+delta*step+buttons.length*2)%buttons.length;if(select(next,true,true))return;}},activate(){buttons[current]?.click();},get selectedIndex(){return current;}};
 }
-const names={kali:'Kali',noah:'Noah',mira:'Mira',eron:'Eron',tomas:'Tomas',vigia:'Vigia',lider:'Líder',daty:'Daty',inauri:'Inauri'};
+const names={kali:'Kali',noah:'Noah',mira:'Mira',eron:'Eron',tomas:'Tomas',vigia:'Vigia',lider:'Líder',daty:'Daty',inauri:'Inauri',mel:'Mel'};
 const api={people,names,speakerKey,portraitKeys,portrait,bindChoices,paginate};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DialogueUI=api;
 })(typeof window==='undefined'?globalThis:window);

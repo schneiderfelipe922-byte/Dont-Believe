@@ -14,16 +14,16 @@ colors:
   noah: "#d0b77e"
   guard: "#b2b9a5"
   dialogue-text: "#ffffff"
-  dialogue-choice: "#c852fc"
-  dialogue-paper: "#161417"
-  dialogue-kali: "#bc3c48"
-  dialogue-noah: "#d8d9de"
-  dialogue-mira: "#242128"
-  dialogue-eron: "#b570db"
-  dialogue-vigia: "#702c40"
-  dialogue-tomas: "#293b78"
-  dialogue-daty: "#eeeeef"
-  dialogue-inauri: "#293b78"
+  dialogue-choice: "#b6b0a1"
+  dialogue-paper: "#131410"
+  dialogue-kali: "#695354"
+  dialogue-noah: "#82817b"
+  dialogue-mira: "#444541"
+  dialogue-eron: "#625a66"
+  dialogue-vigia: "#59494a"
+  dialogue-tomas: "#50565c"
+  dialogue-daty: "#93918a"
+  dialogue-inauri: "#50565c"
 typography:
   body:
     fontFamily: "Arial, Helvetica, sans-serif"
@@ -98,7 +98,7 @@ A referência enviada pelo jogador define uma moldura de lápis/crayon, aba com 
 | Token documental | Variável em css/dialogue.css | Uso |
 |---|---|---|
 | dialogue-text | --dialogue-text | nome, fala, requisitos e apoio em branco |
-| dialogue-choice | --dialogue-choice | seleção e foco; mediana roxa da seta: #c852fc |
+| dialogue-choice | --dialogue-choice | seleção e foco em lilás acinzentado; seta com saturação reduzida |
 | dialogue-paper | --dialogue-paper | fundo da caixa |
 | dialogue-kali | --dialogue-kali | moldura vermelha |
 | dialogue-noah | --dialogue-noah | moldura cinza-clara |
@@ -125,3 +125,33 @@ Memória social e cenas ficam em investigation.js; notebook.js monta as três se
 fullscreen.css adapta a superfície ao espaço da tela, mantendo navegação e controles de toque. fullscreen.js controla API nativa, estado do botão, F/Esc e alternativa dentro da aba. Consultas abertas voltam ao topo após entrar na tela cheia.
 
 No computador, a caixa de diálogo passou de até 460 px para 340 px nas falas; retratos passaram de 32% de largura e 97% de altura para 20% de largura e até 320 px de altura. Escolhas usam até 390 px e paginação quando necessário. Celular usa retratos de até 180 px, acima da caixa. Falas e opções não rolam; são paginadas com medição real. O diário mantém sua própria rolagem.
+
+
+## Molduras apagadas — 15/10/2026
+
+As nove variantes ilustradas usam pigmentos menos saturados e brilho contido: vermelho envelhecido de Kali, cinzas de Noah e Daty, carvão de Mira, roxo acinzentado de Eron, bordô dos vigias e azul ardósia de Tomas/Inauri. O filtro atua na moldura e na seta, preservando as falas brancas, o fundo opaco e os retratos originais. A seleção usa --dialogue-choice (#b6b0a1); --dialogue-choice-wash controla o fundo discreto de seleção e hover. Os valores por personagem descrevem os acentos; a textura original é colorida pelos filtros de css/dialogue.css.
+
+
+## Exploração sem faixas — revisão de 15/10/2026
+
+O cenário ocupa toda a janela durante a partida. Cabeçalho, localização, vigilância, rodapé e contadores saíram da exploração. C abre Controles; Esc também abre a pausa. O menu contém diário, objetos, pedidos, mapa, tela cheia, som e ajuda. J/I/T/M continuam disponíveis diretamente. Um botão discreto no canto permite abrir o menu por toque. Os controles de movimento por toque permanecem sobre o cenário.
+
+Objetos, dentro do diário, reúne vigilância, atenção da patrulha, advertências e ferimentos antes do inventário. Consultar pausa o mundo e não cobra ações. A câmera usa escala visual padrão de 1,25 no computador e 1 no celular, ajustada para que a imagem do mapa cubra a janela; a densidade Retina não aproxima a câmera. O mapa permanece em M.
+
+A caixa de fala mede até 620 × 260 px; escolhas usam até 310 px de altura e mantêm paginação e alvos de 44 px. A moldura tem pigmento quase monocromático, mais escuro; o fundo é carvão neutro e a seleção é pedra (#b6b0a1). A fala continua branca. Estas regras substituem as medidas e a seleção roxa descritas nas etapas anteriores.
+
+
+## Câmera próxima e encaixe dos diálogos — 19/10/2026
+
+A câmera enquadra Kali e parte de um cômodo. A área visível tem no máximo 480 × 320 pixels do mundo em janelas horizontais e 280 × 440 em janelas verticais. O enquadramento cresce proporcionalmente com a resolução física e usa o centro do corpo de Kali como referência, respeitando as bordas do mapa. Esta direção substitui a câmera afastada de 15/10.
+
+A caixa de fala tem até 680 × 280 px; opções usam até 330 px no computador ou 340 px no celular. A moldura preserva textura e pigmentos apagados. O nome fica na aba; o título e a paginação têm hierarquia secundária. Texto em Solway Regular, 18 px no computador e 17 px no celular, com entrelinha 1,5. As margens direitas reservam espaço para a espiral da moldura.
+
+Durante a leitura, Continuar fica no rodapé, junto de Voltar e Explorar depois. O botão não ocupa a área da fala. A paginação usa a área de leitura efetivamente disponível, sem a antiga reserva de espaço para o botão dentro do texto. As escolhas continuam no corpo da caixa, com confirmação explícita e alvos de pelo menos 44 px. Narrativa, custos e requisitos das rotas são preservados.
+
+
+## Moldura horizontal conforme desenho do jogador — 19/10/2026
+
+A caixa ocupa 94% da largura do cenário (96% no celular), formando uma faixa baixa. O corpo tem 180–210 px no computador, 200 px no celular e 184 px na horizontal curta. Sua altura permanece igual na fala e nas escolhas. A aba do nome fica acima da faixa, sem consumir a área de leitura.
+
+O retrato estático fica acima da borda superior, à direita, com pequeno encaixe atrás da moldura. Cores apagadas, textura, câmera próxima e tamanho legível das letras são preservados. Outros assuntos passou ao cabeçalho; a navegação entre grupos de escolhas passou ao rodapé. Textos e opções extensas são paginados na área disponível, sem aumentar a altura. Este encaixe substitui as caixas de 680 × 280/330 px descritas na revisão anterior.

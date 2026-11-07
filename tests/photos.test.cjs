@@ -18,3 +18,8 @@ test('coleta é única, não altera história ou prazo, e é preservada pelo sav
 test('a fala da foto respeita o resgate já realizado de Tomas',()=>{
  const s=G.initial();assert.match(F.text(s,'friends'),/O que será que aconteceu/);s.flags.tomasRescued=true;assert.match(F.text(s,'friends'),/consegui encontrá-lo/);
 });
+
+test('fotografias preservam a memória familiar e reconhecem a transferência confirmada',()=>{
+ const s=G.initial();assert.match(F.text(s,'family'),/Daty e Inauri/);assert(!/Como pude esquecer|Agora eu lembro/.test(F.text(s,'family')));
+ s.flags.tomasTransferred=true;assert.match(F.text(s,'friends'),/outra unidade/);assert(!F.text(s,'friends').includes('O que será que aconteceu'));
+});

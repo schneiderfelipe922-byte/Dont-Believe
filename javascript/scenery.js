@@ -53,5 +53,28 @@ function draw(c,M,art){c.fillStyle='#0b090e';c.fillRect(0,0,M.W*M.T,M.H*M.T);if(
 function drawDoor(c,d,open,art,progress=open?1:0,closing=false){if(!art.fullMap||!sprites[d.id])return false;const frames=sprites[d.id];const frame=progress<=0?0:progress>=1?3:closing?4:progress<.5?1:2;const source=frames[frame],dest=d.art;
  c.drawImage(art.fullMap,...source,...dest);return true;
 }
-const api={mapCrop,layout,passageRects,rooms,geometry,areas,sprites,draw,drawDoor};root.GameScenery=api;if(typeof module!=='undefined')module.exports=api;
+// Os dois criados-mudos do dormitório usam a mesma origem entre aberto e fechado.
+const drawers=[
+ {id:'bedside-left',name:'Gaveta do criado-mudo esquerdo',art:[197,104,31,29],depth:145,point:{x:215,y:158}},
+ {id:'bedside-right',name:'Gaveta do criado-mudo direito',art:[407,104,31,29],depth:141,point:{x:398,y:155}}
+];
+function drawDrawer(c,d,open,art){
+ if(!art.bedside)return false;
+ // O tampo e a vela já existem no mapa: substitui só a frente, sem duplicar a chama.
+ c.drawImage(art.bedside,(open?48:0)+6,30,36,21,...d.art);return true;
+}
+// Documentos da rota principal usam o mesmo desenho das coletas opcionais.
+function storyPickups(state,M){
+ const target=M.stages[state.scene]?.[0];
+ if(!['bed','ledger','records','tomasBed','keyDesk'].includes(target)||!M.positions[target]||state.pending)return [];
+ const p=M.positions[target];return [{...p,type:target==='keyDesk'?'chave':target==='ledger'?'livro':'bilhete',name:target==='bed'?'Carta de Eron':'Documento'}];
+}
+function drawPickup(c,item,art){
+ if(!art.pickups)return false;
+ const name=item.item||item.name||'';
+ const index=item.photo?(item.id==='family'?2:3):item.type==='chave'?5:item.type==='livro'||/Caderno/.test(name)?4:/Fita/.test(name)?6:/Peça/.test(name)?7:/Carta/.test(name)?0:1;
+ const size=item.photo?18:16;
+ c.drawImage(art.pickups,index%4*32,Math.floor(index/4)*32,32,32,Math.round(item.x-size/2),Math.round(item.y-size/2),size,size);return true;
+}
+const api={storyPickups,drawers,drawDrawer,drawPickup,mapCrop,layout,passageRects,rooms,geometry,areas,sprites,draw,drawDoor};root.GameScenery=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

@@ -23,5 +23,7 @@
   "daty/idle.png": "d51228214311c44d88e3ba7ef28fa504c5d3b67b2f788c30e48ea364f1645e2b",
   "daty/preview.gif": "e26ec5bbf859477e2e3986f214981106a9ad17a601ee552836fa3bac968ff0f5",
   "inauri/idle.png": "c2d1da6564c4a0ea9969674c5e5527777e51f2f069af781b20a351f37e7bc663",
-  "inauri/preview.gif": "427b25d0b2f53ab58f850940ca9cabf93be4a13d36f8ffb7f165d1dc5be651d8"
+  "inauri/preview.gif": "427b25d0b2f53ab58f850940ca9cabf93be4a13d36f8ffb7f165d1dc5be651d8",
+  "mel/idle.png": "87cb172f3671c500f6a4e7bd1db964ac9b8b16e687806bb164cb44f110bae343",
+  "mel/walk.png": "d0f541972265f29656fa98ff2e4174385cb89e729138181e56da9416762fab7d"
 }

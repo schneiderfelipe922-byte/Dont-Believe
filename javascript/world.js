@@ -11,6 +11,7 @@ const doors=[
  {id:'cell',name:'Grade da ala leste',x:1164,y:254,w:70,h:8,lock:'cellOpen',art:[1145,174,108,88]},
  {id:'archive',name:'Porta dos arquivos',x:1180,y:751,w:70,h:8,lock:'tunnel',art:[1166,677,100,82]}
 ];
+const drawers=scenery.drawers;
 const sceneryProps=scenery.geometry(),entranceAreas=scenery.passageRects.map(([x,y,w,h])=>({x,y,w,h}));
 function remap(p){
  let old=legacyRooms.find(r=>p.x>=r.x*T&&p.x<(r.x+r.w)*T&&p.y>=r.y*T&&p.y<(r.y+r.h)*T);
@@ -87,11 +88,21 @@ function place(p){
 }
 function move(player,dx,dy,state=null,world=null){
  if(!Number.isFinite(dx)||!Number.isFinite(dy))return;
+ function advance(axis,delta){
+  if(!delta)return;
+  const start=player[axis],free=amount=>walkable(axis==='x'?start+amount:player.x,axis==='y'?start+amount:player.y,7,state,world);
+  if(free(delta)){player[axis]=start+delta;return;}
+  if(!free(0))return;
+  // Encosta na borda sem a folga de até 4 px que variava com o tamanho do passo.
+  let low=0,high=1;
+  while(Math.abs(delta)*(high-low)>.001){const mid=(low+high)/2;if(free(delta*mid))low=mid;else high=mid;}
+  player[axis]=start+delta*low;
+ }
  // Subpassos impedem atravessar paredes/portas em movimentos grandes.
  const count=Math.ceil(Math.max(Math.abs(dx),Math.abs(dy))/4)||1;
  for(let i=0;i<count;i++){
-  if(walkable(player.x+dx/count,player.y,7,state,world))player.x+=dx/count;
-  if(walkable(player.x,player.y+dy/count,7,state,world))player.y+=dy/count;
+  advance('x',dx/count);
+  advance('y',dy/count);
  }
 }
 function roomAt(x,y){return rooms.find(r=>x>=r.x*T&&x<(r.x+r.w)*T&&y>=r.y*T&&y<(r.y+r.h)*T)?.name||'Galeria de serviço';}
@@ -156,7 +167,7 @@ function normalizeWorld(world,state){
   }
   Object.assign(world.player,best||fresh().player);
  }
- normalizeMel(world,state);world.actors={};return world;
+ normalizeMel(world,state);normalizeDrawers(world);world.actors={};return world;
 }
 function updateGuard(g,dt,pace,state,world){
  const distance=g.dir*g.speed*pace*dt,old={x:g.x,y:g.y};
@@ -226,12 +237,22 @@ function updateMel(state,world,dt){
  if(!cat.route.length){cat.step=0;cat.wait=2;}
  return moved>0;
 }
-function fresh(){return {mapVersion:'illustrated-v1',player:{...place(point(12.5,8)),dir:'down',step:0},mel:freshMel(),tunnelOpen:false,doors:{},observed:{},explored:[],alert:0};}
+function normalizeDrawers(world){
+ const old=world.drawers&&typeof world.drawers==='object'&&!Array.isArray(world.drawers)?world.drawers:{};
+ world.drawers={};for(const d of drawers)if(typeof old[d.id]==='boolean')world.drawers[d.id]=old[d.id];return world;
+}
+function drawerPoints(world){return drawers.map(d=>({...d.point,drawer:d.id,name:(world.drawers?.[d.id]?'Fechar ':'Abrir ')+d.name.toLowerCase()}));}
+function toggleDrawer(id,world){
+ const drawer=drawers.find(d=>d.id===id);if(!drawer)return {changed:false,text:'Gaveta não encontrada.'};
+ normalizeDrawers(world);const open=world.drawers[id]=!world.drawers[id];
+ return {changed:true,open,text:open?'Gaveta aberta. Papéis antigos e o fundo de madeira estão à vista.':'Gaveta fechada.'};
+}
+function fresh(){return {mapVersion:'illustrated-v1',player:{...place(point(10.5,8)),dir:'down',step:0},mel:freshMel(),tunnelOpen:false,doors:{},drawers:{},observed:{},explored:[],alert:0};}
 function guards(){return [
  {x:200,y:384,a:110,b:1330,axis:'x',dir:1,speed:30},
  {x:845,y:568,a:835,b:1290,axis:'x',dir:1,speed:22},
  {x:115,y:674,a:115,b:690,axis:'x',dir:-1,speed:26}
  ].map(g=>({...g,...place(g)}));}
 
-const api={remap,authoredPoint,walkAreas,place,sceneryProps,entranceAreas,melPoint,normalizeMel,updateMel,doors,doorBounds,passages,doorLocked,doorOpen,doorPoints,toggleDoor,canInteract,normalizeWorld,updateGuard,T,W,H,rooms,grid,props,lights,positions,stages,night,target,tile,walkable,move,roomAt,visible,path,blocked,fresh,guards};root.GameWorld=api;if(typeof module!=='undefined')module.exports=api;
+const api={drawers,drawerPoints,toggleDrawer,normalizeDrawers,remap,authoredPoint,walkAreas,place,sceneryProps,entranceAreas,melPoint,normalizeMel,updateMel,doors,doorBounds,passages,doorLocked,doorOpen,doorPoints,toggleDoor,canInteract,normalizeWorld,updateGuard,T,W,H,rooms,grid,props,lights,positions,stages,night,target,tile,walkable,move,roomAt,visible,path,blocked,fresh,guards};root.GameWorld=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

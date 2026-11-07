@@ -34,7 +34,7 @@ function open(ctx,tab='investigation',focusTab=false){
    entry('O preço de agir','Escolhas e preparações custam uma ação; revistas custam duas. Destruir a ordem dá mais três. Confirmar o confronto encerra minha preparação.');
   }
   const notes=V.notes(s);content.append(el('h4','O que observei','notebook-divider'));
-  if(!notes.facts.length)entry('Ainda estou procurando','Tomas não respondeu à chamada. Posso ouvir os moradores e observar o que ficou no dormitório.');
+  if(!notes.facts.length)entry('Ainda estou procurando',A.act(s)>=1?'Tomas não respondeu à chamada. Posso ouvir os moradores e observar o que ficou no dormitório.':'O primeiro sino marca a rotina de OldHood. Preciso ouvir os moradores e observar antes de tirar conclusões.');
   for(const [name,text]of notes.facts)entry(name,text);
   if(notes.doubts.length){content.append(el('h4','O que preciso conferir','notebook-divider'));for(const [name,text]of notes.doubts)entry(name,text);}
   if(A.act(s)>=3&&!G.scenes[s.scene].ending){
@@ -47,6 +47,13 @@ function open(ctx,tab='investigation',focusTab=false){
   if(A.act(s)>=1&&!s.flags.committed&&!G.scenes[s.scene].ending){const actions=A.points(s,w);if(actions.length)content.append(el('h4','Onde posso investigar','notebook-divider'));for(const p of actions){const n=entry(p.name,'Posso procurar esse encontro se quiser me preparar.');mark(n,'Marcar encontro',()=>track(p.action));}}
   if(s.history.length){content.append(el('h4','O que fiz até aqui','notebook-divider'));for(const h of s.history.slice().reverse())entry(h.title,h.choice);}
  }else if(tab==='objects'){
+  const alert=Math.round(w.alert||0),risk=alert>15?'Estão me observando':s.suspicion>=4?'Alta':s.suspicion>=2?'Atenta':'Discreta';
+  const condition=entry('Vigilância e condição','Vigilância: '+risk+'. Suspeita registrada: '+s.suspicion+' de 9. Atenção da patrulha: '+alert+'%.');
+  condition.className+=' notebook-condition';
+  condition.append(el('p','Advertências: '+s.danger.warnings+' de 3. Ferimentos: '+s.danger.wounds+' de 2.'));
+  if(s.danger.grace>0)condition.append(el('p','Tenho '+Math.ceil(s.danger.grace)+' segundos de recuo antes de uma nova detecção.'));
+  if(s.danger.hunt>0)condition.append(el('p','A ronda está em alerta. Preciso evitar os vigias.'));
+  content.append(el('h4','O que tenho comigo','notebook-divider'));
   if(!s.inventory.length){const n=entry('Meus bolsos estão vazios','Posso conversar com os moradores. Os objetos e documentos que encontrar ficam guardados aqui.');mark(n,'Ver meus pedidos',()=>open(ctx,'requests'));}
   const uses={'Arame':['Posso levantar a lingueta da grade. O arame ficará preso depois do uso.','gate'],'Pão':['Posso entregar a Mira ou sacrificar a porção durante uma revista.','mira'],'Chave da ala leste':['Abre a grade da ala leste, sem barulho.','gate'],'Trajeto de Eron':['Conheço as curvas, mas ainda preciso combinar quem fará cada tarefa.','eron']};
   for(const name of s.inventory){

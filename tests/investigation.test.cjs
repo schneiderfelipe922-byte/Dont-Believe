@@ -44,3 +44,10 @@ test('anotações distinguem fatos e versões; apresentação não revela pontua
  const s=G.initial();s.flags.registerClue=true;s.scene='registro';const notes=V.notes(s);assert(notes.facts.some(([,t])=>t.includes('destino está vazio')));assert(notes.doubts.some(([,t])=>t.includes('Noah disse')));
  for(const text of ['Mira +2 · Eron −1','Mira e Eron +1','Adultos +2 · Mira −1','Precisa de confiança 3 com os adultos.','Precisa de Eron livre e confiança 2.','Sem Mira 2, a rota coletiva deixa de funcionar.'])assert(!/(Mira|Eron|Noah|Adultos)\s*[+−-]\d|confiança\s*\d|Mira 2/.test(V.present(text)),text);
 });
+
+test('o diário deixa de tratar a identidade atrás da grade como dúvida após resolver o destino',()=>{
+ const s=G.initial();s.flags.cellVoicesHeard=true;s.flags.tomasSignalAnswered=true;
+ assert(V.notes(s).facts.some(([title])=>title==='Atrás da grade'));assert(V.notes(s).doubts.some(([title])=>title==='Quem respondeu?'));
+ s.flags.tomasRescued=true;assert(!V.notes(s).facts.some(([title])=>title==='Atrás da grade'));assert(!V.notes(s).doubts.some(([title])=>title==='Quem respondeu?'));assert(V.notes(s).facts.some(([title])=>title==='Encontrei Tomas'));
+ s.flags.tomasRescued=false;s.flags.tomasTransferred=true;assert(!V.notes(s).facts.some(([title])=>title==='Atrás da grade'));assert(V.notes(s).facts.some(([title])=>title==='A cela vazia'));
+});

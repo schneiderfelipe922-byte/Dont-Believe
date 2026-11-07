@@ -1,6 +1,6 @@
 # DON’T BELIEVE — O Obelisco: história
 
-Atualizado em 09/10/2026. Este documento descreve a versão principal aberta pelo `index.html` da raiz. Contém revelações da trama e dos finais.
+Atualizado em 07/11/2026. Este documento descreve a versão principal aberta pelo `index.html` da raiz. Contém revelações da trama e dos finais.
 
 ## Mensagem central
 
@@ -16,9 +16,9 @@ O desaparecimento de Tomas, melhor amigo de Eron, rompe a aparência de normalid
 
 ## A marca: o passado de Kali
 
-Numa noite chuvosa, Kali viajava com Daty e Inauri, seus pais. Sua mãe o lembrava de que a escolha sobre sua crença continuava sendo dele. Uma colisão interrompeu a viagem. Kali foi levado para OldHood e viu o símbolo familiar ser recolhido da lama, embrulhado e catalogado.
+Numa noite, Kali viajava com Daty e Inauri, seus pais, fugindo da Actras. Sua mãe o lembrava de que a escolha sobre sua crença continuava sendo dele. Uma colisão interrompeu a viagem. Do lado de fora, Kali voltou ao carro em chamas e viu seus pais imóveis. Foi retirado da estrada antes de poder confirmar o que aconteceu com eles. Ele foi levado para OldHood e viu o símbolo familiar ser recolhido do chão, embrulhado e catalogado.
 
-A versão jogável apresenta lembranças fragmentadas. A fotografia da família recupera nomes e imagens da casa perto do bosque. O símbolo encontrado mais tarde não explica completamente o destino de seus pais. Não há uma solução sobrenatural nem uma revelação nova sobre eles nesta expansão.
+A versão jogável abre com a perspectiva de Kali no banco traseiro e as falas da fuga. Após o impacto, o jogador controla Kali criança na estrada e interage com o carro para revelar o interior. As imagens ocupam a tela com legendas sem caixa. A fotografia da família recupera nomes e imagens da casa perto do bosque. O símbolo encontrado mais tarde guarda a lembrança dessa noite.
 
 ## I — O nome que falta
 

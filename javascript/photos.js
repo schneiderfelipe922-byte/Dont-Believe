@@ -10,7 +10,8 @@ function found(s,id){return !!photos[id]&&s.inventory.includes(photos[id].name);
 function points(s){return Object.values(photos).filter(p=>!found(s,p.id)).map(p=>({...p,photo:p.id,name:'Examinar: '+p.hint}));}
 function collect(s,id){const p=photos[id];if(!p)return false;const fresh=!found(s,id);if(fresh)s.inventory.push(p.name);s.flags[p.flag]=true;return fresh;}
 function text(s,id){
- if(id==='family')return 'São meus pais… Daty e Inauri. Agora eu lembro. Aquela casa, o bosque… e eu ali, entre os dois. Como pude esquecer o rosto deles?';
+ if(id==='family')return 'São meus pais… Daty e Inauri. A casa perto do bosque, e eu ali, entre os dois. Aqui ninguém chama esses nomes. Na fotografia, ainda estamos juntos.';
+ if(s.flags.tomasTransferred)return 'Eron e Tomas, antes de levarem Tomas para outra unidade. A fotografia ficou. Não vou deixar que o nome dele desapareça também.';
  if(s.flags.tomasRescued)return 'Então é o Tomas… Eron parecia tão feliz ao lado dele. Antes de tudo isso. Ainda bem que consegui encontrá-lo.';
  return 'Então esse era o Tomas… Eron parecia tão feliz ao lado dele. O que será que aconteceu com ele?';
 }

@@ -88,7 +88,7 @@ S.conversation=(who,s)=>{
   if(s.flags.sharedWithEron)line.text+='\n— A assinatura naquela requisição continua na minha cabeça. Vou guardar o que você me mostrou.';
  }
  if(who==='noah'&&!s.flags.confronted){
-  if(s.socialMemory.refusals.length>=2)line={title:'Então decide sozinho',text:'Noah cruza os braços. — Então decide sozinho. Eu explico, você pergunta de novo. Eu mostro o caminho, você não vem.\nEle responde antes de Kali terminar: — Não diga depois que eu não avisei.\nA voz ficou agressiva, mas ele não chamou o vigia nem fez uma nova denúncia.'};
+  if(s.socialMemory.refusals.length>=2)line={title:'Então decide sozinho',text:'Noah cruza os braços. — Então decide sozinho. Eu explico, você pergunta de novo. Eu mostro o caminho, você não vem.\nEle responde antes de Kali terminar: — Não diga depois que eu não avisei.\nNoah se vira para o corredor. As mãos continuam fechadas sobre a manga.'};
   else if(s.socialMemory.refusals.length===1)line={title:'Por que não me escuta?',text:'Noah aperta a manga e fala mais depressa. — Por que você nunca faz o que eu digo? Aqui tem um jeito certo de fazer as coisas.\nEle tenta retomar o sorriso. — Vem comigo da próxima vez. Não fica procurando outra explicação para tudo.'};
   if(s.flags.sharedWithNoah)line.text+='\n— Não esqueci o papel que você mostrou. Não precisava ter mexido nele.';
  }
@@ -135,7 +135,7 @@ function notes(s){
  if(s.flags.boxMatched||s.flags.kitchenClue)facts.push(['A caixa T-17','Encontrei a caneca e a coberta. A requisição manda manter Tomas na ala leste.']);
  if(s.flags.mealMismatch)facts.push(['As bandejas','Mira viu duas bandejas extras irem para a ala. Registrei a observação sem contar seu nome.']);
  if(s.flags.tomasSignalKnown)facts.push(['O sinal da partida','Eron me ensinou: duas batidas curtas e uma longa. Era o sinal que dividia com Tomas.']);
- if(s.flags.cellVoicesHeard)facts.push(['Atrás da grade',s.flags.tomasSignalAnswered?'Ouvi uma resposta igual ao sinal de Eron. Ainda preciso ver quem respondeu.':'Ouvi uma voz pedir água. Não consegui reconhecer quem falou.']);
+ if(s.flags.cellVoicesHeard&&!s.flags.tomasRescued&&!s.flags.tomasTransferred)facts.push(['Atrás da grade',s.flags.tomasSignalAnswered?'Ouvi uma resposta igual ao sinal de Eron. Ainda preciso ver quem respondeu.':'Ouvi uma voz pedir água. Não consegui reconhecer quem falou.']);
  if(s.flags.warning)facts.push(['O aviso de Mira','Mira escreveu que está na primeira cela e Tomas atrás da divisória. Ela pediu que eu verificasse a ajuda de Noah.']);
  if(s.flags.altarClue)facts.push(['O altar','Anotei a ordem dos símbolos: sino → chama → raiz.']);
  if(s.flags.proof)facts.push(['Uma assinatura','Estou com o registro de transferência. Ele tem nomes, destino e uma assinatura.']);

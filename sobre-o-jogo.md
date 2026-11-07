@@ -1,6 +1,6 @@
 # DON’T BELIEVE — O Obelisco
 
-Guia da versão principal, atualizado em 09/10/2026. Abra `index.html` na raiz para jogar. Este documento contém revelações da história, dos puzzles e dos seis finais.
+Guia da versão principal, atualizado em 07/11/2026. Abra `index.html` na raiz para jogar. Este documento contém revelações da história, dos puzzles e dos seis finais.
 
 ## O que é o jogo
 
@@ -13,6 +13,10 @@ O jogo alterna exploração, conversas com escolhas, investigação de objetos, 
 ## Como começar e continuar
 
 Abra o arquivo `index.html` da raiz. A tela inicial permite começar, continuar um salvamento e rever finais descobertos. Imagens, fontes e regras estão nos arquivos locais; o jogo funciona sem internet. Não há conta nem serviço externo.
+
+O prólogo começa com as falas da fuga sobre a imagem dos pais vistos por Kali no banco traseiro. E, Enter, Espaço ou Continuar avançam as legendas, sem caixa de texto. Após o impacto e a transição pelo preto, mova Kali criança até o carro em chamas e use E ou Interagir: a ilustração do interior revela seus pais. A sequência conduz ao despertar em OldHood. A pausa e o salvamento preservam a fase, a legenda e a posição na estrada.
+
+Se a aba ou janela perder o foco durante a exploração, o jogo salva e abre a pausa. Para retomar, use Voltar ao jogo. Em uma conversa, a página atual permanece aberta.
 
 O progresso fica no armazenamento deste navegador, incluindo escolhas, objetos, pedidos, posição, perigos e preparações. Salvamentos anteriores recebem os novos campos sem reiniciar a história. Finais descobertos ficam registrados separadamente. Trocar de navegador ou apagar seus dados pode remover esse progresso. Os diretórios de versões e backups são arquivos históricos, não a versão principal.
 
@@ -87,7 +91,7 @@ Mira presa e Eron denunciado não recebem pedidos enquanto permanecem indisponí
 
 Nas etapas noturnas, vigias patrulham e detectam Kali no campo de visão. Paredes e móveis bloqueiam a visão; movimento furtivo reduz o alcance da percepção. A detecção inicia uma revista, com opções e custos anunciados.
 
-Depois de três advertências, ou com vigilância interna em oito, a próxima detecção causa captura. Resistir causa um ferimento e aumenta a vigilância em dois. Dois ferimentos reduzem a velocidade; uma terceira resistência encerra a tentativa. Após revista, há doze segundos de proteção para recuar. Esses avisos continuam explícitos.
+Depois de três advertências, ou com vigilância interna em oito, a próxima detecção causa captura. Resistir causa um ferimento e aumenta a vigilância em dois. Cada ferimento reduz a velocidade em 15%; uma terceira resistência encerra a tentativa. Após revista, há doze segundos de proteção para recuar. Esses avisos continuam explícitos.
 
 O confinamento inicia **dez ações** antes da transferência de Tomas. Caminhar, ler, conversar sem executar uma escolha de preparação e marcar lugares não consomem ações. Escolhas de história e preparações custam uma; revistas custam duas. Recolher ou entregar pedidos também custa uma. Rever o plano, cancelar o confronto, consultar o altar e voltar do portão não gastam uma ação. Destruir a ordem dá três ações extras, mas elimina a prova assinada. Não reverte uma transferência já realizada.
 
