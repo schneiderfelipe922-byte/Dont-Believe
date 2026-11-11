@@ -1,0 +1,40 @@
+/* Imagem em tela cheia, legendas livres e passagem curta pelo preto. */
+#prologue-screen { position: absolute; inset: 0; z-index: 8; overflow: hidden; background: var(--bg); color: var(--text); }
+#prologue-image, #prologue-world { display: block; width: 100%; height: 100%; border: 0; }
+#prologue-image { position: relative; z-index: 1; object-fit: contain; user-select: none; pointer-events: none; }
+#prologue-world { image-rendering: pixelated; touch-action: none; }
+#prologue-caption { position: absolute; z-index: 2; left: max(24px,env(safe-area-inset-left)); right: max(24px,env(safe-area-inset-right)); bottom: max(22px,env(safe-area-inset-bottom)); width: min(920px,calc(100% - 48px)); margin-inline: auto; text-align: center; text-shadow: 0 2px 3px #000,0 0 8px #000,0 0 18px #000; }
+#prologue-speaker { margin: 0 0 7px; font: 500 12px/1.4 var(--font-ui); letter-spacing: 2px; color: var(--gold); }
+#prologue-speaker:empty { display: none; }
+#prologue-text { margin: 0 auto; max-width: 850px; font: 400 clamp(17px,1.7vw,22px)/1.55 var(--font-ui); text-wrap: pretty; }
+#prologue-next, #prologue-pause { min-height: 44px; border: 0; padding: 8px 14px; background: transparent; color: var(--text); font: 400 13px/1.4 var(--font-ui); text-shadow: 0 2px 4px #000,0 0 10px #000; }
+#prologue-next { display: block; margin: 8px auto 0; }
+#prologue-next:hover, #prologue-pause:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 5px; }
+#prologue-hint { display: block; font: 400 12px/1.4 var(--font-ui); color: var(--muted); }
+#prologue-pause { position: absolute; z-index: 3; top: max(10px,env(safe-area-inset-top)); right: max(14px,env(safe-area-inset-right)); }
+#prologue-pause span { margin-left: 10px; opacity: .7; font-size: 11px; }
+#prologue-fade { position: absolute; z-index: 5; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity var(--prologue-fade-ms,200ms) ease; }
+#prologue-screen.is-fading #prologue-fade { opacity: 1; }
+body.in-prologue #menu-btn, body.in-prologue #mission, body.in-prologue #interact-prompt, body.in-prologue #notice, body.in-prologue #dialogue { display: none !important; }
+body.in-prologue #touch-controls { visibility: hidden; }
+body.in-prologue.prologue-road #touch-controls { visibility: visible; z-index: 9; }
+body.in-prologue #sneak-touch { display: none; }
+@media (max-width:700px), (pointer:coarse) {
+ body.prologue-road #prologue-caption { bottom: max(126px,calc(env(safe-area-inset-bottom) + 114px)); }
+ #prologue-hint { display: none; }
+ #prologue-caption { left: max(18px,env(safe-area-inset-left)); right: max(18px,env(safe-area-inset-right)); width: calc(100% - 36px); }
+ #prologue-text { font-size: 18px; }
+}
+@media (max-height:500px) {
+ #prologue-caption { bottom: max(8px,env(safe-area-inset-bottom)); width: min(650px,calc(100% - 48px)); }
+ #prologue-text { font-size: 17px; line-height: 1.4; }
+ #prologue-next { margin-top: 2px; }
+ #prologue-hint { display: none; }
+ body.prologue-road #prologue-caption { bottom: max(14px,env(safe-area-inset-bottom)); width: calc(100% - 360px); }
+ body.prologue-road #prologue-speaker { display: none; }
+}
+body.reduced #prologue-fade { transition: none; }
+@media (prefers-reduced-motion: reduce) { #prologue-fade { transition: none; } }
+@media (max-aspect-ratio: 3/4) {
+ #prologue-screen:not([data-phase=road])::before { content: ''; position: absolute; inset: -30px; background: var(--prologue-art) center/cover no-repeat; filter: blur(22px) brightness(.25); }
+}

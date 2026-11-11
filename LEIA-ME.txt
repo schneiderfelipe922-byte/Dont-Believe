@@ -1,0 +1,36 @@
+DON’T BELIEVE — Última versão web: 07/11/2026
+
+Abra index.html para jogar. C abre os controles; J abre o diário; I mostra objetos e vigilância.
+
+Atualização 07/11: Kali e o vigia começam separados no dormitório; os sprites ganharam sombras discretas junto aos pés. A partida pausa ao perder o foco. Diálogos preservam a passagem na rotação de tela e respondem aos botões focados. Pedidos, fotografias, diário e finais respeitam os acontecimentos da partida. Consulte documentacao/ATUALIZACAO-07-11-2026.md.
+
+Atualização 01/11: as três imagens do prólogo usam desenho mais simples, contornos limpos, cores chapadas e menos detalhes. O fogo nas cenas do acidente foi reduzido. Abertura, estrada e revelação usam as novas versões. Consulte assets/prologo/desenhos-simples-2026-11-01-prompts.md.
+
+Atualização 30/10: prólogo com ilustrações em tela cheia e legendas sem caixa. A fuga é vista pelos olhos de Kali no banco traseiro; depois do impacto, mova Kali criança até o carro em chamas e use E ou Interagir para ver seus pais. A sequência termina no despertar em OldHood. A página da legenda e a posição na estrada ficam salvas. Consulte documentacao/ATUALIZACAO-30-10-2026.md.
+
+Atualização 29/10: início sem faixa superior; atlas atual com revisão de cache e nova tentativa de carregamento; objetos ilustrados sob os personagens; criados-mudos com gavetas abertas/fechadas por E ou toque, com estado salvo. Consulte documentacao/ATUALIZACAO-29-10-2026.md.
+
+Atualização 26/10: Mel com novos sprites, pelos volumosos, olhos verde-claros e retrato deitada nas interações.
+
+Atualização 19/10: câmera próxima de Kali, moldura larga e baixa e retrato acima da borda direita. Consulte documentacao/ATUALIZACAO-19-10-2026.md.
+
+Atualização 15/10: revisões do interrogatório, resgate de Mira e símbolo integradas a partir do relatório e fluxograma enviado. Molduras com cores apagadas; contato mais preciso com paredes, móveis e portas. Consulte documentacao/ATUALIZACAO-15-10-2026.md.
+
+javascript/ — código atual.
+css/ — estilos atuais.
+assets/ — recursos usados no jogo e fontes dos sprites atuais.
+tests/ — testes das regras, colisões, salvamentos e finais.
+tools/ — ferramentas de geração e verificação.
+documentacao/ — documentação de desenvolvimento e referências narrativas.
+previas/ — saída das ferramentas de verificação; recriada quando necessário.
+
+sobre-o-jogo.md — guia atual.
+historia.md — história.
+roteiro.md — roteiro.
+cenas.md — catálogo de cenas.
+
+Dont believe/ — projeto Unity independente criado em 10/10/2026, preservado integralmente.
+
+Limpeza em 10/10/2026: cópias antigas, backups, carrossel, prévias e artes sem uso removidos. As fontes e licenças necessárias foram preservadas.
+
+Para distribuir a versão web, execute python3 tools/package-web.py. O ZIP inclui os recursos que o jogo carrega, licenças e documentação; as artes de trabalho ficam no projeto. Extraia a pasta inteira e abra seu index.html. No celular, abra a versão hospedada em um navegador, preservando as subpastas.
