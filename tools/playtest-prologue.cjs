@@ -31,7 +31,7 @@ const server=http.createServer((req,res)=>{
   await page.goto(base+'/index.html');await loaded(page);assert.deepEqual(await page.evaluate(()=>GameArt.status.failed),[]);
   await page.locator('#start').click();await phase(page,'opening');await page.waitForFunction(()=>document.getElementById('prologue-image').naturalWidth>0);
   assert(await page.locator('#dialogue').isHidden());assert(await page.locator('#menu-btn').isHidden());
-  assert((await page.locator('#prologue-image').getAttribute('src')).includes('kali-banco-traseiro'));
+  assert.equal(await page.locator('#prologue-image').getAttribute('src'),await page.evaluate(()=>GameArt.urls.prologueFamily));
   const layout=await page.evaluate(()=>{const s=document.getElementById('prologue-screen').getBoundingClientRect(),c=document.getElementById('prologue-caption'),t=document.getElementById('prologue-text').getBoundingClientRect(),style=getComputedStyle(c);return {x:s.x,y:s.y,w:s.width,h:s.height,captionBottom:t.bottom,captionTop:t.top,background:style.backgroundColor,border:style.borderWidth,overflow:document.documentElement.scrollWidth>innerWidth};});
   assert.deepEqual([layout.x,layout.y,layout.w,layout.h],[0,0,width,height]);assert.equal(layout.background,'rgba(0, 0, 0, 0)');assert.equal(layout.border,'0px');assert(layout.captionTop>=0&&layout.captionBottom<=height);assert(!layout.overflow);
   await shot(page,name+'-abertura');

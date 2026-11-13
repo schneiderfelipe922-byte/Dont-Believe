@@ -1,8 +1,8 @@
 (function(root){
 'use strict';
 const photos={
- family:{id:'family',name:'Fotografia da minha família',hint:'Fotografia antiga',room:'Dormitório',x:7.8*24,y:7*24,flag:'familyPhoto',src:'assets/fotos/kali-com-familia.png',alt:'Kali entre Daty e Inauri, em pé diante de uma casa simples perto de um bosque.',description:'Uma casa perto do bosque. Daty, Inauri e eu, juntos.'},
- friends:{id:'friends',name:'Fotografia de Eron e Tomas',hint:'Fotografia entre os livros',room:'Sala de leitura',x:36.5*24,y:7*24,flag:'friendsPhoto',src:'assets/fotos/eron-tomas-orfanato.png',alt:'Eron e Tomas lado a lado, com os braços sobre os ombros um do outro, no orfanato.',description:'Eron e Tomas abraçados no orfanato, antes do desaparecimento.'}
+ family:{id:'family',name:'Fotografia da minha família',hint:'Fotografia antiga',room:'Dormitório',x:7.8*24,y:7*24,flag:'familyPhoto',src:'assets/fotos/kali-familia-guache-v3.png',alt:'Kali entre Daty e Inauri, em pé diante de uma casa simples perto de um bosque.',description:'Uma casa perto do bosque. Daty, Inauri e eu, juntos.'},
+ friends:{id:'friends',name:'Fotografia de Eron e Tomas',hint:'Fotografia entre os livros',room:'Sala de leitura',x:36.5*24,y:7*24,flag:'friendsPhoto',src:'assets/fotos/eron-tomas-guache-v3.png',alt:'Eron e Tomas lado a lado, com os braços sobre os ombros um do outro, no orfanato.',description:'Eron e Tomas abraçados no orfanato, antes do desaparecimento.'}
 };
 const M=root.GameWorld||(typeof require==='function'?require('./world.js'):null);
 for(const p of Object.values(photos))Object.assign(p,M.place(M.remap(p)));

@@ -20,7 +20,7 @@ function boot(configure){
  const document={getElementById:get,createElement:tag=>new Element(tag),body:new Element(),hidden:false,querySelector:()=>new Element(),querySelectorAll:()=>[],addEventListener:(n,fn)=>(events[n]??=[]).push(fn)};
  const sandbox={document,console,devicePixelRatio:1,innerWidth:960,performance:{now:()=>0},setTimeout:()=>1,clearTimeout(){},requestAnimationFrame:fn=>{tick=fn;},addEventListener(){},localStorage:{getItem:k=>storage.get(k)??null,setItem:(k,v)=>storage.set(k,v)}};
  sandbox.window=sandbox;const c=vm.createContext(sandbox),root=path.resolve(__dirname,'../javascript');
- for(const f of ['story.js','scenery.js','world.js','adventure.js','danger.js','social.js','investigation.js','residents.js','photos.js','character-data.js','character-sprites.js','pixel-art.js','render.js','endings.js','dialogue-ui.js','notebook.js'])vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),c,{filename:f});
+ for(const f of ['story.js','scenery.js','world.js','adventure.js','danger.js','social.js','investigation.js','residents.js','expanded-map.js','photos.js','character-data.js','character-sprites.js','pixel-art.js','render.js','endings.js','dialogue-ui.js','notebook.js'])vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),c,{filename:f});
  c.GameArt={ready:{then(){}},images:{sprites:{width:512,height:509}},urls:{},status:{failed:[]}};
  const story=c.GameStory.initial(),world=c.GameWorld.fresh();story.scene='quarto';configure?.(story,world,c);
  const saveKey='dont-believe.topdown.v2';storage.set(saveKey,JSON.stringify({version:2,story,world}));
@@ -42,9 +42,9 @@ test('E faz carinho em Mel, mostra diálogo e não altera a história; é repet�
 });
 test('E abre e fecha a porta e o estado é salvo',()=>{
  const h=boot((s,w,c)=>{const d=c.GameWorld.doors[0];s.flags.cellOpen=true;w.doors.cell=false;w.player={x:d.x+d.w/2,y:d.y-24,dir:'down',step:0};});
- h.tick();assert.match(h.get('near-label').textContent,/Abrir: Grade da ala leste/);
+ h.tick();assert.match(h.get('near-label').textContent,/Abrir: Grade da cela de Mira/);
  h.key('KeyE','e');assert.equal(JSON.parse(h.storage.get(h.saveKey)).world.doors.cell,true);
- h.tick();assert.match(h.get('near-label').textContent,/Fechar: Grade da ala leste/);
+ h.tick();assert.match(h.get('near-label').textContent,/Fechar: Grade da cela de Mira/);
  h.key('KeyE','e');assert.equal(JSON.parse(h.storage.get(h.saveKey)).world.doors.cell,false);
 });
 test('carinho também funciona pelo botão de interação de toque',()=>{
@@ -53,7 +53,7 @@ test('carinho também funciona pelo botão de interação de toque',()=>{
 });
 test('aviso e tecla E permitem abrir a porta a 80 pixels',()=>{
  const h=boot((s,w,c)=>{const d=c.GameWorld.doors.find(d=>d.id==='cell');s.flags.cellOpen=true;w.doors.cell=false;w.player={x:d.x+d.w/2,y:d.y+d.h/2+80,dir:'up',step:0};});
- h.tick();assert.match(h.get('near-label').textContent,/Abrir: Grade da ala leste/);
+ h.tick();assert.match(h.get('near-label').textContent,/Abrir: Grade da cela de Mira/);
  h.key('KeyE','e');assert.equal(JSON.parse(h.storage.get(h.saveKey)).world.doors.cell,true);
 });
 test('carinho acompanha Mel fora do dormitório e o mapa marca sua posição atual',()=>{

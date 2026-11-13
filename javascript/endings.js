@@ -15,7 +15,7 @@ function draw(canvas,id){
  const art=root.GameArt?.images.endings,rect=panels[id];
  if(art&&rect){
   const c=canvas.getContext('2d');canvas.width=rect[2]*2;canvas.height=rect[3]*2;
-  c.save();c.imageSmoothingEnabled=false;c.clearRect(0,0,canvas.width,canvas.height);
+  c.save();c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.clearRect(0,0,canvas.width,canvas.height);
   c.drawImage(art,...rect,0,0,canvas.width,canvas.height);c.restore();return;
  }
  drawFallback(canvas,id);

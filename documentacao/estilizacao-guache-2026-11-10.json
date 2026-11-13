@@ -1,0 +1,68 @@
+[
+  {
+    "f": "assets/revelacoes/roupa-t17-v2.png",
+    "p": "Edit this exact illustration ONLY by adding one basket of dirty laundry on the floor beside the washing machine. Keep existing upright top-loading machine, visible T-17 garment label, simple plaster wall, composition and handmade gouache style. Basket holds a few crumpled muted clothes. No other added clutter. Full bleed.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-2170538f-460b-40b9-a1c5-a3425f2abaff.png",
+    "target": "assets/revelacoes/roupa-t17-v2-guache-v2.png"
+  },
+  {
+    "f": "assets/revelacoes/tomas-cela-v2.png",
+    "p": "Edit this exact illustration ONLY to remove the distressed pale paper border around all four outer edges. Extend the existing dark violet painted cell background seamlessly to every edge. Preserve the entire character, extreme thinness, face, glasses, hands, loose hoodie and bars EXACTLY. Keep the gouache and ink style inside the picture. No frame, no light torn-paper edge, full bleed.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-33e06295-849e-40ef-8d9c-1929005bb416.png",
+    "target": "assets/revelacoes/tomas-cela-v2-guache-v2.png"
+  },
+  {
+    "f": "assets/menus/oldhood-nanquim-u03.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. Keep orphanage on LEFT and empty dark right half for overlay buttons. No words. Preserve landscape aspect.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-1c5a18ce-75e6-4770-9333-be31607b49cf.png",
+    "target": "assets/menus/oldhood-nanquim-u03-guache-v2.png"
+  },
+  {
+    "f": "assets/cenarios/orfanato-nanquim-v3.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. CRITICAL functioning game map atlas: exact 1456x1080 layout. Preserve EVERY wall, opening, corridor, furniture position and size, all walkable paths. Eight rooms unchanged. Preserve bottom two door animation strips with 5 frames each at same pixel positions and sizes. No extra obstacles. Do not redesign geometry, repaint existing surfaces only. Same aspect ratio and no crop.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-b39a0184-194c-4fa6-af67-6776a4ffad6b.png",
+    "target": "assets/cenarios/orfanato-nanquim-v3-guache-v2.png"
+  },
+  {
+    "f": "assets/prologo/estrada-nanquim-v1.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. Preserve top-down road boundaries, car location, all movement space. No new obstacles. Same landscape aspect.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-a6df1067-b916-4e49-9921-0acba6324c6d.png",
+    "target": "assets/prologo/estrada-nanquim-v1-guache-v2.png"
+  },
+  {
+    "f": "assets/cenarios/altar-nanquim-v1.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. Keep violet obelisk, two candles and altar arrangement. Simplify surface detail strongly.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-327a120a-0186-4823-966e-d3be3afec3d8.png",
+    "target": "assets/cenarios/altar-nanquim-v1-guache-v2.png"
+  },
+  {
+    "f": "assets/fotos/kali-com-familia-nanquim-v1.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. Keep all three family members and exact identities/poses. Red-haired Kali with black glasses. Preserve portrait aspect.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-d870d927-e3bb-4d67-bf9b-65341e1d32cd.png",
+    "target": "assets/fotos/kali-com-familia-nanquim-v1-guache-v2.png"
+  },
+  {
+    "f": "assets/fotos/eron-tomas-nanquim-v1.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. Keep Eron purple hair and Tomas black hair glasses in ivory hoodie, both healthy in this earlier memory. Keep pose and portrait aspect.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-b44f250c-75ca-40bf-8df3-f9cda49138fa.png",
+    "target": "assets/fotos/eron-tomas-nanquim-v1-guache-v2.png"
+  },
+  {
+    "f": "assets/prologo/pais-olhando-tras-nanquim-v1.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. Keep both parents looking backward from front car seats with concerned expressions. Preserve faces and clothes. Landscape.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-999f3a9e-f41e-4ccb-a0b9-b585b26de5ab.png",
+    "target": "assets/prologo/pais-olhando-tras-nanquim-v1-guache-v2.png"
+  },
+  {
+    "f": "assets/prologo/pais-acidente-nanquim-v1.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. Keep tragic quiet aftermath, parents slumped eyes closed inside crashed car. No increased blood or wounds. Preserve faces clothes and framing. Landscape.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-3deb9637-ebe2-475e-b97c-23de21a2d522.png",
+    "target": "assets/prologo/pais-acidente-nanquim-v1-guache-v2.png"
+  },
+  {
+    "f": "assets/finais/finais-nanquim-kali-v2.png",
+    "p": "Use case: style-transfer. Image 1 is EDIT TARGET. Image 2 is STYLE ONLY. Repaint target with the much bolder stylization of image 2: broad opaque dry gouache strokes, simplified angular organic shapes, broken expressive ink contours, flat graphic value masses, aged paper grain, dusty violet shadows and muted ochre/ivory. Dramatically reduce microdetail and realistic texture. Preserve identities, clothes, hair colors, narrative, composition and framing of image 1. Full bleed, NO decorative worn edge or paper border. CRITICAL preserve exact SIX panels in 3 columns by 2 rows, equal 512x512 cells of original 1536x1024 atlas. Keep all scene positions, figures, red-haired Kali dark clothes and ivory sleeves, other people and cat. Keep title/footer panel boundaries exactly aligned. Same lettering. Repaint, do not rearrange.",
+    "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-0a42b57e-80bf-4734-b901-682077ac63fe.png",
+    "target": "assets/finais/finais-nanquim-kali-v2-guache-v2.png"
+  }
+]

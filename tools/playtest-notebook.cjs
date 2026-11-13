@@ -12,9 +12,9 @@ const ROOT=path.resolve(__dirname,'..'),OUT=path.join(ROOT,'previas/diario');fs.
  await page.goto('file://'+ROOT+'/index.html');await page.evaluate(s=>localStorage.setItem('dont-believe.topdown.v2',JSON.stringify(s)),save);await page.reload();await page.evaluate(()=>GameArt.ready);await page.locator('#resume').click();await page.evaluate(()=>__tick());
  assert.equal(await page.locator('#mission').isVisible(),false);assert.equal(await page.locator('#relationships').count(),0);
  await page.keyboard.press('j');await page.evaluate(()=>document.fonts.ready);await page.waitForFunction(()=>document.querySelector('#modal').dataset.art==='ready',null,{polling:100});
- assert.equal(await page.locator('#modal').getAttribute('class'),'notebook');assert(await page.evaluate(()=>document.fonts.check('20px Kalam')));
+ assert.equal(await page.locator('#modal').getAttribute('class'),'notebook');assert(await page.evaluate(()=>document.fonts.check('20px "Mystery Quest"')));
  const ink=await page.locator('.notebook-entry p').first().evaluate(n=>{const c=getComputedStyle(n);return {color:c.color,size:c.fontSize,font:c.fontFamily,line:c.lineHeight}});
- assert.equal(ink.color,'rgb(48, 41, 31)');assert.equal(ink.size,'20px');assert(ink.font.includes('Kalam'));assert.equal(ink.line,'32px');
+ assert.equal(ink.color,'rgb(237, 234, 240)');assert.equal(ink.size,'20px');assert(ink.font.includes('Mystery Quest'));assert.equal(ink.line,'32px');
  const before=await page.evaluate(()=>JSON.stringify(__qa.state.danger));await page.evaluate(()=>__tick(90));assert.equal(await page.evaluate(()=>JSON.stringify(__qa.state.danger)),before);
  assert(!/(Mira|Eron|Noah|Adultos)\s*[+−-]\d|confiança\s*\d|\d\s*\/\s*9/.test(await page.locator('#modal').innerText()));
  await page.screenshot({path:path.join(OUT,'caderno-computador.png')});
@@ -30,7 +30,7 @@ const ROOT=path.resolve(__dirname,'..'),OUT=path.join(ROOT,'previas/diario');fs.
  await page.setViewportSize({width:390,height:844});await page.emulateMedia({reducedMotion:'reduce'});await page.keyboard.press('j');
  await page.locator('.notebook-art-probe').evaluate(img=>img.src='assets/diario/imagem-inexistente.png');await page.waitForFunction(()=>document.querySelector('#modal').dataset.art==='missing',null,{polling:100});assert(await page.locator('#notebook-panel').isVisible());await page.screenshot({path:path.join(OUT,'caderno-sem-imagem.png')});
  await page.keyboard.press('Escape');assert.equal(await page.locator('#modal').isVisible(),false);assert.equal(await page.evaluate(()=>document.activeElement.id),'canvas');
- await page.context().setOffline(true);await page.reload();await page.locator('#resume').click();await page.keyboard.press('j');await page.waitForFunction(()=>document.querySelector('#modal').dataset.art==='ready',null,{polling:100});assert(await page.evaluate(()=>document.fonts.check('20px Kalam')));
+ await page.context().setOffline(true);await page.reload();await page.locator('#resume').click();await page.keyboard.press('j');await page.waitForFunction(()=>document.querySelector('#modal').dataset.art==='ready',null,{polling:100});assert(await page.evaluate(()=>document.fonts.check('20px "Mystery Quest"')));
  assert.deepEqual(errors,[]);fs.writeFileSync(path.join(OUT,'verificacao.json'),JSON.stringify({errors,viewports:['1280x900','390x844','844x390'],checks:['fonte local','consulta sem custo','atalhos','abas por teclado','marcação opcional','rolagem móvel','falha de imagem','redução de movimento','offline','foco restaurado']},null,2));
  console.log(JSON.stringify({errors,mobile,output:OUT}));await browser.close();
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -1,33 +1,27 @@
 /* Don’t Believe — tokens canônicos. DESIGN.md documenta os papéis e consumidores. */
 @font-face {
-  font-family: Solway;
-  src: url('../assets/fontes/Solway-Regular.ttf') format('truetype');
+  font-family: 'Mystery Quest';
+  src: url('../assets/fontes/MysteryQuest-Regular.ttf') format('truetype');
   font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: Solway;
-  src: url('../assets/fontes/Solway-Medium.ttf') format('truetype');
-  font-weight: 500 700;
   font-display: swap;
 }
 :root {
   color-scheme: dark;
-  --bg: #100f13;
-  --surface: #211b20;
-  --gold: #a58b63;
-  --text: #e9dfcf;
-  --muted: #bbafa2;
-  --wine: #783844;
-  --line: #a58b6359;
-  --hover: #78384438;
-  --font-ui: Solway, 'American Typewriter', Georgia, serif;
-  --font-hand: Kalam, Georgia, serif;
+  --bg: #100e14;
+  --surface: #211d28;
+  --gold: #b99bd8;
+  --text: #edeaf0;
+  --muted: #bbb4c4;
+  --wine: #59396f;
+  --line: #ae8dcc59;
+  --hover: #9160bd38;
+  --font-ui: 'Mystery Quest', Georgia, serif;
+  --font-hand: var(--font-ui);
   --text-label: 12px;
   --text-body: 16px;
   --frame-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--line), 0 18px 60px #0008;
   --scroll-track: var(--bg);
-  --scroll-thumb: #74604b;
+  --scroll-thumb: #766184;
   --social-panel: var(--surface);
   --social-border: var(--line);
   --social-paper: var(--text);
@@ -41,6 +35,7 @@
 ::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border: 2px solid var(--scroll-track); }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 body { margin: 0; background: radial-gradient(ellipse at top, var(--surface), transparent 65%), var(--bg); }
+button, input, select, textarea { font: inherit; }
 button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; border-radius: 0; }
 button:disabled { cursor: not-allowed; opacity: .5; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
@@ -90,21 +85,29 @@ kbd { display: inline-grid; place-items: center; font: 400 12px/1.3 var(--font-u
 .settings-row input { width: 22px; height: 22px; margin: 11px; flex: none; accent-color: var(--wine); }
 .setting-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
 .setting-buttons button { flex: 1; }
-.altar-image { width: 100%; max-height: 350px; object-fit: contain; background: var(--bg); image-rendering: pixelated; }
+.altar-image { width: 100%; max-height: 350px; object-fit: contain; background: var(--bg); image-rendering: auto; }
 
-/* O menu preserva a ilustração original; a interface acrescenta os estados interativos. */
-#home-screen { position: absolute; inset: 0; z-index: 5; display: block; overflow: hidden; background: var(--bg); }
-.menu-art-original { display: block; width: 100%; height: 100%; object-fit: fill; user-select: none; pointer-events: none; }
-.menu-art-actions { position: absolute; inset: 0; pointer-events: none; }
-.art-hit { position: absolute; min-height: 44px; left: 77.4%; width: 16.3%; height: 6.75%; background: transparent; border: 1px solid transparent; pointer-events: auto; padding: 0; }
-.art-hit > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.hit-play { top: 35%; }.hit-chapters { top: 43.95%; }.hit-options { top: 52.9%; }.hit-endings { top: 61.9%; }.hit-credits { top: 70.9%; }.hit-exit { top: 79.9%; }
-#home-screen .art-hit:hover, #home-screen .art-hit:focus-visible, #home-screen .art-hit:active { background: var(--hover); border-color: var(--gold); box-shadow: inset 0 0 18px #100f1377; }
-.resume-art { position: absolute; left: 77.4%; top: calc(35% - 52px); width: 16.3%; min-height: 44px; border: 1px solid var(--gold); background: var(--bg); padding: 8px 4px; font: 400 12px/1.4 var(--font-ui); color: var(--text); }
+/* U03 — nanquim, guache e recortes irregulares de papel. */
+#home-screen { position: absolute; inset: 0; z-index: 5; overflow: hidden; background: var(--bg); }
+.menu-art-original { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; pointer-events: none; }
+.menu-paper { position: absolute; right: 5%; top: 0; bottom: 0; width: 29%; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 24px 0; }
+.menu-title { color: var(--text); text-shadow: 0 3px 18px var(--bg); }
+.menu-title small { color: var(--gold); font-size: 12px; letter-spacing: 5px; }
+.menu-title h1 { margin: 12px 0; font: 400 clamp(48px,6.2vw,94px)/.9 var(--font-ui); transform: rotate(-3deg); }
+.menu-title p { font-size: 14px; color: var(--muted); margin: 22px 0 8px; }
+.menu-art-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.art-hit { position: relative; min-height: 48px; width: 100%; background: #211d28ee; color: var(--text); border: 1px solid var(--line); border-radius: 3% 1% 5% 2% / 12% 20% 8% 16%; box-shadow: 2px 3px 0 #08070b80; padding: 10px 8px; }
+.art-hit:nth-child(even) { transform: rotate(.7deg); }
+.art-hit:nth-child(odd) { transform: rotate(-.6deg); }
+.art-hit > span { font: 400 17px/1.2 var(--font-ui); }
+.hit-play { grid-column: 1 / -1; background: #d4c5dd; color: #211727; min-height: 56px; border-color: #e4d6eb; }
+.hit-exit { grid-column: 1 / -1; }
+#home-screen .art-hit:hover, #home-screen .art-hit:focus-visible { background: var(--wine); color: var(--text); border-color: var(--gold); }
+.resume-art { order: -1; min-height: 44px; border: 1px dashed var(--gold); background: #100e14dd; padding: 10px; font: 400 13px/1.4 var(--font-ui); color: var(--text); }
 .resume-art:hover { background: var(--wine); }
-.art-ending-count { position: absolute; right: 7.6%; bottom: 6.1%; font-size: 12px; color: var(--text); letter-spacing: 2px; text-shadow: 0 1px 4px #000; }
+.art-ending-count { font-size: 12px; color: var(--muted); letter-spacing: 2px; text-align: right; }
 body.at-home main { max-width: none; padding: 0; }
-body.at-home #stage { aspect-ratio: 2048/1164; height: auto; min-height: 0; max-height: none; }
+body.at-home #stage { height: max(700px,100dvh); min-height: 700px; max-height: none; border: 0; }
 body.at-home #canvas { position: absolute; inset: 0; visibility: hidden; }
 
 /* Avisos compactos preservam a área visível do cenário. */
@@ -129,7 +132,7 @@ body.in-dialogue #touch-controls, body.at-home #touch-controls { visibility: hid
 /* Desfechos: a cena inteira à esquerda, a leitura em uma folha escura à direita. */
 #ending-screen { position: absolute; inset: 0; z-index: 10; display: grid; grid-template-columns: 46% 54%; overflow: auto; background: var(--bg); color: var(--text); --ending-accent: var(--gold); }
 #ending-screen .ending-art { position: relative; min-height: 100%; background: var(--bg); }
-.ending-art canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; image-rendering: pixelated; }
+.ending-art canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; image-rendering: auto; }
 #ending-number { position: absolute; left: 24px; bottom: 25px; font-size: 12px; letter-spacing: 2px; color: var(--text); text-shadow: 0 2px 5px #000; }
 .ending-content { padding: clamp(24px,3vw,46px); background: var(--surface); border-left: 1px solid var(--line); box-shadow: inset 4px 0 var(--bg), inset 5px 0 var(--line); }
 .ending-content .eyebrow { color: var(--ending-accent); }
@@ -154,7 +157,7 @@ body.in-dialogue #touch-controls, body.at-home #touch-controls { visibility: hid
 #modal.photo-memory .memory-title { font: 400 26px/1.3 var(--font-ui); color: var(--text); margin: 0 0 12px; flex: none; }
 .memory-layout { display: flex; flex-direction: column; gap: 16px; min-height: 0; flex: 1; }
 .memory-photo { position: relative; display: grid; place-items: center; min-height: 90px; flex: 1; margin: 0; overflow: hidden; }
-.memory-image { display: block; width: 100%; height: 100%; min-height: 0; max-height: 100%; object-fit: contain; image-rendering: pixelated; opacity: 0; }
+.memory-image { display: block; width: 100%; height: 100%; min-height: 0; max-height: 100%; object-fit: contain; image-rendering: auto; opacity: 0; }
 .is-ready .memory-image { animation: memory-reveal .4s ease-out both; }
 #modal.photo-memory .memory-load { position: absolute; max-width: 36ch; padding: 18px; text-align: center; font: 400 16px/1.6 var(--font-ui); color: var(--text); }
 .memory-retry { position: absolute; bottom: 12px; }
@@ -188,25 +191,26 @@ body.reduced .is-ready .memory-image { opacity: 1; }
   .memory-continue { width: 100%; }
 }
 @media (max-width:1000px) {
-  body.at-home #stage { height: max(620px,100dvh); aspect-ratio: auto; min-height: 620px; }
-  .menu-art-original { object-fit: cover; object-position: 27% center; filter: brightness(.68); }
-  #home-screen::before { content: 'DON’T\A BELIEVE'; white-space: pre; position: absolute; z-index: 1; top: 28px; left: 25px; font: 500 45px/1 var(--font-ui); letter-spacing: -2px; color: var(--text); text-shadow: 3px 4px var(--bg); }
-  .menu-art-actions { inset: auto 23px 37px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; z-index: 2; pointer-events: auto; }
-  .art-hit { position: relative; inset: auto; width: 100%; height: 52px; background: var(--surface); border: 1px solid var(--gold); box-shadow: inset 0 0 0 3px var(--bg), inset 0 0 0 4px var(--line); }
-  .art-hit > span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; font: 400 16px var(--font-ui); color: var(--text); }
-  #home-screen .art-hit:hover, #home-screen .art-hit:active { background: var(--wine); }
-  .hit-play, .hit-exit { grid-column: 1/3; }
-  .hit-play { background: var(--wine); }
-  .resume-art { top: 164px; left: 26px; width: calc(100% - 52px); z-index: 2; }
-  .art-ending-count { bottom: 10px; right: 27px; z-index: 2; }
+  body.at-home #stage { height: max(740px,100dvh); min-height: 740px; }
+  .menu-art-original { object-position: 35% center; }
+  .menu-paper { right: 5%; width: 40%; }
+  .menu-title h1 { font-size: 62px; }
 }
-@media (max-height:500px) and (min-width:701px) and (max-width:1000px) {
-  html.is-fullscreen body.at-home #stage, body.at-home #stage { height: 100dvh; min-height: 0; }
-  .menu-art-original { width: 170%; }
-  #home-screen::before { font-size: 36px; }
-  .menu-art-actions { left: 48%; gap: 10px; }
-  .hit-play, .hit-exit { grid-column: auto; }
-  .resume-art { width: 38%; }
+@media (max-width:600px) {
+  .menu-art-original { object-position: 34% top; }
+  .menu-paper { inset: 0; width: 100%; padding: 26px; justify-content: end; gap: 14px; background: linear-gradient(180deg,#100e1410,#100e14a0 30%,#100e14f5 65%); }
+  .menu-title h1 { font-size: 64px; }
+  .menu-title p { margin: 16px 0 4px; }
+  .resume-art { order: 0; }
+}
+@media (max-height:500px) and (min-width:701px) {
+  html.is-fullscreen body.at-home #stage, body.at-home #stage { height: 100dvh; min-height: 390px; }
+  .menu-paper { right: 4%; width: 62%; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-content: center; padding: 16px 0; }
+  .menu-title h1 { font-size: 48px; }
+  .menu-title p { font-size: 12px; }
+  .menu-art-actions { gap: 7px; }
+  .art-hit, .hit-play { min-height: 44px; }
+  .resume-art { order: 0; }
 }
 @media (forced-colors:active) {
   * { scrollbar-color: auto; }

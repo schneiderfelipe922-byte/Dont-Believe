@@ -65,3 +65,15 @@ html.is-fullscreen body.at-home #stage { height: 100dvh; min-height: 0; aspect-r
   .controls-keys { gap: 4px 16px; margin-bottom: 16px; }
   .controls-location { padding-block: 12px; }
 }
+
+/* U01: ações principais primeiro; informações extras sob demanda. */
+.controls-menu #modal-content > p { margin: 0 0 14px; color: var(--muted); }
+.controls-section-title { margin: 18px 0 0; font: 400 16px/1.4 var(--font-ui); color: var(--gold); }
+.controls-disclosure { border-top: 1px solid var(--line); margin: 10px 0; }
+.controls-disclosure summary { padding: 14px 4px; cursor: pointer; color: var(--text); font-size: 16px; }
+.controls-disclosure summary:hover { color: var(--gold); }
+.controls-disclosure > p { padding: 0 8px 8px; }
+.controls-menu .controls-location { margin-top: 16px; padding-block: 8px; }
+.controls-menu .controls-location h3 { font-size: 20px; }
+.controls-menu .controls-keys { font-size: 14px; margin-bottom: 18px; }
+.controls-menu .controls-actions { margin-top: 10px; }

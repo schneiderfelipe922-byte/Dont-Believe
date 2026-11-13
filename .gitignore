@@ -1,3 +1,10 @@
 .DS_Store
 /.vercel/
 /vercel-dist/
+
+# Backups, prévias e ferramentas locais
+/backups/
+/previas/
+/output/
+/tmp/
+/Dont believe/

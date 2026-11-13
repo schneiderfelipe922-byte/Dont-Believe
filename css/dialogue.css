@@ -1,9 +1,9 @@
 /* Diálogos: moldura ilustrada e pigmentos próprios de cada personagem. */
-:root{--dialogue-font:var(--font-ui);--dialogue-text:var(--text);--dialogue-choice:var(--text);--dialogue-choice-wash:var(--hover);--dialogue-paper:var(--bg);--dialogue-kali:#695354;--dialogue-noah:#82817b;--dialogue-mira:#444541;--dialogue-eron:#625a66;--dialogue-vigia:#59494a;--dialogue-tomas:#50565c;--dialogue-daty:#93918a;--dialogue-inauri:#50565c}
+:root{--dialogue-font:var(--font-ui);--dialogue-text:var(--text);--dialogue-choice:var(--text);--dialogue-choice-wash:var(--hover);--dialogue-paper:var(--bg);--dialogue-kali:#a78ab8;--dialogue-noah:#aaa2b4;--dialogue-mira:#74667e;--dialogue-eron:#9b7fb4;--dialogue-vigia:#87699a;--dialogue-tomas:#8b8599;--dialogue-daty:#c6becf;--dialogue-inauri:#8b8599}
 /* Pigmento gasto: filtros só na arte, sem tornar a caixa ou as falas transparentes. */
-#dialogue{position:absolute;z-index:8;inset:0;max-height:none;padding:0;overflow:hidden;border:0;background:linear-gradient(90deg,#0001 35%,#09070dc4 100%),linear-gradient(0deg,#060509bb,transparent 85%);box-shadow:none;isolation:isolate;font-family:var(--dialogue-font);color:var(--dialogue-text);--dialogue-accent:var(--dialogue-noah);--dialogue-frame-filter:grayscale(1) brightness(.8) sepia(.22)}
+#dialogue{position:absolute;z-index:8;inset:0;max-height:none;padding:0;overflow:hidden;border:0;background:linear-gradient(90deg,#0001 35%,#09070dc4 100%),linear-gradient(0deg,#060509bb,transparent 85%);box-shadow:none;isolation:isolate;font-family:var(--dialogue-font);color:var(--dialogue-text);--dialogue-accent:var(--dialogue-noah);--dialogue-frame-filter:grayscale(1) brightness(.8) sepia(.2) hue-rotate(220deg)}
 #dialogue[data-speaker=kali]{--dialogue-accent:var(--dialogue-kali);--dialogue-frame-filter:grayscale(.85) hue-rotate(68deg) saturate(.3) brightness(.56)}
-#dialogue[data-speaker=noah]{--dialogue-accent:var(--dialogue-noah);--dialogue-frame-filter:grayscale(1) brightness(.9) sepia(.22)}
+#dialogue[data-speaker=noah]{--dialogue-accent:var(--dialogue-noah);--dialogue-frame-filter:grayscale(1) brightness(.9) sepia(.2) hue-rotate(220deg)}
 #dialogue[data-speaker=mira]{--dialogue-accent:var(--dialogue-mira);--dialogue-frame-filter:grayscale(1) brightness(.42)}
 #dialogue[data-speaker=eron]{--dialogue-accent:var(--dialogue-eron);--dialogue-frame-filter:grayscale(.85) saturate(.3) brightness(.58)}
 #dialogue[data-speaker=vigia],#dialogue[data-speaker=lider]{--dialogue-accent:var(--dialogue-vigia);--dialogue-frame-filter:grayscale(.8) hue-rotate(60deg) saturate(.3) brightness(.48)}
@@ -84,7 +84,7 @@
 @media(forced-colors:active){#dialogue .dialogue-card::after{background:Canvas}#dialogue .dialogue-card::before{filter:grayscale(1)}#dialogue .choice[data-selected=true]{color:Highlight}#dialogue .choice:focus-visible{outline:2px solid Highlight}#dialogue,#dialogue #dialogue-text p,#dialogue #speaker,#dialogue .choice small{color:CanvasText}}
 
 /* Mel repousa na borda: retrato horizontal, inteiro e na escala dos companheiros. */
-#dialogue[data-speaker=mel]{--dialogue-accent:#9caaa0;--dialogue-frame-filter:grayscale(.9) sepia(.15) brightness(.9)}
+#dialogue[data-speaker=mel]{--dialogue-accent:#b2a5bf;--dialogue-frame-filter:grayscale(.9) sepia(.2) hue-rotate(220deg) brightness(.9)}
 #dialogue[data-speaker=mel] .portrait{width:26%;height:24dvh;max-height:200px;right:8%}
 @media(max-width:700px){#dialogue[data-speaker=mel] .portrait{width:39%;height:20dvh;max-height:140px;right:7%}}
 @media(max-height:500px) and (min-width:701px){#dialogue[data-speaker=mel] .portrait{width:24%;height:32dvh;max-height:125px}}

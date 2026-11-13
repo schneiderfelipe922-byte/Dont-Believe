@@ -4,12 +4,12 @@
 const M=root.GameWorld||(typeof require==='function'?require('./world.js'):null),A=root.GameAdventure||(typeof require==='function'?require('./adventure.js'):null);
 const p=(x,y)=>M.authoredPoint(x,y);
 function setup(kind,s){
- if(['travessia','portao'].includes(s.scene)&&!s.flags.escapeSolo){return {mode:'escape',start:p(kind==='mira'?54:kind==='eron'?56:55,17.2),stops:[]};}
+ if(['travessia','portao'].includes(s.scene)&&!s.flags.escapeSolo){return {mode:'escape',start:M.place({x:M.positions.exit.x+(kind==='mira'?100:kind==='eron'?140:120),y:M.positions.exit.y-10}),stops:[]};}
  if(kind==='mira')return s.flags.miraTaken&&!s.flags.rescued?{mode:'cell',start:M.positions.miraCell,stops:[]}:
   s.flags.rescued?{mode:'rescued',start:p(46,28.5),stops:[p(48.5,28.5),p(17.5,35.5)]}:{mode:'free',start:M.positions.mira,stops:[p(29.5,10.5),p(9.5,9.5),p(12.5,35.5)]};
  if(kind==='eron')return s.flags.eronBetrayed?{mode:'cell',start:p(55,8.5),stops:[]}:{mode:'free',start:M.positions.eronDorm,stops:[p(50.5,28.5),p(17.5,36.5),p(17,8)]};
  if(['limiar','emboscada'].includes(s.scene))return {mode:'office',start:p(42,39.5),escort:p(40,39.5),stops:[]};
- if(s.flags.noahTask&&A.act(s)>=3)return {mode:'latch',start:p(56,18.2),escort:p(54,18.2),stops:[]};
+ if(s.flags.noahTask&&A.act(s)>=3)return {mode:'latch',start:M.positions.exitLatch,escort:M.place({x:M.positions.exitLatch.x+60,y:M.positions.exitLatch.y}),stops:[]};
  return {mode:'free',start:p(15,9.8),escort:M.positions.guardDorm,stops:[p(27.5,18.5),p(42.5,39.5),p(37.5,28.5),p(12.5,9.5)]};
 }
 function freshActor(spec){return {...spec.start,mode:spec.mode,dir:'down',step:0,wait:2,next:0,route:[],doors:null};}

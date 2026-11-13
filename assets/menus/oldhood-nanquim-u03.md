@@ -1,0 +1,7 @@
+# Guilherme — U03
+
+Arte criada com a ferramenta integrada image_gen e aplicada à tela inicial. Original preservado em menu-original.png. Direção: nanquim e guache, papel escuro, arquitetura imperfeita e luz violeta. Botões HTML mantêm foco e ações reais, com bordas assimétricas.
+
+## Prompt final
+
+Use case: illustration-story. Create an original landscape 16:9 main-menu background illustration for the psychological mystery game Don't Believe — O Obelisco, set at the old orphanage OldHood. Hand-drawn ink and dry gouache on worn charcoal paper, expressive crooked outlines, uneven perspective, scratchy crosshatching, loose brushwork and irregular organic silhouettes, authored storybook suspense rather than polished geometric vector art. A looming old orphanage fills the left two thirds, seen from its winding cracked path, with tall crooked windows, a single violet lit window, tangled bare branches and a pale broken moon. Ash charcoal, dusty lilac, faded ivory, muted plum, small warm window accents. Rich tactile detail with intentional empty spaces. The rightmost third dissolves into nearly black plum paper and faint branches along outer edges, leaving calm empty dark space for separate HTML title and menu buttons. Atmospheric and legible, haunting but no gore. Full bleed painted artwork, no frame, no lettering, no words, no buttons, no UI. Landscape 1536x1024 or preferably 1792x1024 composition.

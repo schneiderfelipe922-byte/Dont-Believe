@@ -1,6 +1,6 @@
 (function(root){
 'use strict';
-const T=24,W=61,H=38;
+const T=24,W=72,H=89;
 const legacyRooms=[{id:'dorm',name:'Dormitório',x:2,y:2,w:20,h:12,floor:'wood'},{id:'study',name:'Sala de leitura',x:26,y:2,w:15,h:10,floor:'wood'},{id:'cell',name:'Ala restrita',x:45,y:2,w:15,h:10,floor:'stone'},{id:'hall',name:'Corredor dos vigias',x:2,y:15,w:58,h:5,floor:'stone'},{id:'dining',name:'Salão do obelisco',x:2,y:23,w:28,h:20,floor:'stone'},{id:'kitchen',name:'Cozinha',x:33,y:23,w:27,h:8,floor:'wood'},{id:'office',name:'Sala de observação',x:33,y:35,w:12,h:8,floor:'wood'},{id:'archive',name:'Arquivos subterrâneos',x:48,y:35,w:12,h:8,floor:'stone'}];
 const scenery=root.GameScenery||(typeof require==='function'?require('./scenery.js'):null);
 const rooms=scenery.rooms(T),walkAreas=scenery.areas();
@@ -8,8 +8,10 @@ const grid=Array.from({length:H},()=>Array(W).fill(0));
 for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(walkAreas.some(a=>(x+.5)*T>=a.x&&(x+.5)*T<a.x+a.w&&(y+.5)*T>=a.y&&(y+.5)*T<a.y+a.h))grid[y][x]=2;
 const passages=scenery.passageRects.map(a=>a.map(v=>v/T));
 const doors=[
- {id:'cell',name:'Grade da ala leste',x:1164,y:254,w:70,h:8,lock:'cellOpen',art:[1145,174,108,88]},
- {id:'archive',name:'Porta dos arquivos',x:1180,y:751,w:70,h:8,lock:'tunnel',art:[1166,677,100,82]}
+ {id:'cell',name:'Grade da cela de Mira',x:315,y:1768,w:240,h:16,lock:'cellOpen',art:[315,1672,240,112]},
+ {id:'tomasCell',name:'Grade da cela de Tomas',x:615,y:1768,w:210,h:16,lock:'cellOpen',art:[615,1672,210,112]},
+ {id:'archive',name:'Porta dos arquivos',x:925,y:1785,w:100,h:16,lock:'tunnel',art:[925,1645,100,156]},
+ {id:'warehouse',name:'Porta do armazém',x:1058,y:310,w:48,h:16,lock:'warehouseOpen'}
 ];
 const drawers=scenery.drawers;
 const sceneryProps=scenery.geometry(),entranceAreas=scenery.passageRects.map(([x,y,w,h])=>({x,y,w,h}));
@@ -40,7 +42,7 @@ prop('archiveShelf','books',49,36,3,2);prop('archiveShelf2','books',56,36,3,2);p
 [[3,24],[28,24],[3,41],[28,41],[3,3],[24,17],[43,17],[59,3],[34,29],[59,29]].forEach(([x,y],i)=>prop('plant'+i,'plant',x,y,1,1));
 const lights=[[12.5,25.5],[19.5,25.5],[3.5,16],[23.5,16],[43.5,16],[59,18],[28.5,40],[3.5,40],[35,29],[58,29],[49,40],[58,40],[20.5,7],[27.5,10],[58,10]].map(([x,y])=>{const p=remap({x:x*T,y:y*T});return [p.x/T,p.y/T];});
 const point=(x,y)=>remap({x:x*T,y:y*T});
-let reachableFloor;
+const placementCache=new Map();
 const positions=new Proxy({mel:point(10.5,10.5),guardDorm:point(12.5,9.8),altar:point(16,37.5),mira:point(12,34.5),noahHall:point(27,17.5),eronDorm:point(17,8),bed:point(7.3,8.3),eronKitchen:point(50,28),service:point(40,23),examiner:point(40,39.3),miraBed:point(8.3,6.8),noahDorm:point(17,9.8),officeDoor:point(39.5,34.5),guardHall:point(36,17.5),miraCell:point(51,7),relic:point(54,39.5),leader:point(51,40.7),exit:point(60.2,17.5)},{set(o,k,v){o[k]=place(v);return true;}});
 for(const key of Object.keys(positions))positions[key]=positions[key];
 const stages={
@@ -74,17 +76,15 @@ function walkable(x,y,r=7,state=null,world=null){
  return !world||!doors.some(d=>!doorOpen(d,state,world)&&overlaps(doorBounds(d),x,y,r));
 }
 function place(p){
- if(!reachableFloor){
-  const step=T/4,seed={x:303,y:249},queue=[seed];reachableFloor=new Map([[`${seed.x},${seed.y}`,seed]]);
-  for(let i=0;i<queue.length;i++){const a=queue[i];for(const [dx,dy]of [[step,0],[-step,0],[0,step],[0,-step]]){const b={x:a.x+dx,y:a.y+dy},key=`${b.x},${b.y}`;if(!reachableFloor.has(key)&&walkable(b.x,b.y,7)&&clearWalk(a,b,null,null)){reachableFloor.set(key,b);queue.push(b);}}}
- }
- const center={x:(Math.floor(p.x/(T/4))+.5)*(T/4),y:(Math.floor(p.y/(T/4))+.5)*(T/4)};
- if(walkable(p.x,p.y,7)&&reachableFloor.has(`${center.x},${center.y}`)&&clearWalk(p,center,null,null))return {...p};
+ const cacheKey=p.x+','+p.y,cached=placementCache.get(cacheKey);if(cached)return {...p,...cached};
+ if(walkable(p.x,p.y,7))return {...p,area:scenery.floorAt(p).id};
  const room=rooms.find(r=>p.x>=r.x*T&&p.x<(r.x+r.w)*T&&p.y>=r.y*T&&p.y<(r.y+r.h)*T);
-
- let best=null,distance=Infinity;
- for(const q of reachableFloor.values()){if(room&&(q.x<room.x*T||q.x>=(room.x+room.w)*T||q.y<room.y*T||q.y>=(room.y+room.h)*T))continue;const d=Math.hypot(q.x-p.x,q.y-p.y);if(d<distance){best=q;distance=d;}}
- return {...p,...best};
+ let best=null,distance=Infinity;const floor=scenery.floorAt(p);
+ for(let y=floor.y+9;y<floor.y+floor.h;y+=6)for(let x=9;x<floor.w;x+=6){
+  if(room&&(x<room.x*T||x>=(room.x+room.w)*T||y<room.y*T||y>=(room.y+room.h)*T))continue;
+  const d=Math.hypot(x-p.x,y-p.y);if(d<distance&&walkable(x,y,7)){best={x,y};distance=d;}
+ }
+ const result={...best,area:floor.id};placementCache.set(cacheKey,result);return {...p,...result};
 }
 function move(player,dx,dy,state=null,world=null){
  if(!Number.isFinite(dx)||!Number.isFinite(dy))return;
@@ -104,9 +104,11 @@ function move(player,dx,dy,state=null,world=null){
   advance('x',dx/count);
   advance('y',dy/count);
  }
+ player.area=scenery.floorAt(player).id;
 }
 function roomAt(x,y){return rooms.find(r=>x>=r.x*T&&x<(r.x+r.w)*T&&y>=r.y*T&&y<(r.y+r.h)*T)?.name||'Galeria de serviço';}
 function visible(a,b,state=null,world=null,ignoreDoor=null){
+ if(scenery.floorAt(a).id!==scenery.floorAt(b).id)return false;
  const n=Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/4);
  for(let i=1;i<n;i++){
   const x=a.x+(b.x-a.x)*i/n,y=a.y+(b.y-a.y)*i/n;
@@ -120,13 +122,15 @@ function doorPoints(state,world){return doors.map(d=>({id:'door-'+d.id,door:d.id
 function toggleDoor(id,state,world,actors=[]){
  const door=doors.find(d=>d.id===id);
  if(!door)return {changed:false,text:'Porta não encontrada.'};
- if(doorLocked(door,state,world))return {changed:false,text:door.lock==='cellOpen'?'A grade está trancada. Procure uma chave, um arame ou uma distração.':door.lock==='tunnel'?'Os arquivos estão trancados. O mecanismo do altar abre a passagem.':'O portão está trancado. Prepare sua fuga ou peça a Noah para soltar o trinco.'};
+ if(doorLocked(door,state,world))return {changed:false,text:door.lock==='cellOpen'?'A grade está trancada. Procure uma chave, um arame ou uma distração.':door.lock==='warehouseOpen'?'O armazém está trancado. A chave fica no armário de serviço da lavanderia.':door.lock==='tunnel'?'Os arquivos estão trancados. O mecanismo do altar abre a passagem.':'O portão está trancado. Prepare sua fuga ou peça a Noah para soltar o trinco.'};
  const open=doorOpen(door,state,world);
  if(open&&[world.player,...actors].some(p=>overlaps(doorBounds(door),p.x,p.y,9)))return {changed:false,text:'Afaste-se da passagem para fechar a porta.'};
  world.doors=world.doors||{};world.doors[id]=!open;
  return {changed:true,text:door.name+(open?' fechada.':' aberta.')};
 }
 function path(start,end,state=null,world=null,options={}){
+ if(start&&end&&scenery.floorAt(start).id!==scenery.floorAt(end).id)return [];
+
  if(!start||!end||!walkable(start.x,start.y,7,state,world)||!walkable(end.x,end.y,7,state,world))return [];
  // A malha de 6 px encontra os corredores estreitos junto às bancadas.
  const step=T/4,routePoint=(x,y)=>({x:x*step,y:y*step}),cell=p=>[Math.floor(p.x/step),Math.floor(p.y/step)], [sx,sy]=cell(start),[ex,ey]=cell(end),queue=[],seen=new Map();
@@ -152,10 +156,17 @@ function path(start,end,state=null,world=null,options={}){
 }
 function blocked(state,world,x,y){const d=doors.find(d=>!doorOpen(d,state,world)&&overlaps(doorBounds(d),x,y));return d?d.name+' fechada. Use E perto da porta.':null;}
 function normalizeWorld(world,state){
- if(world.mapVersion!=='illustrated-v1'){
-  Object.assign(world.player,remap(world.player));if(world.mel)Object.assign(world.mel,remap(world.mel));
-  world.residents={};world.mapVersion='illustrated-v1';
+ if(world.mapVersion!=='expanded-v2'){
+  // Saves do mapa ilustrado usam coordenadas de arte; saves anteriores usam tiles.
+  if(world.mapVersion==='illustrated-v1'){
+   const old=[['dorm',104,40,428,240],['study',641,42,316,206],['cell',1042,44,318,209],['hall',94,311,1268,100],['dining',96,469,611,399],['kitchen',779,470,585,165],['office',782,718,261,155],['archive',1107,713,258,158]];
+   const p=world.player,r=old.find(a=>p.x>=a[1]&&p.x<a[1]+a[3]&&p.y>=a[2]&&p.y<a[2]+a[4]);
+   if(r){const n=rooms.find(n=>n.id===r[0]);Object.assign(p,{x:n.x*T+(p.x-r[1])/r[3]*n.w*T,y:n.y*T+(p.y-r[2])/r[4]*n.h*T});}
+   else Object.assign(p,positions.guardHall);
+  }else Object.assign(world.player,remap(world.player));
+  world.mel=freshMel();world.residents={};world.mapVersion='expanded-v2';
  }
+ world.player.area=scenery.floorAt(world.player).id;
 
  const stored=world.doors;world.doors={};
  for(const d of doors)if(typeof stored?.[d.id]==='boolean')world.doors[d.id]=stored[d.id];
@@ -178,7 +189,7 @@ function updateGuard(g,dt,pace,state,world){
  g.step=(g.step||0)+Math.hypot(g.x-old.x,g.y-old.y)/20;
 }
 // Pontos de passeio em cômodos diferentes; o trajeto só usa portas já abertas.
-const melStops=[[14.5,11.5],[20.5,18.5],[29.5,10.5],[16.5,36.5],[49.5,28.5],[42.5,39.5],[54.5,41.5],[52.5,8.5],[10.5,10.5]].map(([x,y])=>place(point(x,y)));
+const melStops=[[300,245],[550,400],[750,260],[300,820],[1080,665],[900,880],[1120,880],[1380,625],[1430,275],[1080,220],[268,230]].map(([x,y])=>place({x,y}));
 function freshMel(){return {...positions.mel,dir:'down',step:0,wait:1.5,nextStop:0,route:[],doors:null};}
 function melPoint(world){return world?.mel||positions.mel;}
 function normalizeMel(world,state){
@@ -247,12 +258,12 @@ function toggleDrawer(id,world){
  normalizeDrawers(world);const open=world.drawers[id]=!world.drawers[id];
  return {changed:true,open,text:open?'Gaveta aberta. Papéis antigos e o fundo de madeira estão à vista.':'Gaveta fechada.'};
 }
-function fresh(){return {mapVersion:'illustrated-v1',player:{...place(point(10.5,8)),dir:'down',step:0},mel:freshMel(),tunnelOpen:false,doors:{},drawers:{},observed:{},explored:[],alert:0};}
+function fresh(){return {mapVersion:'expanded-v2',player:{...place(point(10.5,8)),dir:'down',step:0},mel:freshMel(),tunnelOpen:false,doors:{},drawers:{},observed:{},explored:[],alert:0};}
 function guards(){return [
- {x:200,y:384,a:110,b:1330,axis:'x',dir:1,speed:30},
- {x:845,y:568,a:835,b:1290,axis:'x',dir:1,speed:22},
- {x:115,y:674,a:115,b:690,axis:'x',dir:-1,speed:26}
+ {x:390,y:400,a:105,b:1170,axis:'x',dir:1,speed:30},
+ {x:790,y:665,a:790,b:1100,axis:'x',dir:1,speed:22},
+ {x:300,y:1880,a:100,b:1580,axis:'x',dir:-1,speed:26}
  ].map(g=>({...g,...place(g)}));}
 
-const api={drawers,drawerPoints,toggleDrawer,normalizeDrawers,remap,authoredPoint,walkAreas,place,sceneryProps,entranceAreas,melPoint,normalizeMel,updateMel,doors,doorBounds,passages,doorLocked,doorOpen,doorPoints,toggleDoor,canInteract,normalizeWorld,updateGuard,T,W,H,rooms,grid,props,lights,positions,stages,night,target,tile,walkable,move,roomAt,visible,path,blocked,fresh,guards};root.GameWorld=api;if(typeof module!=='undefined')module.exports=api;
+const api={melStops,drawers,drawerPoints,toggleDrawer,normalizeDrawers,remap,authoredPoint,walkAreas,place,sceneryProps,entranceAreas,melPoint,normalizeMel,updateMel,doors,doorBounds,passages,doorLocked,doorOpen,doorPoints,toggleDoor,canInteract,normalizeWorld,updateGuard,T,W,H,rooms,grid,props,lights,positions,stages,night,target,tile,walkable,move,roomAt,visible,path,blocked,fresh,guards};root.GameWorld=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

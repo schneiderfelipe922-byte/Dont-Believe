@@ -30,7 +30,7 @@ const server=http.createServer((req,res)=>{
    };return r;};}});
   });
   await page.goto(base+'/index.html');await page.evaluate(()=>Promise.all([GameArt.ready,document.fonts.ready]));
-  assert.deepEqual(await page.evaluate(()=>GameArt.status.failed),[]);assert.equal(await page.locator('header,#brand').count(),0);
+  assert.deepEqual(await page.evaluate(()=>GameArt.status.failed),[]);assert.equal(await page.locator('body > header,#brand').count(),0);
   assert.equal((await page.locator('#stage').boundingBox()).y,0);
   assert.deepEqual(await page.evaluate(()=>[GameArt.images.sprites.naturalWidth,GameArt.images.sprites.naturalHeight]),[512,1024]);
   const url=await page.evaluate(()=>GameArt.urls.sprites),response=await page.request.get(base+'/'+url),sha=crypto.createHash('sha256').update(await response.body()).digest('hex');assert.equal(sha,crypto.createHash('sha256').update(fs.readFileSync(path.join(ROOT,'assets/sprites-e-idles/sprites.png'))).digest('hex'));

@@ -1,21 +1,21 @@
 ---
 version: alpha
 name: "Don’t Believe — O Obelisco"
-description: "Interface de jogo narrativo com gótico discreto, madeira escura e bronze envelhecido."
+description: "Interface de jogo narrativo com gótico discreto, preto, cinza e detalhes roxos."
 colors:
-  background: "#100F13"
-  surface: "#211B20"
-  bronze: "#A58B63"
-  text: "#E9DFCF"
-  muted: "#BBAFA2"
-  primary: "#783844"
+  background: "#100E14"
+  surface: "#211D28"
+  bronze: "#B99BD8"
+  text: "#EDEAF0"
+  muted: "#BBB4C4"
+  primary: "#59396F"
 typography:
   interface:
-    fontFamily: "Solway, 'American Typewriter', Georgia, serif"
+    fontFamily: "'Mystery Quest', Georgia, serif"
     fontSize: "16px"
     lineHeight: "1.6"
   handwriting:
-    fontFamily: "Kalam, Georgia, serif"
+    fontFamily: "'Mystery Quest', Georgia, serif"
     fontSize: "20px"
     lineHeight: "1.6"
 rounded:
@@ -43,6 +43,16 @@ components:
 
 # Don’t Believe — direção da interface
 
+## Direção pintada — 10/11/2026
+
+A estética aprovada passa a orientar as imagens e cenários: nanquim orgânico, guache seco, pinceladas visíveis, sombras malva e luzes ocre. Foram repintados o mapa de OldHood e suas portas, a estrada do prólogo, o altar, as duas fotografias e as seis imagens finais. Esta revisão substitui a orientação anterior de cores chapadas para esses recursos. Layout do mapa, recortes das portas e colisões permanecem nas coordenadas existentes. Sprites jogáveis ficam para a etapa seguinte; as prévias não foram integradas. Arquivos e prompts completos em `documentacao/direcao-pintada-2026-11-10.md`.
+
+## Revisão U03 — 09/11/2026
+
+O mesmo acabamento em nanquim e guache também foi aplicado às duas cenas dos pais no prólogo: olhando para o banco traseiro e mortos após o acidente. As versões `pais-olhando-tras-nanquim-v1.png` e `pais-acidente-nanquim-v1.png` substituem as cores chapadas anteriores no carregamento do jogo, preservando personagens, roupas e composição. Prompts em `assets/prologo/nanquim-v1-prompts.md`.
+
+A pedido do usuário, a tela inicial passa a usar uma nova ilustração original de OldHood em nanquim e guache, com contornos livres, arquitetura irregular, textura de papel e luz violeta. Esta revisão substitui, para o menu inicial, a orientação anterior de preservar a arte e usar somente cantos retos. O arquivo anterior permanece disponível. O título é HTML e os botões têm bordas assimétricas discretas, mantendo foco, leitura e ações reais. A navegação simplificada do U01 permanece. Cenários jogáveis, sprites e colisões não foram alterados nesta etapa. Prompt e origem em `assets/menus/oldhood-nanquim-u03.md`; capturas e verificação em `previas/u03/`.
+
 ## Overview
 
 O ponto de partida é o próprio orfanato OldHood: madeira escura, ferragens envelhecidas, tecidos vinho e objetos guardados por Kali. A UI serve à exploração e à leitura em português brasileiro no computador e no celular. A assinatura visual é a moldura ilustrada dos diálogos, acompanhada de bordas duplas discretas nos painéis. Evitar neon, cartões arredondados e ornamentação que ocupe a área de leitura.
@@ -66,9 +76,9 @@ O plano aprovado em 25/10/2026 abrange a versão web. A arte do menu e do cadern
 
 ## Typography
 
-Solway Regular (400) para leitura e controles; Medium (500) para ênfase. Arquivos e licenças locais em `assets/fontes`. Usar `--font-ui`, nunca fontes independentes por painel. Títulos 26–36 px, corpo 16–18 px, rótulos pelo menos 12 px. Falas mantêm 18 px no computador e 17 px no celular, entrelinha 1,5. O título ilustrado do menu é uma exceção à escala.
+Mystery Quest (400), local, é a fonte única de toda a interface, incluindo menu, diálogos, diário, controles, prólogo e rótulos do mapa. Os textos desenhados no menu são cobertos por botões HTML usando a mesma família ornamental. Usar `--font-ui`. Títulos 26–36 px, corpo 16–20 px e rótulos pelo menos 12 px. Falas mantêm 18 px no computador e 17 px no celular, entrelinha 1,5.
 
-Kalam é `--font-hand`, restrita ao caderno: 20 px no computador e 18 px no celular, entrelinha 1,6. Os fallbacks serifados preservam a leitura quando a fonte local falhar. Não carregar Google Fonts nem qualquer fonte remota.
+O diário usa a mesma família, com 20 px no computador e 18 px no celular e entrelinha 1,6. A fonte e a licença OFL estão em `assets/fontes`; não há dependência de fontes remotas em runtime.
 
 ## Layout
 
@@ -93,12 +103,12 @@ Cantos retos, bronze fino e encaixes discretos. O caderno é a exceção materia
 - **Exploração:** cartas, fotografias e outros itens apoiados no chão são desenhados antes dos personagens; móveis e portas mantêm profundidade pelos pés. Gavetas possuem estados aberto/fechado persistidos no mundo.
 - **HUD:** Controles, interação, aviso e objetivo compartilham fonte e paleta. Sem novos painéis persistentes sobre a exploração. O objetivo só aparece após marcação no caderno.
 - **Diálogos:** `css/dialogue.css` possui moldura, nome, pigmento por personagem, seleção e paginação visual. `javascript/dialogue-ui.js` e `javascript/game.js` mantêm navegação, medição e custo das ações.
-- **Diário:** `css/notebook.css` possui papel, tinta, fonte manuscrita e abas. Não aplicar a superfície escura dentro do caderno.
+- **Diário:** `css/notebook.css` usa páginas cinza-escuras, texto claro, detalhes roxos e abas, com a fonte canônica.
 - **Tela cheia e toque:** `css/fullscreen.css` possui enquadramento, posicionamento do HUD e menu de controles. A UI não altera câmera, hitboxes ou movimentos. O início em tela cheia usa toda a altura, sem reserva para cabeçalho.
 - **Fotografias e finais:** arte inteira com `object-fit: contain`; corpo legível e ações com o mesmo tratamento dos demais painéis.
 - **Movimento:** transições discretas somente na revelação de fotografias; respeitar preferência do jogo e `prefers-reduced-motion`. Modo de cores forçadas preserva foco e contornos.
 
-Atualização de 30/10/2026: o prólogo usa `css/prologue.css` e `javascript/prologue.js`. As ilustrações abrem em tela cheia, inteiras, com legendas Solway na parte inferior e sem caixa, bordas ou retrato separado. Em telas verticais, a própria arte escurecida e desfocada preenche o fundo, preservando o enquadramento completo dos pais. A estrada possui câmera própria e Kali criança; os controles de toque aparecem somente durante a exploração. Transições passam pelo preto e respeitam movimento reduzido. A caixa ilustrada continua sendo usada nas conversas do orfanato.
+Atualização de 30/10/2026: o prólogo usa `css/prologue.css` e `javascript/prologue.js`. As ilustrações abrem em tela cheia, inteiras, com legendas na fonte canônica na parte inferior e sem caixa, bordas ou retrato separado. Em telas verticais, a própria arte escurecida e desfocada preenche o fundo, preservando o enquadramento completo dos pais. A estrada possui câmera própria e Kali criança; os controles de toque aparecem somente durante a exploração. Transições passam pelo preto e respeitam movimento reduzido. A caixa ilustrada continua sendo usada nas conversas do orfanato.
 
 Atualização de 01/11/2026: abertura, estrada e revelação do carro passam a usar desenho simples com contornos limpos, cores chapadas e poucas sombras. Foram reduzidos hachuras, texturas, detalhes pequenos e a quantidade de fogo. O fundo da estrada é suavizado ao escalar; os sprites mantêm seu tratamento de pixel art. Enquadramentos, geometria e fases da sequência foram preservados.
 
