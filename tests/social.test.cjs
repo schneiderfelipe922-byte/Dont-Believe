@@ -33,7 +33,7 @@ test('missões respeitam prisão, compromisso final, prazo e migração de salva
 });
 test('todos os itens são alcançáveis com as trancas de história abertas',()=>{
  const {s,w}=setup();Object.assign(s.flags,{cellOpen:true,tunnel:true,latchOpen:true});
- for(const item of Object.values(S.items)){assert(M.walkable(item.x,item.y),item.name);assert(M.path(w.player,item,s,w).length,item.name);}
+ for(const item of Object.values(S.items)){assert(M.walkable(item.x,item.y),item.name);assert(M.path(item.y>=1200?{x:155,y:1830}:w.player,item,s,w).length,item.name);}
 });
 test('Mira e Eron falam mais com confiança; Noah e vigias mantêm vozes próprias',()=>{
  const {s}=setup();for(const who of ['mira','eron']){const low=S.conversation(who,s).text;s[who]=6;assert(S.conversation(who,s).text.length>low.length);}
@@ -53,5 +53,5 @@ test('objetivos, preparações e retorno de tarefas usam a posição real dos pe
  const target=M.target(s,w);assert.equal(target.x,relocated.x);assert.equal(target.y,relocated.y);
  s.errands['mira-book']='active';s.inventory.push('Livro de capa verde');w.tracked='errand:mira-book';assert.equal(M.target(s,w).x,relocated.x);
  const saved=JSON.parse(JSON.stringify(w));M.normalizeWorld(saved,s);assert.equal(R.point('mira',s,saved).x,relocated.x);
- s.flags.miraTaken=true;assert.deepEqual({x:R.point('mira',s,w).x,y:R.point('mira',s,w).y},M.positions.miraCell);
+ s.flags.miraTaken=true;assert.deepEqual({x:R.point('mira',s,w).x,y:R.point('mira',s,w).y},{x:M.positions.miraCell.x,y:M.positions.miraCell.y});
 });

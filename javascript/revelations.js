@@ -2,8 +2,8 @@
 (function(root){
 'use strict';
 const scenes={
- laundry:{title:'A roupa T-17',src:'assets/revelacoes/roupa-t17-v2-guache-v2.png',alt:'Máquina de lavar vertical aberta diante de uma parede, com roupa úmida, costura azul e etiqueta T-17 sobre a borda e um cesto de roupas sujas ao lado.',lines:()=>[['KALI','T-17… O mesmo número que encontrei na cama.'],['KALI','A roupa dele ficou aqui. Isso não combina com a história da transferência.'],['KALI','Preciso conferir para onde mandaram essas peças.']]},
- warehouse:{title:'Pertences sem dono',src:'assets/revelacoes/armazem-v2.png',alt:'Da porta do armazém, uma sala com malas, cartas, chapéus, relógios, roupas e brinquedos espalhados junto às paredes.',lines:s=>[['KALI','Tudo isso pertencia a alguém.'],['KALI','Cartas, roupas… até brinquedos. Guardaram as coisas e apagaram os nomes.'],['KALI',s.flags.eliasRoom?'Talvez alguma coisa aqui explique quem dormia naquele quarto.':'Talvez ainda existam nomes nas etiquetas.']]},
+ laundry:{title:'A roupa T-17',src:'assets/revelacoes/roupa-t17-v2-guache-v2.png',alt:'Máquina de lavar vertical aberta diante de uma parede, com roupa úmida, costura azul e etiqueta T-17 sobre a borda e um cesto de roupas sujas ao lado.',lines:s=>[['KALI',s.flags.bedClue?'T-17… O mesmo número que encontrei na cama.':'T-17… Vou guardar esse número para comparar com o livro de chamadas.'],['KALI','A roupa ficou aqui. Sozinha, ela não diz para onde levaram Tomas.'],['KALI','Preciso conferir para onde mandaram essas peças.']]},
+ warehouse:{title:'Pertences sem dono',src:'assets/revelacoes/armazem-v2.png',alt:'Da porta do armazém, uma sala com malas, cartas, chapéus, relógios, roupas e brinquedos espalhados junto às paredes.',lines:s=>[['KALI','Tudo isso pertencia a alguém.'],['KALI','Cartas, roupas… até brinquedos. Guardaram as coisas e apagaram os nomes.'],['KALI',(s.flags.eliasRoom||s.flags.eliasMemoryRead)?'Talvez alguma coisa aqui explique quem dormia naquele quarto.':'Talvez ainda existam nomes nas etiquetas.']]},
  tomas:{title:'Uma voz atrás das grades',src:'assets/revelacoes/tomas-cela-v2-guache-v2.png',alt:'Tomas muito magro, com óculos e moletom claro largo, apoia-se nas grades da cela.',lines:()=>[['TOMAS','Ei… por favor. Me ajuda.'],['KALI','Tomas? Você está aqui…'],['TOMAS','Eles quase não trazem comida. Eu não consigo ficar em pé por muito tempo.'],['KALI','Preciso abrir essa grade.']]}
 };
 function normalize(s){
@@ -20,8 +20,12 @@ function begin(s,id,replay=false){const r=normalize(s);if(!scenes[id]||r.current
 function advance(s){const r=normalize(s),c=r.current;if(!c)return null;
  if(c.page<scenes[c.id].lines(s).length-1){c.page++;return {done:false};}
  const first=!c.replay&&!r.seen[c.id];r.seen[c.id]=true;r.current=null;
- if(first){if(c.id==='laundry')s.flags.laundryObserved=true;if(c.id==='warehouse')s.flags.warehouseOpen=true;if(c.id==='tomas')s.flags.tomasSeen=true;}
+ if(first){if(c.id==='laundry')s.flags.laundryObserved=true;if(c.id==='tomas')s.flags.tomasSeen=true;}
  return {done:true,id:c.id,first};
+}
+function entry(s,p,rooms,T=24){
+ const r=rooms.find(r=>r.id==='warehouse');
+ return r&&p.x>=r.x*T&&p.x<(r.x+r.w)*T&&p.y>=r.y*T&&p.y<(r.y+r.h)*T&&!normalize(s).seen.warehouse?'warehouse':null;
 }
 function create({document:doc,getState,save,clearMovement,pause,finish=()=>{},reduced=()=>false}){
  const shell=doc.createElement('section');shell.id='revelation-screen';shell.hidden=true;shell.setAttribute('role','dialog');shell.setAttribute('aria-modal','true');shell.setAttribute('aria-label','Revelação ilustrada');
@@ -33,5 +37,5 @@ function create({document:doc,getState,save,clearMovement,pause,finish=()=>{},re
  next.addEventListener('click',step);pauseButton.addEventListener('click',pause);retry.addEventListener('click',()=>{error.hidden=true;img.hidden=false;img.src=currentSrc+'?retry='+Date.now();});img.addEventListener('error',()=>{img.hidden=true;error.hidden=false;});img.addEventListener('load',()=>{error.hidden=true;});
  return {get active(){return !shell.hidden;},show(){clearMovement();render();if(!shell.hidden)next.focus();},open(id,replay=false){if(!begin(getState(),id,replay))return false;save();this.show();return true;},advance:step,focus(){next.focus();},hide(){token++;busy=false;shell.hidden=true;shell.classList.remove('fading');},element:shell};
 }
-const api={scenes,normalize,begin,advance,create};root.GameRevelations=api;if(typeof module!=='undefined')module.exports=api;
+const api={scenes,normalize,begin,advance,entry,create};root.GameRevelations=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

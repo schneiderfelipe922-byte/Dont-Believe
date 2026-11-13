@@ -149,6 +149,68 @@ function notes(s){
  if(s.flags.noahTask&&!s.flags.latchOpen)doubts.push(['Uma promessa','Noah disse que abriria o trinco. Preciso conferir antes de depender dele.']);
  return {facts,doubts};
 }
+
+// Histórias opcionais dos novos locais. Não concedem chaves, resgates ou rotas.
+const placeStories={
+ laundryMemory:{room:'laundry',title:'O remendo que resistiu',done:'laundryMemoryRead',text:s=>[
+ 'No cesto da lavanderia, uma manga foi remendada duas vezes. A linha azul atravessa a etiqueta T-17. Alguém tentou esfregar o número; o ponto da costura continua firme.',
+ s.flags.bedClue?'Kali compara com a etiqueta da cama. É o mesmo número. A roupa ficou em OldHood, mas isso, sozinho, não diz onde Tomas está.':'Kali copia T-17. Ainda precisa comparar esse número com a costura da cama de Tomas e o livro da sala de leitura.',
+ 'Na borda do tanque, uma instrução: “Separar pertences. Não devolver aos dormitórios”. Kali imagina Tomas procurando a manga enquanto um adulto lhe diz que nunca teve aquela roupa.',
+ 'Há uma seta de serviço para o armazém. A roupa segue um caminho diferente de quem a usava. Para encontrar Tomas, a investigação da caixa na cozinha continua necessária.'
+ ].join('\n\n'),choices:[{label:'Registrar a roupa e a instrução de separação.',effect:{flags:{laundryMemoryRead:true}},response:'Kali copia a instrução sem levar a roupa molhada. A anotação fica no diário. Eron talvez reconheça o remendo; o livro e a caixa da cozinha ainda precisam ser conferidos.'}]},
+ warehouseMemory:{room:'warehouse',title:'A letra por baixo do número',done:'warehouseMemoryRead',text:s=>[
+ 'Uma mala pequena sustenta outras três. Não tem cadeado. Na alça, o nome Elias aparece sob uma etiqueta de inventário. Dentro, um botão azul prende um pedaço de tecido dobrado.',
+ s.flags.eliasMemoryRead?'No quarto, Kali viu a marca de um botão arrancado no tecido. A semelhança merece ser anotada; não conta o que aconteceu com Elias.':'Kali lembra a placa do quarto de Elias, perto da observação. Pode procurar ali uma ligação com o tecido, sem transformar uma etiqueta numa história pronta.',
+ 'Ao lado, um barco de papel ficou achatado entre duas cartas sem envelope. Não é uma coleção de coisas caras. São objetos que alguém procuraria ao acordar.',
+ 'Kali pode copiar o nome escondido ou o procedimento de confisco. O que registrar ficará no caderno; nenhum desses objetos substitui a ordem assinada dos arquivos.'
+ ].join('\n\n'),choices:[{label:'Registrar o nome de Elias e o botão azul.',effect:{flags:{warehouseMemoryRead:true,keptEliasName:true}},response:'Kali escreve Elias antes do número. Deixa o tecido na mala. No quarto de Elias, poderá comparar o vestígio; o paradeiro dele continua desconhecido.'},{label:'Registrar como os nomes foram cobertos.',effect:{flags:{warehouseMemoryRead:true,keptConfiscationMethod:true}},response:'Kali descreve as etiquetas coladas sobre nomes. A anotação registra o que viu, mas não tem assinatura nem comprova uma transferência. A prova dos arquivos continua necessária para quem depender dela.'}]},
+ eliasMemory:{room:'elias',title:'Uma coisa para amanhã',done:'eliasMemoryRead',text:s=>[
+ 'No quarto de Elias, um quadrado menos desbotado marca o lugar de um desenho retirado. Perto da cama, há um retalho com um círculo de linha e nenhum botão.',
+ 'Na parte de baixo de uma folha presa à mesa, Kali lê: “Amanhã termino o barco. Se levarem minhas coisas, não deixem dizer que eu não estava aqui.” Não há data.',
+ s.flags.keptEliasName?'O botão azul na mala pode pertencer ao retalho. Kali anota a ligação como possibilidade, não como certeza.':'A última linha cita uma mala com o nome na alça. O armazém pode guardar o objeto; a chave de serviço fica na lavanderia.',
+ 'Kali pensa no símbolo que arrancaram de seu cordão. Não sabe se Elias saiu, fugiu ou foi levado. Sabe apenas que alguém tinha um plano para o dia seguinte.'
+ ].join('\n\n'),choices:[{label:'Copiar o recado, preservando a dúvida sobre Elias.',effect:{flags:{eliasMemoryRead:true}},response:'“Elias queria terminar um barco”, Kali escreve. “Não encontrei data nem destino.” O recado fica no diário. O armazém guarda pertences; os arquivos guardam registros. Nenhum nome será tratado como um resgate que não aconteceu.'}]},
+ courtyardMemory:{room:'courtyard',title:'O lugar de quem espera',done:'courtyardMemoryRead',text:s=>[
+ 'No pátio, riscos baixos na pedra formam um tabuleiro. Uma das casas foi refeita várias vezes, sempre um pouco mais larga. Perto dela, duas iniciais: E e T.',
+ s.flags.tomasSignalKnown?'Kali lembra a partida que Eron contou. Antes de servir para reconhecer alguém atrás de uma grade, aquele sinal servia para continuar uma brincadeira.':'Kali pode perguntar a Eron sobre a partida quando ele confiar nele. As iniciais não ensinam um sinal nem garantem que alguém responderá.',
+ 'Do banco, Kali enxerga a passagem para a lavanderia e o caminho de volta ao corredor. O pátio dá ar; os muros continuam altos. Estar ao ar livre ainda não é sair de OldHood.',
+ 'Uma pedrinha ocupa a borda do tabuleiro, como se alguém tivesse pedido para guardar sua vez. Kali deixa a peça onde está. Antes de reunir os moradores, precisará combinar o trajeto com Eron e preparar a saída.'
+ ].join('\n\n'),choices:[{label:'Anotar a partida inacabada e voltar à investigação.',effect:{flags:{courtyardMemoryRead:true}},response:'Kali registra o tabuleiro no diário. Quando falar com Eron, poderá ouvir o que aquele lugar significava. A lembrança não abre o portão nem substitui um plano de fuga.'}]}
+};
+for(const [id,entry] of Object.entries(placeStories)){
+ const room=M.rooms.find(r=>r.id===entry.room);
+ if(!room)continue;
+ const target='storyPlace_'+entry.room;
+ M.positions[target]=M.place({x:(room.x+room.w*.55)*M.T,y:(room.y+room.h*.75)*M.T});
+ A.actions[id]={target,name:entry.title,act:1,who:'kali',...entry};
+}
+const placeConversation=S.conversation;
+S.conversation=(who,s)=>{
+ const line={...placeConversation(who,s)};
+ if(who==='eron'&&!s.flags.eronBetrayed){
+  if(s.flags.laundryMemoryRead)line.text+='\n— Eu segurava a manga enquanto Tomas costurava — Eron diz ao ouvir sobre a roupa. — Ele reclamava que eu puxava demais. Não era só um número numa etiqueta.';
+  if(s.flags.courtyardMemoryRead)line.text+=s.flags.tomasTransferred?'\nEron escuta sobre o tabuleiro. — Deixa a peça lá. Hoje eu não consigo olhar.':s.flags.tomasRescued?'\n— Quando estivermos seguros, podemos terminar a partida — Eron diz. — Aqui no pátio, ainda não.':'\n— A casa maior era a dele — Eron conta sobre o pátio. — Dizia que a peça precisava de espaço. Quero ouvir essa desculpa de novo.';
+ }
+ if(who==='mira'&&s.flags.eliasMemoryRead&&!(s.flags.miraTaken&&!s.flags.rescued))line.text+='\nMira escuta o recado de Elias. — Guarda o que ele escreveu. Mas não inventa um destino para fazer a história parar de doer. Se achar outra coisa, me conta.';
+ return line;
+};
+const coreNotes=notes;
+notes=s=>{
+ const result=coreNotes(s);
+ if(s.flags.laundryMemoryRead)result.facts.push(['A roupa na lavanderia','Vi T-17 numa manga remendada e a ordem de separar pertences. Compare com a cama, o livro e a caixa da cozinha; roupa guardada não confirma onde está Tomas.']);
+ if(s.flags.warehouseMemoryRead)result.facts.push(['As malas do armazém',s.flags.keptEliasName?'Copiei Elias da alça de uma mala com um botão azul. Posso comparar com o retalho do quarto. Não sei o destino dele.':'Registrei etiquetas de inventário cobrindo nomes. É uma observação do confisco, não a prova assinada dos arquivos.']);
+ if(s.flags.eliasMemoryRead){result.facts.push(['O amanhã de Elias','Copiei um recado sem data: Elias queria terminar um barco. A mala citada pode estar no armazém; a chave de serviço fica na lavanderia.']);result.doubts.push(['Para onde foi Elias?','O recado e os pertences não comprovam fuga, transferência nem morte. Seu destino continua desconhecido.']);}
+ if(s.flags.courtyardMemoryRead)result.facts.push(['Uma partida no pátio','Vi o tabuleiro com E e T. Eron pode contar essa lembrança. Para sair, ainda preciso preparar a passagem e combinar quem acompanha o grupo.']);
+ return result;
+};
+const placeConsequences=A.consequences;
+A.consequences=s=>{
+ const result=placeConsequences(s);
+ if(s.flags.keptEliasName)result.push('Kali registrou o nome de Elias sob a etiqueta do armazém. Preservou uma lembrança, sem descobrir seu destino.');
+ if(s.flags.keptConfiscationMethod)result.push('Kali anotou como os nomes eram cobertos nos pertences confiscados. Essa observação não substituiu a prova assinada.');
+ return result;
+};
+
 const api={normalize,present,notes,optionalFor:(who,s)=>[['eron','memoryTomas'],['noah','noahVersion']].filter(([kind,id])=>kind===who&&A.available(id,s)).map(([,id])=>id)};
 root.GameInvestigation=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window==='undefined'?globalThis:window);

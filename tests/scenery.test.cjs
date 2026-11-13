@@ -1,41 +1,24 @@
-const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
-const M=require('../javascript/world.js'),S=require('../javascript/scenery.js'),G=require('../javascript/story.js');require('../javascript/adventure.js');
+const test=require('node:test'),assert=require('node:assert/strict');
+const M=require('../javascript/world.js'),S=require('../javascript/scenery.js'),G=require('../javascript/story.js');require('../javascript/adventure.js');require('../javascript/expanded-map.js');
 const ctx=calls=>new Proxy({drawImage(...args){calls.push(args);}},{get:(o,k)=>k in o?o[k]:()=>{}});
-test('repintura com outra resolução mantém recortes e destinos do mapa e das portas',()=>{
- const calls=[],art={fullMap:{naturalWidth:1495,naturalHeight:1052}};
- S.draw(ctx(calls),M,art);
- assert.deepEqual(calls[0].slice(5),[0,0,1456,895]);
- assert(Math.abs(calls[0][3]-1495)<1e-8);
- assert.equal(calls[0][4],895*(1052/1080));
- for(const door of M.doors){
-  S.drawDoor(ctx(calls),door,false,art);
-  const call=calls.at(-1),source=S.sprites[door.id][0];
-  assert.deepEqual(call.slice(1,5),source.map((n,i)=>n*(i%2?1052/1080:1495/1456)));
-  assert.deepEqual(call.slice(5),door.art);
- }
+test('os mapas completos são desenhados em andares separados, sem distorcer a proporção',()=>{
+ const calls=[],art={fullMap:{id:'ground'},basementMap:{id:'basement'}};S.draw(ctx(calls),M,art);
+ assert.deepEqual(calls[0],[art.fullMap,0,0,1586,992]);assert.deepEqual(calls[1],[art.basementMap,0,1200,1717,916]);
 });
-test('usa o mapa fornecido inteiro sem incluir a legenda de sprites no cenário',()=>{
- assert(fs.existsSync(require('node:path').join(__dirname,'../assets/cenarios/mapa sem portas.png')));
- const calls=[],art={fullMap:{}};S.draw(ctx(calls),M,art);
- assert.deepEqual(calls[0].slice(1),[0,0,1456,895,0,0,1456,895]);
- assert(calls.every(c=>c[2]+c[4]<=895),'nenhuma faixa de sprites é desenhada no fundo');
+test('celas e arquivos ficam no subterrâneo; armazém no térreo',()=>{
+ for(const d of M.doors)assert.equal(S.floorAt(d).id,d.id==='warehouse'?'ground':'basement');
+ assert(M.rooms.some(r=>r.id==='warehouse'));assert(M.rooms.some(r=>r.id==='elias'));assert(M.rooms.some(r=>r.id==='laundry'));assert(M.rooms.some(r=>r.id==='courtyard'));
 });
-test('somente a cela superior direita e os arquivos inferiores direitos têm portas',()=>{
- assert.deepEqual(M.doors.map(d=>d.id),['cell','archive']);
- assert(M.doors[0].y<300&&M.doors[1].y>700);
- for(const d of M.doors){const calls=[],art={fullMap:{}};S.drawDoor(ctx(calls),d,false,art);S.drawDoor(ctx(calls),d,true,art);assert.equal(calls[0][1],S.sprites[d.id][0][0]);assert.equal(calls[1][1],S.sprites[d.id][3][0]);assert.notDeepEqual(calls[0].slice(1,5),calls[1].slice(1,5));assert.deepEqual(calls[0].slice(5),d.art);}
+test('grades fechadas usam a arte pintada original e abertas liberam o vão',()=>{
+ for(const d of M.doors.filter(d=>d.art)){const calls=[],art={basementMap:{}};S.drawDoor(ctx(calls),d,false,art);assert.deepEqual(calls[0].slice(1,5),[d.art[0],d.art[1]-1200,d.art[2],d.art[3]]);calls.length=0;S.drawDoor(ctx(calls),d,true,art);assert.equal(calls.length,0);}
 });
-test('todos os oito cômodos são alcançáveis quando as duas trancas estão abertas',()=>{
- const s=G.initial(),w=M.fresh();Object.assign(s.flags,{cellOpen:true,tunnel:true});
- for(const r of M.rooms){const p=M.place({x:(r.x+r.w/2)*M.T,y:(r.y+r.h*.8)*M.T});assert(M.path(w.player,p,s,w).length,r.id);}
+test('cada ambiente é alcançável a partir da chegada segura do seu andar',()=>{
+ const s=G.initial(),w=M.fresh();Object.assign(s.flags,{cellOpen:true,tunnel:true,warehouseOpen:true});
+ for(const r of M.rooms){const p=M.place({x:(r.x+r.w/2)*M.T,y:(r.y+r.h*.8)*M.T}),start=p.y>=1200?{x:155,y:1830}:w.player;assert(M.path(start,p,s,w).length,r.id);}
 });
-test('animações usam os quadros intermediários da imagem fornecida',()=>{
- for(const d of M.doors){const calls=[],c=ctx(calls),a={fullMap:{}};for(const progress of [0,.25,.75,1])S.drawDoor(c,d,progress>0,a,progress);assert.equal(new Set(calls.map(c=>c[1])).size,4);S.drawDoor(c,d,false,a,.5,true);assert.equal(calls.at(-1)[1],S.sprites[d.id][4][0]);}
+test('salvamentos ilustrados e antigos migram uma vez preservando direção e trancas',()=>{
+ for(const version of [undefined,'illustrated-v1']){const s=G.initial(),w=M.fresh();w.mapVersion=version;w.player={x:300,y:240,dir:'up',step:0};w.doors={dorm:true,cell:false,archive:true};const before=JSON.stringify(s);M.normalizeWorld(w,s);assert.equal(w.mapVersion,'expanded-v2');assert(M.walkable(w.player.x,w.player.y,7,s,w));assert.deepEqual(w.doors,{cell:false,archive:true});assert.equal(JSON.stringify(s),before);const p={...w.player};M.normalizeWorld(w,s);assert.deepEqual(w.player,p);}
 });
-test('salvamentos da versão anterior são convertidos uma única vez',()=>{
- const s=G.initial(),w=M.fresh();delete w.mapVersion;w.player={x:300,y:240,dir:'up',step:0};w.doors={dorm:true,study:true,cell:false,archive:true};M.normalizeWorld(w,s);assert.equal(w.mapVersion,'illustrated-v1');assert(M.walkable(w.player.x,w.player.y,7,s,w));assert.deepEqual(Object.keys(w.doors),['cell','archive']);const p={...w.player};M.normalizeWorld(w,s);assert.deepEqual(w.player,p);
-});
-test('portas antigas salvas não bloqueiam as passagens que agora são livres',()=>{
- const s=G.initial(),w=M.fresh();w.doors={dorm:false,study:false,dining:false,kitchen:false,office:false};M.normalizeWorld(w,s);
- for(const id of ['dorm','study','hall','dining','kitchen','office']){const r=M.rooms.find(r=>r.id===id),p=M.place({x:(r.x+r.w/2)*M.T,y:(r.y+r.h*.8)*M.T});assert(M.path(w.player,p,s,w).length,id);}
+test('saves nas antigas celas e arquivos reaparecem no subterrâneo correspondente',()=>{
+ for(const [x,y,room]of [[1200,180,'cell'],[1280,820,'archive']]){const s=G.initial(),w=M.fresh();s.flags.cellOpen=s.flags.tunnel=true;w.mapVersion='illustrated-v1';w.player={x,y};M.normalizeWorld(w,s);assert.equal(w.player.area,'basement');const r=M.rooms.find(r=>r.id===room);assert(w.player.x>=r.x*M.T&&w.player.x<(r.x+r.w)*M.T);assert(M.walkable(w.player.x,w.player.y,7,s,w));}
 });

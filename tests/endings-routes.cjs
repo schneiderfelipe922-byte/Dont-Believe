@@ -1,10 +1,12 @@
 const assert=require('node:assert/strict');
 const M=require('../javascript/world.js'),G=require('../javascript/story.js');
-const A=require('../javascript/adventure.js'),D=require('../javascript/danger.js');require('../javascript/social.js');require('../javascript/investigation.js');
+const A=require('../javascript/adventure.js'),D=require('../javascript/danger.js');require('../javascript/social.js');require('../javascript/investigation.js');require('../javascript/expanded-map.js');
 const clone=s=>JSON.parse(JSON.stringify(s));
 function route(config={}){
  let s=G.initial(),w=M.fresh(),steps=[],checkpoints=[];
  function travel(target){
+  const waypoint=M.navigationGoal(w.player,target,s,w);if(waypoint!==target){travel(waypoint);assert(M.travel(waypoint.id,s,w).changed, 'escada indisponível');}
+
   const points=M.path(w.player,target,s,w,{exact:true});assert(points.length,`${s.scene}: objetivo inacessível (${target.x}, ${target.y})`);
   for(const p of [...points,target]){
    for(const d of M.doors)if(!M.doorOpen(d,s,w)&&!M.doorLocked(d,s,w)){w.player={...w.player};M.toggleDoor(d.id,s,w);}
@@ -29,7 +31,7 @@ function route(config={}){
   steps.push({type:'story',scene:s.scene,index});const previous=s.scene;s=G.take(s,index);
   if(s.flags.tunnel)w.tunnelOpen=true;
   // A transição do altar usa o mesmo ponto de chegada do jogo.
-  if(previous==='subsolo'&&s.scene==='arquivo')Object.assign(w.player,M.authoredPoint(54,41.8));
+  if(previous==='subsolo'&&s.scene==='arquivo')Object.assign(w.player,M.place({x:1575,y:1735}));
  }
  assert(G.scenes[s.scene].ending,'Rota não terminou');
  return {state:s,world:w,steps,checkpoints};

@@ -3,7 +3,7 @@ const M=require('../javascript/world.js'),G=require('../javascript/story.js');re
 const {configs,route}=require('./endings-routes.cjs');
 const inside=(p,x,y,r=7)=>x+r>p.x&&x-r<p.x+p.w&&y+r>p.y&&y-r<p.y+p.h;
 test('cadeiras, cabeceiras, mesa e obelisco bloqueiam os pés até a borda da arte',()=>{
- for(const [name,x,y]of [['cadeira da escrivaninha',340,143],['pé da cama',169,183],['cadeira do salão',212,639],['banco do salão',212,798],['bancada da cozinha',951,613],['cadeira da observação',900,832],['mesa dos arquivos',1216,843],['cristal do altar',400,610]])assert(!M.walkable(x,y,7),name);
+ for(const [name,x,y]of [['cama',150,170],['estante',730,110],['mesa salão',200,630],['obelisco',375,700],['bancada',890,580],['mesa observação',840,850],['mesa arquivo',1200,1580],['árvore',1400,550],['lavadora',1400,190]])assert(!M.walkable(x,y,7),name);
 });
 test('vãos não desativam móveis e laterais de paredes; nenhum pé válido invade um sólido',()=>{
  let checked=0;
@@ -12,7 +12,7 @@ test('vãos não desativam móveis e laterais de paredes; nenhum pé válido inv
   assert(!M.sceneryProps.some(p=>inside(p,x,y)),`obstáculo atravessável em ${x},${y}`);
  }
  assert(checked>20000);
- for(const [x,y]of [[890,611],[963,740],[883,340],[1238,242]])assert(!M.walkable(x,y,7),`canto da passagem ${x},${y}`);
+ for(const [x,y]of [[700,500],[555,1660],[1200,480],[1250,320]])assert(!M.walkable(x,y,7),`canto da passagem ${x},${y}`);
 });
 test('apertar diagonalmente e dar passos grandes não permite atravessar cantos ou janelas',()=>{
  const s=G.initial(),w=M.fresh();s.flags.cellOpen=s.flags.tunnel=true;
@@ -25,7 +25,7 @@ test('apertar diagonalmente e dar passos grandes não permite atravessar cantos 
 test('rotas do mapa têm largura para os pés do personagem em cada segmento',()=>{
  const run=route(configs.voz),s=run.state,w=run.world;
  const samples=[M.positions.bed,M.positions.examiner,M.positions.relic,M.positions.records,M.positions.miraCell];
- for(const goal of samples){const p=M.place({...w.player});const path=M.path(p,goal,s,w);assert(path.length);for(const next of [...path,goal]){M.move(p,next.x-p.x,next.y-p.y,s,w);assert(Math.hypot(p.x-next.x,p.y-next.y)<.01)}}
+ for(const goal of samples){const p=M.place(goal.y>=1200?{x:155,y:1830}:M.fresh().player);const path=M.path(p,goal,s,w);assert(path.length);for(const next of [...path,goal]){M.move(p,next.x-p.x,next.y-p.y,s,w);assert(Math.hypot(p.x-next.x,p.y-next.y)<.01)}}
 });
 test('retomar partidas recupera jogador sobre cadeira ou porta fechada sem mudar a história',()=>{
  for(const [x,y]of [[340,143],[900,832],[1216,843],[1199,258],[1215,755]]){
@@ -41,15 +41,15 @@ test('porta fechada bloqueia toda a folha visível pelo norte, sul e laterais',(
  }
 });
 test('janelas laterais e bordas inferiores das paredes não viram piso',()=>{
- for(const [name,x,y]of [['janela esquerda do dormitório',119,149],['janela direita do dormitório',516,146],['parede da leitura',653,148],['parede lateral da cela',1055,178],['mureta do corredor',600,400],['parede lateral do salão',104,660],['parede inferior do salão',400,862]])assert(!M.walkable(x,y,7),name);
+ for(const [name,x,y]of [['janela dormitório',95,149],['parede leitura',550,180],['parede celas',570,1600],['mureta corredor',600,450],['parede salão',72,660],['parede inferior salão',400,915]])assert(!M.walkable(x,y,7),name);
 });
 test('contato com parede, móvel e porta não deixa uma folga dependente do passo',()=>{
  const s=G.initial(),w=M.fresh();s.flags.cellOpen=true;w.doors.cell=false;
  const probes=[
-  {x:300,y:155,dx:0,dy:-40,axis:'y',edge:140},
-  {x:160,y:200,dx:-40,dy:0,axis:'x',edge:145},
-  {x:300,y:155,dx:40,dy:0,axis:'x',edge:309},
-  {x:1199,y:300,dx:0,dy:-80,axis:'y',edge:269}
+  {x:300,y:155,dx:0,dy:-40,axis:'y',edge:142},
+  {x:200,y:175,dx:-40,dy:0,axis:'x',edge:192},
+  {x:300,y:155,dx:0,dy:-200,axis:'y',edge:142},
+  {x:435,y:1830,dx:0,dy:-200,axis:'y',edge:1791}
  ];
  for(const probe of probes)for(const frames of [1,7,30]){
   const p={x:probe.x,y:probe.y};
@@ -61,5 +61,11 @@ test('contato com parede, móvel e porta não deixa uma folga dependente do pass
 test('andar na diagonal desliza junto à parede sem prender nem atravessar os pés',()=>{
  const s=G.initial(),w=M.fresh(),p={x:240,y:155};
  M.move(p,40,-40,s,w);
- assert.equal(p.x,280);assert(Math.abs(p.y-140)<.002);assert(M.walkable(p.x,p.y,7,s,w));
+ assert.equal(p.x,280);assert(Math.abs(p.y-142)<.002);assert(M.walkable(p.x,p.y,7,s,w));
+});
+
+test('paredes laterais e inferiores pintadas bloqueiam até deslocamentos grandes',()=>{
+ for(const probe of [{x:140,y:200,dx:-100,dy:0,minX:122},{x:450,y:220,dx:100,dy:0,maxX:473},{x:200,y:850,dx:0,dy:150,maxY:878},{x:1500,y:400,dx:150,dy:0,maxX:1523}]){
+  const p={x:probe.x,y:probe.y};assert(M.walkable(p.x,p.y,7));M.move(p,probe.dx,probe.dy);assert(M.walkable(p.x,p.y,7));if(probe.minX)assert(p.x>=probe.minX);if(probe.maxX)assert(p.x<=probe.maxX);if(probe.maxY)assert(p.y<=probe.maxY);
+ }
 });

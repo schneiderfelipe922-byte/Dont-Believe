@@ -54,3 +54,7 @@ Validação da aplicação: 111 testes automatizados aprovados; build estático 
 ## Plantas completas e visibilidade
 
 A planta expandida mais recente está descrita em `MAPA-COMPLETO.md`: armazém no lugar da antiga cela, quarto de Elias no antigo espaço dos arquivos, pátio e lavanderia anexos, subterrâneo em imagem separada. São artes preparadas; não substituir a geometria antiga apenas trocando o PNG. A visão por sala e os avisos de vigias foram implementados no mapa atual, preservando a orientação por passagens.
+
+## Integração dos sprites — 13/11/2026
+
+Personagens em guache aplicados pelo renderer, incluindo caminhada de seis frames e correções frente/costas. Recortes e âncoras individuais preservam os pés; escala comum por direção. Os cenários expandidos já estão jogáveis conforme `MAPA-COMPLETO.md`. Esta atualização substitui os estados históricos de “prévia” acima. Os sprites da infância no prólogo e os retratos ilustrados específicos mantêm suas artes próprias. 131 testes aprovados e revisão no navegador nos três formatos de tela; nenhuma mudança nas condições dos seis finais.

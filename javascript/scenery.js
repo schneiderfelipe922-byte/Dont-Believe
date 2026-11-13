@@ -1,34 +1,40 @@
-/* Mapa completo fornecido pelo jogador. Coordenadas em pixels da imagem 1456×1080. */
+/* Plantas em guache: térreo 1586×992; subterrâneo 1717×916, deslocado 1200 px em Y. */
 (function(root){
 'use strict';
-const mapCrop=[0,0,1456,895];
+const mapCrop=[0,0,1586,992],basementOffset=1200;
+const floors=[{id:'ground',name:'Térreo',x:0,y:0,w:1586,h:992},{id:'basement',name:'Subterrâneo',x:0,y:basementOffset,w:1717,h:916}];
 const layout=[
- ['dorm','Dormitório',104,40,428,240,'wood'],['study','Sala de leitura',641,42,316,206,'wood'],
- ['cell','Ala restrita',1042,44,318,209,'stone'],['hall','Corredor dos vigias',94,311,1268,100,'wood'],
- ['dining','Salão do obelisco',96,469,611,399,'wood'],['kitchen','Cozinha',779,470,585,165,'stone'],
- ['office','Sala de observação',782,718,261,155,'wood'],['archive','Arquivos subterrâneos',1107,713,258,158,'wood']
+ ['dorm','Dormitório',105,70,385,225,'wood'],['study','Sala de leitura',565,70,320,228,'wood'],
+ ['warehouse','Armazém de pertences',935,65,285,235,'wood'],['hall','Corredor dos vigias',55,330,1155,105,'stone'],
+ ['dining','Salão do obelisco',90,490,570,405,'wood'],['kitchen','Cozinha',720,490,460,200,'stone'],
+ ['office','Sala de observação',725,750,210,155,'wood'],['elias','Quarto de Elias',980,750,320,155,'wood'],
+ ['courtyard','Pátio',1230,350,310,330,'stone'],['laundry','Lavanderia',1275,105,275,215,'stone'],
+ ['cell','Cela de Mira',315,1460,240,212,'stone'],['tomasCell','Cela de Tomas',615,1460,210,212,'stone'],
+ ['basementHall','Corredor subterrâneo',90,1800,1530,180,'stone'],['serviceStairs','Escada de serviço',95,1530,115,280,'stone'],
+ ['archive','Arquivos subterrâneos',900,1320,730,450,'stone']
 ];
-const passageRects=[[286,260,66,100],[730,235,89,128],[1164,240,70,124],[344,401,72,120],[884,396,80,132],[884,628,80,150],[1180,655,70,126],[884,655,366,40]];
+// Vãos reais; os dois andares são ilhas separadas ligadas por interações nas escadas.
+const passageRects=[[280,280,65,75],[680,275,65,85],[1058,280,48,80],[320,420,50,100],[820,420,40,110],[830,680,60,145],[925,825,80,55],[1190,370,55,55],[1380,305,50,70],[315,1655,240,165],[615,1655,210,165],[925,1750,100,75]];
 const blocks={
- dorm:[[104,40,428,93],[144,117,63,68],[435,117,58,68],[104,133,34,147],[498,133,34,147],[180,208,24,35],[206,104,23,41],[316,120,47,30],[146,244,26,33],[478,245,54,32]],
- study:[[641,42,316,57],[641,98,55,25],[686,126,36,69],[767,119,46,109],[866,120,37,65],[916,99,41,40],[641,161,30,38],[923,184,34,37],[687,213,38,35],[874,211,37,37]],
- cell:[[1042,44,318, 60],[1042,103,35,150],[1325,99,35,154],[1180,137,70,29],[1042,191,123,62],[1234,191,126,62]],
- hall:[[94,311,1268,45]],
- dining:[[96,469,611,42],[130,548,168,94],[511,548,165,94],[130,710,168,91],[511,710,165,91],[344,556,110,214],[96,817,105,51],[606,817,101,51]],
- kitchen:[[779,470,585,50],[779,517,36,84],[1327,518,37,115],[875,540,167,28],[1081,540,164,28],[894,589,134,27],[1079,589,145,27],[779,599,95,36]],
- office:[[782,718,261,52],[782,771,25,102],[1017,768,26,105],[852,795,94,39]],
- archive:[[1107,713,258,47],[1107,760,32,96],[1321,760,44,96],[1185,784,66,63],[1107,850,61,21],[1303,849,62,22]]
+ dorm:[[105,70,385,65],[120,130,65,60],[400,130,65,65],[108,215,25,65],[448,250,40,40]],
+ study:[[565,70,320,60],[565,155,35,85],[620,145,35,62],[705,145,40,88],[793,145,36,65],[845,200,40,60],[610,235,45,30]],
+ warehouse:[[935,65,285,90],[935,160,52,130],[1140,150,80,105],[1120,250,100,48],[985,240,45,55]],
+ hall:[[55,330,220,40],[350,330,325,40],[750,330,300,40],[1110,330,100,40]],
+ dining:[[90,490,220,50],[390,490,270,50],[120,575,145,83],[485,575,145,83],[120,725,145,86],[485,725,145,86],[310,575,120,212],[90,855,100,40],[535,855,125,40]],
+ kitchen:[[720,490,90,45],[870,490,310,55],[720,545,45,60],[820,560,135,35],[990,560,130,35],[835,610,120,35],[985,610,115,35],[1135,550,45,65],[720,625,70,55],[1115,625,60,62]],
+ office:[[725,750,95,55],[900,750,35,55],[800,830,80,48],[725,810,30,95]],
+ elias:[[1090,775,48,47],[1150,765,75,102],[1240,760,60,100],[1015,850,90,40]],
+ courtyard:[[1320,480,155,105],[1250,545,45,70],[1480,545,45,70],[1230,625,35,55],[1505,625,35,55]],
+ laundry:[[1275,105,275,125],[1290,235,110,65]],
+ cell:[[325,1480,140,85],[485,1520,55,45]],tomasCell:[[620,1480,135,85],[775,1520,45,45]],
+ archive:[[900,1635,25,135],[1025,1635,30,135],[1010,1320,500,140],[900,1400,90,230],[1430,1430,85,275],[1110,1525,210,155],[1530,1440,100,275]]
 };
-// Somente estes vãos recortam as paredes. Móveis na passagem continuam sólidos.
-const wallOpenings={study:[[730,235,89,13]],cell:[[1164,240,70,13]],hall:[[286,311,66,45],[730,311,89,45],[1164,311,70,45]],dining:[[344,469,72,42]],kitchen:[[884,470,80,50]],office:[[884,718,80,52]],archive:[[1180,713,70,47]]};
-const boundaryWalls=[
- ['dorm',[104,267,428,13],[[286,267,66,13]]],
- ['study',[641,123,30,125],[]],['study',[933,139,24,109],[]],['study',[641,234,316,14],[[730,234,89,14]]],
- ['hall',[94,396,1268,15],[[344,396,72,15],[884,396,80,15]]],['hall',[94,356,12,55],[]],['hall',[1350,356,12,55],[]],
- ['dining',[96,511,15,357],[]],['dining',[690,511,17,357],[]],['dining',[96,852,611,16],[]],
- ['kitchen',[779,634,585,1],[[884,634,80,1]]],
- ['office',[782,860,261,13],[]],['archive',[1107,856,258,15],[]]
-];
+const wallOpenings={};
+// Bordas internas das paredes pintadas; os vãos continuam transitáveis.
+const boundaryWalls=layout.flatMap(([id,,x,y,w,h])=>{
+ const holes=[...passageRects,...layout.filter(r=>r[0]!==id).map(r=>r.slice(2,6))];
+ return [[x,y,w,10],[x,y+h-10,w,10],[x,y,10,h],[x+w-10,y,10,h]].map(box=>[id,box,holes]);
+});
 function subtract(box,hole){
  const [x,y,w,h]=box,[hx,hy,hw,hh]=hole,left=Math.max(x,hx),top=Math.max(y,hy),right=Math.min(x+w,hx+hw),bottom=Math.min(y+h,hy+hh);
  if(left>=right||top>=bottom)return [box];
@@ -47,21 +53,30 @@ function atlas(c,image,sx,sy,sw,sh,...dest){
  c.drawImage(image,sx*scaleX,sy*scaleY,sw*scaleX,sh*scaleY,...dest);
 }
 function floor(c,image,box){c.save();c.beginPath();c.rect(...box);c.clip();for(let y=box[1];y<box[1]+box[3];y+=12)for(let x=box[0];x<box[0]+box[2];x+=53)atlas(c,image,894,660,53,12,x,y,53,12);c.restore();}
-function draw(c,M,art){c.fillStyle='#0b090e';c.fillRect(0,0,M.W*M.T,M.H*M.T);if(!art.fullMap)return;atlas(c,art.fullMap,...mapCrop,...mapCrop);
- // Retira a grade decorativa do salão: apenas cela e arquivos recebem portas reais.
- floor(c,art.fullMap,[343,403, 73,73]);
- // Apaga as folhas embutidas sob os quadros dinâmicos, para não reaparecerem abertas.
- floor(c,art.fullMap,[1164,190,70,73]);floor(c,art.fullMap,[1180,696,70,67]);
- // O acesso à observação precisa ser um vão visível, igual ao da física.
- floor(c,art.fullMap,[884,700,80,70]);
+function draw(c,M,art){
+ c.fillStyle='#0b090e';c.fillRect(0,0,M.W*M.T,M.H*M.T);
+ if(art.fullMap)c.drawImage(art.fullMap,0,0,1586,992);
+ if(art.basementMap)c.drawImage(art.basementMap,0,basementOffset,1717,916);
+ // Passagens dinâmicas: cobrir as folhas pintadas com piso do mesmo cenário.
+ const patch=(image,source,box)=>{if(image)c.drawImage(image,...source,...box);};
+ patch(art.fullMap,[840,710,40,18],[935,825,68,55]);
+ patch(art.basementMap,[350,390,180,70],[315,1672,240,128]);
+ patch(art.basementMap,[650,390,160,70],[615,1672,210,128]);
+ patch(art.basementMap,[1045,460,100,100],[925,1645,100,180]);
 }
-function drawDoor(c,d,open,art,progress=open?1:0,closing=false){if(!art.fullMap||!sprites[d.id])return false;const frames=sprites[d.id];const frame=progress<=0?0:progress>=1?3:closing?4:progress<.5?1:2;const source=frames[frame],dest=d.art;
- atlas(c,art.fullMap,...source,...dest);return true;
+function drawDoor(c,d,open,art){
+ if(open)return true;
+ if(art.basementMap&&d.art){c.drawImage(art.basementMap,d.art[0],d.art[1]-basementOffset,d.art[2],d.art[3],...d.art);return true;}
+ c.save();c.fillStyle='#231c29';c.fillRect(d.x,d.y,d.w,d.h);
+ c.fillStyle=d.id==='warehouse'?'#886249':'#9a7b83';
+ if(d.id==='warehouse'||d.id==='archive'){c.fillRect(d.x+3,d.y+2,d.w-6,d.h-4);c.fillStyle='#d1ad66';c.fillRect(d.x+d.w-12,d.y+6,5,5);}
+ else {for(let x=d.x+5;x<d.x+d.w;x+=16)c.fillRect(x,d.y-24,4,44);c.fillRect(d.x,d.y-24,d.w,5);}
+ c.restore();return true;
 }
 // Os dois criados-mudos do dormitório usam a mesma origem entre aberto e fechado.
 const drawers=[
- {id:'bedside-left',name:'Gaveta do criado-mudo esquerdo',art:[197,104,31,29],depth:145,point:{x:215,y:158}},
- {id:'bedside-right',name:'Gaveta do criado-mudo direito',art:[407,104,31,29],depth:141,point:{x:398,y:155}}
+ {id:'bedside-left',name:'Gaveta do criado-mudo esquerdo',art:[183,111,27,24],depth:140,point:{x:205,y:155}},
+ {id:'bedside-right',name:'Gaveta do criado-mudo direito',art:[376,111,27,24],depth:140,point:{x:383,y:155}}
 ];
 function drawDrawer(c,d,open,art){
  if(!art.bedside)return false;
@@ -81,29 +96,9 @@ function drawPickup(c,item,art){
  const size=item.photo?18:16;
  c.drawImage(art.pickups,index%4*32,Math.floor(index/4)*32,32,32,Math.round(item.x-size/2),Math.round(item.y-size/2),size,size);return true;
 }
-// A sala atual inclui suas soleiras; o interior das salas vizinhas permanece oculto.
-const contains=(b,p)=>p.x>=b[0]&&p.x<=b[0]+b[2]&&p.y>=b[1]&&p.y<=b[1]+b[3];
-const distanceTo=(b,p)=>Math.hypot(Math.max(b[0]-p.x,0,p.x-b[0]-b[2]),Math.max(b[1]-p.y,0,p.y-b[1]-b[3]));
-const intersects=(a,b)=>a[0]<=b[0]+b[2]&&a[0]+a[2]>=b[0]&&a[1]<=b[1]+b[3]&&a[1]+a[3]>=b[1];
-function roomView(point){
- const row=layout.find(r=>contains(r.slice(2,6),point))||layout.reduce((best,r)=>distanceTo(r.slice(2,6),point)<distanceTo(best.slice(2,6),point)?r:best);
- const core=row.slice(2,6),border=[core[0]-18,core[1]-24,core[2]+36,core[3]+42];
- const passages=passageRects.filter(b=>intersects(core,b));
- let boxes=[border,...passages];
- for(const other of layout)if(other!==row)boxes=boxes.flatMap(b=>subtract(b,other.slice(2,6)));
- // Galerias entre duas salas: a soleira precisa continuar visível até a troca.
- const standing=passageRects.find(b=>contains(b,point));if(standing&&!passages.includes(standing))boxes.push(standing);
- return {id:row[0],name:row[1],core,boxes,passages,contains:p=>boxes.some(b=>contains(b,p))};
-}
-function guardWarnings(point,guards){
- const view=roomView(point),[x,y,w,h]=view.core;
- return view.passages.flatMap((b,index)=>{
-  const center={x:b[0]+b[2]/2,y:b[1]+b[3]/2};
-  const neighbors=layout.filter(r=>r[0]!==view.id&&intersects(r.slice(2,6),b));
-  const threat=guards.some(g=>!view.contains(g)&&Math.hypot(g.x-center.x,g.y-center.y)<210&&neighbors.some(r=>contains(r.slice(2,6),g)));
-  if(!threat||Math.hypot(point.x-center.x,point.y-center.y)>300)return [];
-  return [{id:view.id+':'+index,x:Math.max(x+45,Math.min(x+w-45,center.x)),y:Math.max(y+40,Math.min(y+h-20,center.y)),text:'PASSOS · VIGIA'}];
- });
-}
-const api={roomView,guardWarnings,storyPickups,drawers,drawDrawer,drawPickup,mapCrop,layout,passageRects,rooms,geometry,areas,sprites,draw,drawDoor};root.GameScenery=api;if(typeof module!=='undefined')module.exports=api;
+function floorAt(p){return p.y>=basementOffset?floors[1]:floors[0];}
+// Visibilidade por andar: cômodos vizinhos permanecem visíveis.
+function roomView(point){const f=floorAt(point);return {id:f.id,name:f.name,core:[f.x,f.y,f.w,f.h],boxes:[[f.x,f.y,f.w,f.h]],passages:[],contains:p=>floorAt(p).id===f.id};}
+function guardWarnings(){return [];}
+const api={floors,floorAt,basementOffset,roomView,guardWarnings,storyPickups,drawers,drawDrawer,drawPickup,mapCrop,layout,passageRects,rooms,geometry,areas,sprites,draw,drawDoor};root.GameScenery=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

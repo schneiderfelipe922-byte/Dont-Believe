@@ -1,0 +1,312 @@
+{
+  "tool": "image_gen integrada",
+  "integrated": true,
+  "heights": {
+    "kali": 40,
+    "mira": 40,
+    "eron": 46,
+    "noah": 46,
+    "tomas": 46,
+    "vigia": 54,
+    "lider": 54,
+    "daty": 40,
+    "inauri": 54,
+    "mel": 26
+  },
+  "images": [
+    {
+      "who": "kali",
+      "action": "walk",
+      "prompt": "Production 2D TOP-DOWN RPG WALK animation spritesheet for KALI. Reference 1 is approved character identity and handmade gouache art direction. Reference 2 is ONLY layout and top-down camera reference. Replace pixel art appearance with bold dry opaque gouache, simplified organic angular shapes and selective broken ink outlines, dusty plum shadows, broad flat painted shapes, no glossy anime. Kali has messy RED hair, rectangular BLACK glasses, dark short-sleeve shirt OVER ivory long sleeves, dark shorts/trousers and dark shoes with ivory soles. Preserve young short slender proportions, serious reserved face, both hands free at sides. Exact regular grid: SIX columns and FOUR rows, 24 full-body figures total. Row 1 faces DOWN toward viewer; row 2 faces LEFT; row 3 faces RIGHT; row 4 faces UP away viewer. Each row is a full six-frame walking cycle: left contact, left passing, left lift, right contact, right passing, right lift; readable alternating leg and arm movement with mild body bob, seamless loop. Same identity, proportions, palette, clothes and scale all frames. Top-down slightly elevated orthographic camera seeing top of head and shoulders, not eye-level portraits or isometric. Center each figure in equal-sized cell, soles at same bottom-center baseline, generous transparent gutters and outer padding, no overlap or cropping. Full hair and both feet visible. Flat true transparent background everywhere outside figures. NO cast shadows, glow, haze, aura, scenery, grid lines, labels, text or decorative border. Clear silhouettes readable when displayed at 40px tall. Generate entire sheet at once, preferably 1536x1024 landscape.",
+      "file": "kali-walk.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+    },
+    {
+      "who": "kali",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Kali, young short slender, messy red hair, black rectangular glasses, dark short-sleeve shirt OVER ivory long sleeves, dark trousers and shoes with ivory soles. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/kali.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "kali-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-971b0412-3871-4844-91a7-49b315d6cfb5.png"
+    },
+    {
+      "who": "mira",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Mira, young short girl, long black-violet hair, ivory collared long sleeve blouse and dark plum skirt, black shoes. Reserved thoughtful. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/mira.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "mira-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-20b4bb73-0a3a-440f-9710-7847893ffddb.png"
+    },
+    {
+      "who": "mira",
+      "action": "walk",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Mira, young short girl, long black-violet hair, ivory collared long sleeve blouse and dark plum skirt, black shoes. Reserved thoughtful. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 6 columns x FOUR rows = 24 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Six genuinely distinct phases of a seamless WALK cycle: left contact, left passing, left lift, right contact, right passing, right lift. Alternate limbs clearly, gentle natural bob. Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Landscape 1536x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/mira.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "mira-walk.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-775e3e4d-d67f-4539-873f-80ba1a7d5dcf.png"
+    },
+    {
+      "who": "eron",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Eron, young medium height, messy VIOLET hair, dark plum long-sleeve jacket and dark pants, dark shoes. Reserved serious. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/eron.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "eron-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-51cd7a78-c825-4675-8809-5086f09cd394.png"
+    },
+    {
+      "who": "eron",
+      "action": "walk",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Eron, young medium height, messy VIOLET hair, dark plum long-sleeve jacket and dark pants, dark shoes. Reserved serious. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 6 columns x FOUR rows = 24 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Six genuinely distinct phases of a seamless WALK cycle: left contact, left passing, left lift, right contact, right passing, right lift. Alternate limbs clearly, gentle natural bob. Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Landscape 1536x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/eron.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "eron-walk.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-baf174b5-08ab-4db0-b977-f4dc6a6f405d.png"
+    },
+    {
+      "who": "noah",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Noah, young medium height, sandy blond messy hair, pale muted BLUE collared shirt and dark trousers, brown shoes. Ambiguous neutral face, not villainous. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/noah.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "noah-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-2812136b-9ae4-4e3e-8173-23c4fa5f8b92.png"
+    },
+    {
+      "who": "noah",
+      "action": "walk",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Noah, young medium height, sandy blond messy hair, pale muted BLUE collared shirt and dark trousers, brown shoes. Ambiguous neutral face, not villainous. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 6 columns x FOUR rows = 24 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Six genuinely distinct phases of a seamless WALK cycle: left contact, left passing, left lift, right contact, right passing, right lift. Alternate limbs clearly, gentle natural bob. Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Landscape 1536x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/noah.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "noah-walk.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-0b3d8ca9-ffaa-4ecc-add3-1b34b441d4a3.png"
+    },
+    {
+      "who": "tomas",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Tomas, young medium height, BLACK messy hair, black glasses, loose ivory hoodie and dark trousers, dark shoes. Slender and reserved, no grin. Preserve identity. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/tomas.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "tomas-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-2f5ca4da-fc3a-4f96-8130-c65f0ae7b000.png"
+    },
+    {
+      "who": "tomas",
+      "action": "walk",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Tomas, young medium height, BLACK messy hair, black glasses, loose ivory hoodie and dark trousers, dark shoes. Slender and reserved, no grin. Preserve identity. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 6 columns x FOUR rows = 24 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Six genuinely distinct phases of a seamless WALK cycle: left contact, left passing, left lift, right contact, right passing, right lift. Alternate limbs clearly, gentle natural bob. Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Landscape 1536x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/tomas.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "tomas-walk.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-443c77cc-6458-4e7e-9ff8-31bddc017f68.png"
+    },
+    {
+      "who": "vigia",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Vigia, tall adult guard, deep charcoal-plum hooded cloak, shadow conceals eyes, dark boots, arms free at sides. NO gold trim and NO weapon. Impassive. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/vigia.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "vigia-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-216a6213-88ba-46f8-a9e7-70f947d5d50a.png"
+    },
+    {
+      "who": "vigia",
+      "action": "walk",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Vigia, tall adult guard, deep charcoal-plum hooded cloak, shadow conceals eyes, dark boots, arms free at sides. NO gold trim and NO weapon. Impassive. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 6 columns x FOUR rows = 24 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Six genuinely distinct phases of a seamless WALK cycle: left contact, left passing, left lift, right contact, right passing, right lift. Alternate limbs clearly, gentle natural bob. Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Landscape 1536x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/vigia.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "vigia-walk.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-5e2718c6-522a-490e-aef1-9c2bc4bd35ce.png"
+    },
+    {
+      "who": "lider",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Leader of Actras, tall adult, dark plum hooded ceremonial robe with GOLD trim and medallion, dark shoes, violet-tipped slim staff as reference. Restrained authority. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/lider.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "lider-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-1d8175f9-935c-4231-aae1-92c71acbff51.png"
+    },
+    {
+      "who": "lider",
+      "action": "walk",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Leader of Actras, tall adult, dark plum hooded ceremonial robe with GOLD trim and medallion, dark shoes, violet-tipped slim staff as reference. Restrained authority. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 6 columns x FOUR rows = 24 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Six genuinely distinct phases of a seamless WALK cycle: left contact, left passing, left lift, right contact, right passing, right lift. Alternate limbs clearly, gentle natural bob. Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Landscape 1536x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/lider.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "lider-walk.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-c72720ef-3fac-4064-9e1e-8261ed152f63.png"
+    },
+    {
+      "who": "daty",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Daty, adult mother, reddish-brown wavy hair, ivory long coat over dark shirt, muted blue-gray trousers, dark shoes. Protective restrained expression. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/daty.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "daty-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-da99fbf1-355a-4285-8a5e-55efcada3db0.png"
+    },
+    {
+      "who": "inauri",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Inauri, adult father, receding brown hair, dark blue-plum collared shirt with rolled sleeves, ivory trousers, dark shoes. Protective serious expression. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed.  Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/inauri.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "inauri-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-4aaa7521-d29a-4adf-a464-e581c92089cb.png"
+    },
+    {
+      "who": "mel",
+      "action": "idle",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Mel, small fluffy IVORY WHITE cat with green eyes, pink nose, broad angular furry silhouette and fluffy tail. No clothing. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 4 columns x FOUR rows = 16 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Four genuinely distinct subtle IDLE phases: neutral breathing, inhale, blink or small ear movement, exhale. NO walking, no changing facing direction, planted feet; arms relaxed. Cat rests low on belly with paws tucked and tail along body, subtle ear and breathing motion. Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Square 1024x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/mel.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "mel-idle.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-40e381ba-2c32-4688-9664-98883595fd8b.png"
+    },
+    {
+      "who": "mel",
+      "action": "walk",
+      "prompt": "Production game animation spritesheet. Reference 1 is character identity and approved gouache style ONLY (do NOT copy its backdrop or halo). Reference 2 is approved Kali walk sheet for top-down camera and small-body proportions ONLY (do not copy Kali identity or background). CHARACTER: Mel, small fluffy IVORY WHITE cat with green eyes, pink nose, broad angular furry silhouette and fluffy tail. No clothing. ART: bold dry opaque gouache, simplified organic angular shapes, selective broken ink contours, dusty plum shadow planes, clear flat painted masses. Handmade, NOT pixel art, NOT polished anime. Exact regular grid: 6 columns x FOUR rows = 24 isolated full-body figures. Row1 DOWN toward viewer; row2 LEFT; row3 RIGHT; row4 UP away viewer. Six genuinely distinct phases of a seamless WALK cycle: left contact, left passing, left lift, right contact, right passing, right lift. Alternate limbs clearly, gentle natural bob. Each row keeps same facing direction. Top-down slightly elevated orthographic RPG camera seeing top of head and shoulders; no eye-level portraits or isometric. Same character size, clothes, palette, proportions, silhouette family and bottom-center baseline in all cells. Center each figure within its equal-sized cell with wide empty transparent gutters, clear gaps between rows and generous outer margins, no touching or cropped figures. Hair, hands, feet, tail or staff fully inside cells. TRUE TRANSPARENT alpha outside figures. NO background color, vignette, glow, aura, shadows, scenery, grid lines, labels or text. All painted body shapes opaque. Readable at 40-54px game height (cat26px). Generate entire sheet at once. Landscape 1536x1024.",
+      "refs": [
+        "/Users/Admin/Desktop/dont-believe-5/assets/dialogos/retratos/mel.png",
+        "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-54582d7f-04ba-405a-9011-9293373dedb9.png"
+      ],
+      "file": "mel-walk.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-4da2d183-9087-498b-9d37-32b7fae255f2.png"
+    }
+  ],
+  "melCorrection": "Correct anatomy of this CAT walking spritesheet. Reference1 current sheet is EDIT TARGET: repaint ALL cat poses to be a normal QUADRUPED house cat walking on FOUR PAWS, low horizontal spine parallel to ground, body longer than tall in side views, NO upright torso, NO bipedal or human walking poses, NO squirrel-like vertical body. Reference2 approved original game cat sheet shows the correct low four-legged anatomy and top-down perspective. Preserve expressive dry gouache creamy ivory fur, plum outline, green eyes and fluffy tail, but tail extends behind body horizontally with tip gently curved, NEVER towering like squirrel. Exact SIX columns FOUR rows, 24 full body distinct animation frames. Row1 cat faces DOWN and walks toward viewer, seeing elongated back from elevated top-down camera. Row2 walks LEFT, four alternating paws under long horizontal torso. Row3 walks RIGHT, same quadrupedal anatomy. Row4 walks UP away, back visible, hind paws stepping. Six phases per row, alternating fore and hind paws with natural feline gait. Same body size and proportions all frames. Wide TRANSPARENT gutters and outer margins, equal cell spacing, no cropping. Real alpha transparent background. No background, aura, shadows, grid or text. Full sheet in one edit, no human features.",
+  "corrections": [
+    {
+      "who": "kali",
+      "action": "walk",
+      "rows": 2,
+      "directions": [
+        0,
+        3
+      ],
+      "file": "kali-walk-front-back-v2.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-495962f6-7a38-480b-a1a5-d5d5db27d720.png",
+      "prompt": "Edit the referenced sprite character to fix the front/back WALK cycle. Output ONLY TWO ROWS x SIX COLUMNS, exactly 12 complete separated figures on transparent background, evenly sized and spaced. Row 1 faces camera/front, row 2 faces away/back. Same top-down RPG camera, identical identity, hair, outfit, ink and dry gouache palette. No side views. Critical: true alternating two-legged walk, NOT the same leg stepping twice. In EACH row: frame1 screen-left foot is LOWEST on canvas, screen-right foot raised 25px; frame2 left foot still lower but feet nearing; frame3 passing pose feet nearly level, right knee lifting; frame4 screen-RIGHT foot is LOWEST, screen-left foot raised25px; frame5 right still lower but nearing; frame6 passing pose left knee lifting. Frames1 and4 MUST have clearly opposite foot silhouettes. Arms counter-swing. Keep torso/hair orientation consistent, do NOT mirror whole figure. Small body bob. Both full shoes visible separately with gap. Six distinct sequential phases looping smoothly. No captions, numbers, lines, glow, shadow patches or scenery. Crisp transparent outside painted silhouette. Preserve the source proportions and recognizable costume. Frame4 must step with the OPPOSITE leg to frame1."
+    },
+    {
+      "who": "mira",
+      "action": "walk",
+      "rows": 2,
+      "directions": [
+        0,
+        3
+      ],
+      "file": "mira-walk-front-back-v2.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-5a1128a2-0002-4c02-9b25-2df931570511.png",
+      "prompt": "Edit the referenced sprite character to fix the front/back WALK cycle. Output ONLY TWO ROWS x SIX COLUMNS, exactly 12 complete separated figures on transparent background, evenly sized and spaced. Row 1 faces camera/front, row 2 faces away/back. Same top-down RPG camera, identical identity, hair, outfit, ink and dry gouache palette. No side views. Critical: true alternating two-legged walk, NOT the same leg stepping twice. In EACH row: frame1 screen-left foot is LOWEST on canvas, screen-right foot raised 25px; frame2 left foot still lower but feet nearing; frame3 passing pose feet nearly level, right knee lifting; frame4 screen-RIGHT foot is LOWEST, screen-left foot raised25px; frame5 right still lower but nearing; frame6 passing pose left knee lifting. Frames1 and4 MUST have clearly opposite foot silhouettes. Arms counter-swing. Keep torso/hair orientation consistent, do NOT mirror whole figure. Small body bob. Both full shoes visible separately with gap. Six distinct sequential phases looping smoothly. No captions, numbers, lines, glow, shadow patches or scenery. Crisp transparent outside painted silhouette. Preserve the source proportions and recognizable costume. Frame4 must step with the OPPOSITE leg to frame1."
+    },
+    {
+      "who": "eron",
+      "action": "walk",
+      "rows": 2,
+      "directions": [
+        0,
+        3
+      ],
+      "file": "eron-walk-front-back-v2.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-5bafc0f6-a88d-4023-b7f3-4e33ea397fc6.png",
+      "prompt": "Edit the referenced sprite character to fix the front/back WALK cycle. Output ONLY TWO ROWS x SIX COLUMNS, exactly 12 complete separated figures on transparent background, evenly sized and spaced. Row 1 faces camera/front, row 2 faces away/back. Same top-down RPG camera, identical identity, hair, outfit, ink and dry gouache palette. No side views. Critical: true alternating two-legged walk, NOT the same leg stepping twice. In EACH row: frame1 screen-left foot is LOWEST on canvas, screen-right foot raised 25px; frame2 left foot still lower but feet nearing; frame3 passing pose feet nearly level, right knee lifting; frame4 screen-RIGHT foot is LOWEST, screen-left foot raised25px; frame5 right still lower but nearing; frame6 passing pose left knee lifting. Frames1 and4 MUST have clearly opposite foot silhouettes. Arms counter-swing. Keep torso/hair orientation consistent, do NOT mirror whole figure. Small body bob. Both full shoes visible separately with gap. Six distinct sequential phases looping smoothly. No captions, numbers, lines, glow, shadow patches or scenery. Crisp transparent outside painted silhouette. Preserve the source proportions and recognizable costume. Frame4 must step with the OPPOSITE leg to frame1."
+    },
+    {
+      "who": "noah",
+      "action": "walk",
+      "rows": 2,
+      "directions": [
+        0,
+        3
+      ],
+      "file": "noah-walk-front-back-v2.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-1d7c4a09-9d82-4946-bc32-8a4b2d1893e4.png",
+      "prompt": "Image1 is Noah appearance reference ONLY. Image2 is REQUIRED leg pose/layout template. Redraw Noah (blond hair pale blue shirt brown trousers) in precisely the 12 walking poses and TWO ROW SIX COLUMN layout of image2 (Kali), replace Kali with Noah. Both rows frame1 left shoe low/right high, frame4 right shoe low/left high. NOT repeated same-foot steps. Preserve Noah identity costume gouache style. Front row faces camera; bottom row rear view. True transparent background, no glow, no scenery. Copy the alternating leg silhouettes of image2 exactly, not the faulty legs of image1. All12 full bodies equal scale and separated."
+    },
+    {
+      "who": "tomas",
+      "action": "walk",
+      "rows": 2,
+      "directions": [
+        0,
+        3
+      ],
+      "file": "tomas-walk-front-back-v2.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-b8ef4e65-aa29-4c1f-8b83-2ba00b250756.png",
+      "prompt": "Edit the referenced sprite character to fix the front/back WALK cycle. Output ONLY TWO ROWS x SIX COLUMNS, exactly 12 complete separated figures on transparent background, evenly sized and spaced. Row 1 faces camera/front, row 2 faces away/back. Same top-down RPG camera, identical identity, hair, outfit, ink and dry gouache palette. No side views. Critical: true alternating two-legged walk, NOT the same leg stepping twice. In EACH row: frame1 screen-left foot is LOWEST on canvas, screen-right foot raised 25px; frame2 left foot still lower but feet nearing; frame3 passing pose feet nearly level, right knee lifting; frame4 screen-RIGHT foot is LOWEST, screen-left foot raised25px; frame5 right still lower but nearing; frame6 passing pose left knee lifting. Frames1 and4 MUST have clearly opposite foot silhouettes. Arms counter-swing. Keep torso/hair orientation consistent, do NOT mirror whole figure. Small body bob. Both full shoes visible separately with gap. Six distinct sequential phases looping smoothly. No captions, numbers, lines, glow, shadow patches or scenery. Crisp transparent outside painted silhouette. Preserve the source proportions and recognizable costume. Frame4 must step with the OPPOSITE leg to frame1."
+    },
+    {
+      "who": "vigia",
+      "action": "walk",
+      "rows": 2,
+      "directions": [
+        0,
+        3
+      ],
+      "file": "vigia-walk-front-back-v2.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-c7495d0d-49c7-4852-9fb2-d49f43c53833.png",
+      "prompt": "Edit the referenced sprite character to fix the front/back WALK cycle. Output ONLY TWO ROWS x SIX COLUMNS, exactly 12 complete separated figures on transparent background, evenly sized and spaced. Row 1 faces camera/front, row 2 faces away/back. Same top-down RPG camera, identical identity, hair, outfit, ink and dry gouache palette. No side views. Critical: true alternating two-legged walk, NOT the same leg stepping twice. In EACH row: frame1 screen-left foot is LOWEST on canvas, screen-right foot raised 25px; frame2 left foot still lower but feet nearing; frame3 passing pose feet nearly level, right knee lifting; frame4 screen-RIGHT foot is LOWEST, screen-left foot raised25px; frame5 right still lower but nearing; frame6 passing pose left knee lifting. Frames1 and4 MUST have clearly opposite foot silhouettes. Arms counter-swing. Keep torso/hair orientation consistent, do NOT mirror whole figure. Small body bob. Both full shoes visible separately with gap. Six distinct sequential phases looping smoothly. No captions, numbers, lines, glow, shadow patches or scenery. Crisp transparent outside painted silhouette. Preserve the source proportions and recognizable costume. Frame4 must step with the OPPOSITE leg to frame1. Keep cloak design but show TWO separated alternating boots under hem."
+    },
+    {
+      "who": "lider",
+      "action": "walk",
+      "rows": 2,
+      "directions": [
+        0,
+        3
+      ],
+      "file": "lider-walk-front-back-v2.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-ecdf6e7a-c7cb-4dd9-827f-94d4c23bffa5.png",
+      "prompt": "Remove ALL white background to genuine alpha transparency. Keep these exact twelve painted character poses, pixels appearance, two rows six columns. No other changes, preserve opposite leg positions in frames1and4. No glow or outlines."
+    },
+    {
+      "who": "mel",
+      "action": "walk",
+      "rows": 2,
+      "directions": [
+        0,
+        3
+      ],
+      "file": "mel-walk-front-back-v2.png",
+      "source": "/Users/Admin/.codex/generated_images/01a1bfee-eaf4-7ad1-ae33-e81379d51831/exec-999b9c63-5003-4d74-845a-40516d2461fa.png",
+      "prompt": "Edit ONLY bottom row hind legs of cat animation. Leave top row unchanged. Bottom row columns 1,2,3 currently WRONG: right paw is extended. Redraw bottom row first THREE cats with SCREEN LEFT hind leg extended LONG DOWN and SCREEN RIGHT hind leg bent UP tightly under rump. Tail lifted toward right so extended left leg very visible. Bottom row columns4,5,6 retain RIGHT hind leg extended DOWN. Clear opposite-leg silhouettes between bottom col1 and col4. Preserve cat body, fur, low quadruped anatomy, top-down viewpoint and painterly style. Exactly12 figures in2rows6columns. Transparent background. Do not just shift tail. Actually swap the bent and straight hind legs in bottom row first3 cats."
+    }
+  ],
+  "integrationDate": "2026-11-13"
+}

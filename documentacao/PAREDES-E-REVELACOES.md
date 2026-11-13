@@ -1,0 +1,11 @@
+# Paredes e revelações — 12/11/2026
+
+1. **Propósito:** impedir passagem pelas bordas pintadas e aplicar os gatilhos pedidos para as imagens existentes.
+2. **Experiência:** o armazém abre sua imagem automaticamente ao entrar pela primeira vez na partida. A lavanderia abre sua imagem ao examinar a lavadora; pode ser revista por nova interação. Continuar retorna à exploração, sem movimento residual.
+3. **Regras:** paredes internas de 10 px com recortes para vãos reais; ajuste da área do quarto de Elias e da colisão da mesa, preservando circulação entre os móveis. A leitura pausa simulação, rondas e movimento. Não custa ações. Página atual e conclusão são salvas; o armazém não repete depois de concluído. A imagem não concede chave nem desbloqueia a porta.
+4. **Visual e som:** reutiliza as imagens aprovadas, com texto legível, botões de continuar e pausa, teclado e toque. Nenhuma arte ou áudio foi gerado ou alterado. A fala T-17 distingue quem já encontrou a etiqueta de quem ainda não a investigou.
+5. **Impacto:** mesmas pistas, custos, resgates e requisitos dos seis finais. Saves em posições agora bloqueadas usam a correção de posição existente. Cópia anterior dos arquivos em `backups/antes-paredes-revelacoes-2026-11-12`.
+6. **Escopo:** colisões de borda em scenery.js; integração do módulo revelations.js em game.js e index.html; testes e revisões dos arquivos para invalidar cache. Sem publicação remota.
+7. **Verificações:** 127 testes aprovados, incluindo deslocamentos grandes contra paredes, todos os pontos novos, circulação de Mel, trajetos e finais. Teste automatizado em Chromium nos tamanhos 1280×800, 390×844 e 844×390: entrada por movimento real no armazém, não repetição, lavadora por E, simulação congelada, pausa, retomada e restauração da página após reload. Sem erros JavaScript. Capturas em `previas/paredes-revelacoes`; revista visualmente a lavanderia no celular e o armazém na horizontal.
+
+**Avaliação:** clareza — atende: paredes e portas distintas, imagem ligada à ação esperada e retorno explícito; pistas e escolhas — atende por preservação: sem transformar roupa em prova de destino ou imagem em chave; seis finais — atende por preservação, com regressão de rotas aprovada. Ainda não houve observação com jogador novo; testes automatizados não demonstram compreensão humana.
