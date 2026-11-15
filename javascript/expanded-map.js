@@ -3,7 +3,7 @@
 'use strict';
 const M=root.GameWorld||(typeof require==='function'?require('./world.js'):null),G=root.GameStory||(typeof require==='function'?require('./story.js'):null),A=root.GameAdventure||(typeof require==='function'?require('./adventure.js'):null),S=root.GameScenery||(typeof require==='function'?require('./scenery.js'):null);
 Object.assign(M.positions,{
- cellDoor:{x:435,y:1808},miraCell:{x:430,y:1620},tomas:{x:720,y:1620},
+ cellDoor:{x:435,y:1808},miraCell:{x:450,y:1650},tomas:{x:710,y:1650},
  records:{x:1200,y:1698},relic:{x:1350,y:1550},leader:{x:1350,y:1640},
  exit:{x:80,y:402},exitLatch:{x:110,y:402},escapeTurn:{x:180,y:402},
  washer:{x:1420,y:251},laundryBook:{x:1415,y:280},serviceCabinet:{x:1515,y:255},

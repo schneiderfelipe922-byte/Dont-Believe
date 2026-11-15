@@ -135,3 +135,11 @@ test('diálogo aplica tema, setas trocam a seleção e Enter confirma exatamente
  h.key('ArrowUp');assert.equal(options[available[0]].dataset.selected,'true');
  h.key('Space');assert.equal(actions,1);
 });
+
+test('salvamento recupera o estado após falha de armazenamento',()=>{
+ const app=boot(),write=app.c.localStorage.setItem;
+ app.c.localStorage.setItem=()=>{throw Error('quota');};
+ app.snapshot();assert.equal(app.get('save-status').textContent,'SALVAMENTO INDISPONÍVEL');
+ app.c.localStorage.setItem=write;app.snapshot();
+ assert.equal(app.get('save-status').textContent,'✓ PROGRESSO SALVO');
+});

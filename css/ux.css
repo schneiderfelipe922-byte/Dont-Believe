@@ -1,0 +1,18 @@
+#quick-tools{display:none;position:absolute;top:max(12px,env(safe-area-inset-top));left:max(12px,env(safe-area-inset-left));gap:8px;z-index:4}
+body.in-game #quick-tools{display:flex}
+body.in-dialogue #quick-tools,body.in-prologue #quick-tools,body.at-ending #quick-tools{display:none}
+#quick-tools button,#resume-goal,#save-feedback{background:var(--bg);color:var(--text);border:1px solid var(--line);padding:10px;min-height:48px}
+#resume-goal{position:absolute;top:70px;left:12px;z-index:4}
+#save-feedback{position:absolute;left:12px;top:126px;z-index:4;font-size:12px;max-width:250px}
+body.at-home #resume-goal,body.at-ending #resume-goal{display:none}
+body[data-input=touch] kbd,body[data-input=touch] .controls-keys{display:none}
+#dpad{grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,48px);touch-action:none}
+#touch-controls button{min-height:48px;min-width:48px}
+#interact-touch{max-width:100px;overflow-wrap:anywhere}
+#sneak-touch{max-width:80px}
+.large-text #dialogue #dialogue-text{font-size:22px}
+.large-text #dialogue .choice{font-size:20px}
+.large-text #modal.notebook p{font-size:22px}
+
+@media(max-width:700px){#touch-controls{gap:4px!important}#sneak-touch{font-size:11px;padding:4px}#interact-touch{font-size:12px;padding:6px}#dialogue .dialogue-foot button{min-height:48px}.large-text #dialogue{--dialogue-card-height:min(330px,65dvh)}}
+@media(max-height:500px){#dialogue .portrait{height:20dvh}.large-text #dialogue{--dialogue-card-height:70dvh}}

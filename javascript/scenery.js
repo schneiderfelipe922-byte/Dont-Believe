@@ -9,12 +9,12 @@ const layout=[
  ['dining','Salão do obelisco',90,490,570,405,'wood'],['kitchen','Cozinha',720,490,460,200,'stone'],
  ['office','Sala de observação',725,750,210,155,'wood'],['elias','Quarto de Elias',980,750,320,155,'wood'],
  ['courtyard','Pátio',1230,350,310,330,'stone'],['laundry','Lavanderia',1275,105,275,215,'stone'],
- ['cell','Cela de Mira',315,1460,240,212,'stone'],['tomasCell','Cela de Tomas',615,1460,210,212,'stone'],
+ ['cell','Cela de Mira',380,1550,145,140,'stone'],['tomasCell','Cela de Tomas',630,1550,145,140,'stone'],
  ['basementHall','Corredor subterrâneo',90,1800,1530,180,'stone'],['serviceStairs','Escada de serviço',95,1530,115,280,'stone'],
  ['archive','Arquivos subterrâneos',900,1320,730,450,'stone']
 ];
 // Vãos reais; os dois andares são ilhas separadas ligadas por interações nas escadas.
-const passageRects=[[280,280,65,75],[680,275,65,85],[1058,280,48,80],[320,420,50,100],[820,420,40,110],[830,680,60,145],[925,825,80,55],[1190,370,55,55],[1380,305,50,70],[315,1655,240,165],[615,1655,210,165],[925,1750,100,75]];
+const passageRects=[[280,280,65,75],[680,275,65,85],[1058,280,48,80],[320,420,50,100],[820,420,40,110],[830,680,60,145],[925,825,80,55],[1190,370,55,55],[1380,305,50,70],[380,1675,145,145],[630,1675,145,145],[925,1750,100,75]];
 const blocks={
  dorm:[[105,70,385,65],[120,130,65,60],[400,130,65,65],[108,215,25,65],[448,250,40,40]],
  study:[[565,70,320,60],[565,155,35,85],[620,145,35,62],[705,145,40,88],[793,145,36,65],[845,200,40,60],[610,235,45,30]],
@@ -26,7 +26,7 @@ const blocks={
  elias:[[1090,775,48,47],[1150,765,75,102],[1240,760,60,100],[1015,850,90,40]],
  courtyard:[[1320,480,155,105],[1250,545,45,70],[1480,545,45,70],[1230,625,35,55],[1505,625,35,55]],
  laundry:[[1275,105,275,125],[1290,235,110,65]],
- cell:[[325,1480,140,85],[485,1520,55,45]],tomasCell:[[620,1480,135,85],[775,1520,45,45]],
+ cell:[[390,1578,75,42],[492,1584,20,17]],tomasCell:[[640,1578,70,42],[741,1584,20,17]],
  archive:[[900,1635,25,135],[1025,1635,30,135],[1010,1320,500,140],[900,1400,90,230],[1430,1430,85,275],[1110,1525,210,155],[1530,1440,100,275]]
 };
 const wallOpenings={};
@@ -60,8 +60,8 @@ function draw(c,M,art){
  // Passagens dinâmicas: cobrir as folhas pintadas com piso do mesmo cenário.
  const patch=(image,source,box)=>{if(image)c.drawImage(image,...source,...box);};
  patch(art.fullMap,[840,710,40,18],[935,825,68,55]);
- patch(art.basementMap,[350,390,180,70],[315,1672,240,128]);
- patch(art.basementMap,[650,390,160,70],[615,1672,210,128]);
+ patch(art.basementMap,[400,435,100,45],[380,1690,145,110]);
+ patch(art.basementMap,[650,435,100,45],[630,1690,145,110]);
  patch(art.basementMap,[1045,460,100,100],[925,1645,100,180]);
 }
 function drawDoor(c,d,open,art){
@@ -81,7 +81,11 @@ const drawers=[
 function drawDrawer(c,d,open,art){
  if(!art.bedside)return false;
  // O tampo e a vela já existem no mapa: substitui só a frente, sem duplicar a chama.
- c.drawImage(art.bedside,(open?48:0)+6,30,36,21,...d.art);return true;
+ const sx=(art.bedside.naturalWidth||96)/96,sy=(art.bedside.naturalHeight||64)/64;
+ const smoothing=c.imageSmoothingEnabled,quality=c.imageSmoothingQuality;
+ c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
+ c.drawImage(art.bedside,((open?48:0)+6)*sx,30*sy,36*sx,21*sy,...d.art);
+ c.imageSmoothingEnabled=smoothing;c.imageSmoothingQuality=quality;return true;
 }
 // Documentos da rota principal usam o mesmo desenho das coletas opcionais.
 function storyPickups(state,M){

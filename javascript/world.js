@@ -8,8 +8,8 @@ const grid=Array.from({length:H},()=>Array(W).fill(0));
 for(let y=0;y<H;y++)for(let x=0;x<W;x++)if(walkAreas.some(a=>(x+.5)*T>=a.x&&(x+.5)*T<a.x+a.w&&(y+.5)*T>=a.y&&(y+.5)*T<a.y+a.h))grid[y][x]=2;
 const passages=scenery.passageRects.map(a=>a.map(v=>v/T));
 const doors=[
- {id:'cell',name:'Grade da cela de Mira',x:315,y:1768,w:240,h:16,lock:'cellOpen',art:[315,1672,240,112]},
- {id:'tomasCell',name:'Grade da cela de Tomas',x:615,y:1768,w:210,h:16,lock:'cellOpen',art:[615,1672,210,112]},
+ {id:'cell',name:'Grade da cela de Mira',x:380,y:1768,w:145,h:16,lock:'cellOpen',art:[380,1690,145,94]},
+ {id:'tomasCell',name:'Grade da cela de Tomas',x:630,y:1768,w:145,h:16,lock:'cellOpen',art:[630,1690,145,94]},
  {id:'archive',name:'Porta dos arquivos',x:925,y:1785,w:100,h:16,lock:'tunnel',art:[925,1645,100,156]},
  {id:'warehouse',name:'Porta do armazém',x:1058,y:310,w:48,h:16,lock:'warehouseOpen'}
 ];

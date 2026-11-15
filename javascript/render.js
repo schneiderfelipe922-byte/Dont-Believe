@@ -11,7 +11,32 @@ refreshArt();
 function label(c,text,x,y,color='#edeaf0',size=9){c.font=`${size}px "Mystery Quest", Georgia, serif`;c.textAlign='center';c.fillStyle='#0009';c.fillRect(x-c.measureText(text).width/2-6,y-size-4,c.measureText(text).width+12,size+9);c.fillStyle=color;c.fillText(text,x,y);}
 const imported=typeof CharacterSprites!=='undefined'?CharacterSprites:require('./character-sprites.js');
 // Não trocar os personagens por desenhos antigos quando a imagem está carregando.
-const sprite=(c,x,y,kind,dir,step,idle)=>imported.draw(c,x,y,kind,dir,step,idle,art);
+const sprite=(c,x,y,kind,dir,step,idle,paint)=>imported.draw(c,x,y,kind,dir,step,idle,art,paint);
+function scenePaint(tint){
+ const sheets=new WeakMap();
+ return (image,rect,scale)=>{
+  let frames=sheets.get(image);
+  if(!frames){frames=new Map();sheets.set(image,frames);}
+  const key=[...rect,scale].join(',');
+  if(frames.has(key))return frames.get(key);
+  // Uma resolução intermediária suaviza os traços finos sem apagar olhos e óculos.
+  const paintScale=scale*1.65;
+  const frame=makeCanvas(Math.ceil(rect[2]*paintScale),Math.ceil(rect[3]*paintScale)),c=frame.getContext('2d');
+  c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';
+  c.filter='saturate(0.78) brightness(0.92) contrast(0.96)';
+  c.drawImage(image,...rect,0,0,frame.width,frame.height);c.filter='none';
+  c.globalCompositeOperation='source-atop';c.fillStyle=tint;c.fillRect(0,0,frame.width,frame.height);
+  frames.set(key,frame);
+  return frame;
+ };
+}
+const groundPaint=scenePaint('rgba(153,99,73,.20)'),basementPaint=scenePaint('rgba(105,74,122,.24)');
+function actorShadow(c,x,y,pet,underground){
+ c.save();c.translate(Math.round(x),Math.round(y)-1);c.scale(pet?10:16,pet?3:5);
+ const shadow=c.createRadialGradient(0,0,.18,0,0,1);
+ shadow.addColorStop(0,underground?'rgba(15,11,27,.65)':'rgba(36,18,30,.58)');
+ shadow.addColorStop(1,'transparent');c.fillStyle=shadow;c.fillRect(-1,-1,2,2);c.restore();
+}
 function npcs(state,world){const p=M.positions,A=root.GameAdventure;let a=[{...(root.GameResidents?.point('guard',state,world)||p.guardDorm),kind:'guard',name:'Vigia'}, {...p.examiner,kind:'guard',name:'Vigia'}, {...M.melPoint(world),kind:'mel',name:'Mel'}];
  if(A){for(const kind of ['mira','eron','noah'])a.push({...(root.GameResidents?.point(kind,state,world)||A.characterPoint(kind,state)),kind,name:kind[0].toUpperCase()+kind.slice(1)});
  if(state.flags.miraTaken&&!state.flags.tomasTransferred)a.push({...state.flags.tomasRescued?M.authoredPoint(44.5,29.2):p.tomas,kind:'tomas',name:'Tomas'});
@@ -40,6 +65,7 @@ function draw(state,world,guards,options={}){
  const portrait=w<h,view=portrait?{w:280,h:440}:{w:480,h:320};
  const z=options.zoom||Math.max(w/view.w,h/view.h,w/map.width,h/map.height);
  const player=world.player,roomView=scenery.roomView(player),floor=scenery.floorAt(player),cam={x:Math.max(floor.x,Math.min(floor.x+floor.w-w/z,player.x-w/z/2)),y:Math.max(floor.y,Math.min(floor.y+floor.h-h/z,player.y-16-h/z/2))};
+ const underground=floor.id==='basement',paint=underground?basementPaint:groundPaint;
  cam.x=Math.round(cam.x);cam.y=Math.round(cam.y);ctx.imageSmoothingEnabled=false;ctx.fillStyle='#0b090e';ctx.fillRect(0,0,w,h);ctx.save();ctx.scale(z,z);ctx.translate(-cam.x,-cam.y);ctx.beginPath();ctx.rect(floor.x,floor.y,floor.w,floor.h);ctx.clip();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(map,0,0);ctx.imageSmoothingEnabled=false;
  // Amber spill from the windows follows the reference's lamplit interiors.
  for(const room of M.rooms){if(art.fullMap||room.id==='hall')continue;const wx=room.id==='dorm'?280:(room.x+room.w*.53)*M.T,wy=room.id==='dorm'?96:room.y*M.T;ctx.fillStyle='#e18b4514';for(let row=0;row<75;row+=3){const wide=27+row*.30;ctx.fillRect(Math.round(wx-wide),wy+row,Math.round(wide*2),3);}}
@@ -61,7 +87,7 @@ function draw(state,world,guards,options={}){
   if(layer.drawer){scenery.drawDrawer(ctx,layer.drawer,!!world.drawers?.[layer.drawer.id],art);return;}
   if(layer.door){drawDoor(ctx,layer.door,{...state,_px:player.x,_py:player.y},world,options.reduced);return;}
   if(layer.scenery){const p=layer.scenery;ctx.imageSmoothingEnabled=true;ctx.drawImage(map,p.x,p.y,p.w,p.h,p.x,p.y,p.w,p.h);ctx.imageSmoothingEnabled=false;return;}
-  const p=layer.actor;ctx.fillStyle='#0004';ctx.beginPath();ctx.ellipse(Math.round(p.x),Math.round(p.y)-1,p.kind==='mel'?8:9,p.kind==='mel'?2:3,0,0,Math.PI*2);ctx.fill();sprite(ctx,p.x,p.y,p.kind,p.dir||'down',p.step||0,options.reduced?0:(world.animTime||0)+p.x*.01);if(p.kind==='kali'&&state.flags.cover)rect(ctx,p.x-10,p.y-23,6,4,'#b29063');
+  const p=layer.actor;actorShadow(ctx,p.x,p.y,p.kind==='mel',underground);ctx.save();ctx.translate(p.x,p.y);ctx.scale(1.6,1.6);sprite(ctx,0,0,p.kind,p.dir||'down',p.step||0,options.reduced?0:(world.animTime||0)+p.x*.01,paint);ctx.restore();if(p.kind==='kali'&&state.flags.cover)rect(ctx,p.x-16,p.y-37,9,6,'#b29063');
  });
  if(options.labels!==false)actors.forEach(p=>{if(p.name&&Math.hypot(p.x-player.x,p.y-player.y)<100)label(ctx,p.name,p.x,p.y+13,p.kind==='tomas'?'#93b5cf':'#c5b6a5',7);});
  // Ambient darkness is pierced by nearby candles; the player stays legible.

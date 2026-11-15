@@ -49,3 +49,8 @@
 }
 @media(max-height:520px) and (min-width:701px){.notebook-spread{padding:5% 7%}#modal.notebook h2{font-size:28px}#modal.notebook .notebook-intro{font-size:18px;margin-bottom:8px}#modal.notebook .notebook-margin{display:none}.notebook-tabs{gap:0;margin-bottom:8px}}
 @media(forced-colors:active){.notebook-spread{background:Canvas!important;color:CanvasText;border:2px solid CanvasText}#modal.notebook *{color:CanvasText!important}#modal.notebook .notebook-tab[aria-selected=true]{border-color:Highlight}}
+/* Guache: tinta escura sobre papel claro; arte não contém texto ou pistas. */
+#modal.notebook{--notebook-ink:#302532;--notebook-muted:#594956;--notebook-paper:#f5e3ba;--notebook-rule:#80664e;--notebook-accent:#563349;--text:#302532;--muted:#594956;--line:#80664e;--hover:#76554820;--bg:#f5e3ba}
+.notebook[data-art=ready] .notebook-spread{background-image:url('../assets/diario/caderno-kali-guache-v2.png');background-size:100% 100%;background-repeat:no-repeat;border:0;box-shadow:none}
+#modal.notebook .modal-top{position:absolute;top:5%;right:7%}
+@media(max-width:700px){.notebook[data-art=ready] .notebook-spread{background-size:200% 100%;background-position:right center;padding:60px 8% 35px}#modal.notebook .modal-top{top:12px;right:8%}}

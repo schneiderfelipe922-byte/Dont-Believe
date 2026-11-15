@@ -14,7 +14,7 @@ const ROOT=path.resolve(__dirname,'..'),OUT=path.join(ROOT,'previas/diario');fs.
  await page.keyboard.press('j');await page.evaluate(()=>document.fonts.ready);await page.waitForFunction(()=>document.querySelector('#modal').dataset.art==='ready',null,{polling:100});
  assert.equal(await page.locator('#modal').getAttribute('class'),'notebook');assert(await page.evaluate(()=>document.fonts.check('20px "Mystery Quest"')));
  const ink=await page.locator('.notebook-entry p').first().evaluate(n=>{const c=getComputedStyle(n);return {color:c.color,size:c.fontSize,font:c.fontFamily,line:c.lineHeight}});
- assert.equal(ink.color,'rgb(237, 234, 240)');assert.equal(ink.size,'20px');assert(ink.font.includes('Mystery Quest'));assert.equal(ink.line,'32px');
+ assert.equal(ink.color,'rgb(48, 37, 50)');assert.equal(ink.size,'20px');assert(ink.font.includes('Mystery Quest'));assert.equal(ink.line,'32px');
  const before=await page.evaluate(()=>JSON.stringify(__qa.state.danger));await page.evaluate(()=>__tick(90));assert.equal(await page.evaluate(()=>JSON.stringify(__qa.state.danger)),before);
  assert(!/(Mira|Eron|Noah|Adultos)\s*[+−-]\d|confiança\s*\d|\d\s*\/\s*9/.test(await page.locator('#modal').innerText()));
  await page.screenshot({path:path.join(OUT,'caderno-computador.png')});

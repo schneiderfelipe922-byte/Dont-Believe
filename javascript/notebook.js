@@ -1,6 +1,7 @@
 /* Caderno de Kali: texto real sobre uma ilustração, sem alterar o estado ao consultar. */
 (function(root){
 'use strict';
+const positions={};
 const tabs=[['investigation','Investigação','J'],['objects','Objetos','I'],['requests','Pedidos','T']];
 function open(ctx,tab='investigation',focusTab=false){
  const {document:doc,state:s,world:w,G,A,S,D,F,V,modal,button,track,trackErrand,openPhoto}=ctx;
@@ -85,7 +86,8 @@ function open(ctx,tab='investigation',focusTab=false){
  shell.notebookArtProbe=image;
  image.addEventListener('error',()=>{if(shell.notebookArtProbe===image)shell.dataset.art='missing';});
  image.addEventListener('load',()=>{if(shell.notebookArtProbe===image&&image.naturalWidth)shell.dataset.art='ready';});
- left.append(image);image.src='assets/diario/caderno-kali.png';
+ left.append(image);image.src='assets/diario/caderno-kali-guache-v2.png';
+ content.scrollTop=positions[tab]||0;content.addEventListener('scroll',()=>positions[tab]=content.scrollTop);
  if(focusTab)selected.focus({preventScroll:true});else content.focus({preventScroll:true});
 }
 root.GameNotebook={open,tabs};if(typeof module!=='undefined')module.exports=root.GameNotebook;
