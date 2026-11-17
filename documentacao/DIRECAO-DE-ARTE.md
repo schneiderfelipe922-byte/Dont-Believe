@@ -58,3 +58,23 @@ A planta expandida mais recente está descrita em `MAPA-COMPLETO.md`: armazém n
 ## Integração dos sprites — 13/11/2026
 
 Personagens em guache aplicados pelo renderer, incluindo caminhada de seis frames e correções frente/costas. Recortes e âncoras individuais preservam os pés; escala comum por direção. Os cenários expandidos já estão jogáveis conforme `MAPA-COMPLETO.md`. Esta atualização substitui os estados históricos de “prévia” acima. Os sprites da infância no prólogo e os retratos ilustrados específicos mantêm suas artes próprias. 131 testes aprovados e revisão no navegador nos três formatos de tela; nenhuma mudança nas condições dos seis finais.
+
+## Diário e celas compactas — 14/11/2026
+
+1. Propósito: substituir o caderno fotográfico por guache e corrigir a escala das celas individuais.
+2. Experiência: páginas claras com tinta escura; no celular, uma página ampliada. Celas menores com camas proporcionais e acesso legível pela grade.
+3. Regras: piso interno de cada cela passa a 145 × 140 px; corredores de entrada, grades e móveis acompanham a pintura. Mira e Tomas reposicionados no piso livre. Saves em áreas agora sólidas usam a recuperação existente de posição.
+4. Visual e som: guache seco, capa ameixa, papel marfim; subterrâneo mantém confinamento e sombras violetas. Sem áudio novo. Arte do diário: assets/diario/caderno-kali-guache-v2.png. Subterrâneo mantém caminho ativo anterior. Geradas com image_gen integrada; fontes exec-2fc5904e-4fc7-44be-8059-d2b129442ab8.png e exec-046582a5-2df7-4af4-9722-75252705f207.png.
+5. Impacto: colisões, pontos dos personagens e recortes sob grades atualizados juntos; escadas, trancas, provas, custos e seis finais preservados. Versões anteriores em backups/antes-diario-celas-20261114.
+6. Tamanho: duas imagens e integração local, sem expansão narrativa.
+7. Testes e conclusão: 133 testes aprovados e build concluído. Navegador em 1280×800/900, 390×844 e 844×390: escadas, cela trancada/aberta, arquivos; diário, leitura, foco, rolagem, offline e falha de imagem. Capturas em previas/cenarios-jogaveis e previas/diario. Clareza atende às verificações de interface e acesso; pistas/escolhas e finais atendem por preservação das regras e regressão. Nenhuma validação com participantes novos foi realizada.
+
+## Proporções e paleta no mapa — 14/11/2026
+
+1. Propósito: corrigir personagens pequenos diante do mobiliário e utensílios desproporcionais.
+2. Experiência: personagens do cenário com escala visual 1,6×, preservando diferenças de estatura e apoio dos pés. Xícaras, pratos, livros, tigelas e assentos reduzidos nas pinturas, sem remover objetos de investigação.
+3. Regras: velocidade, alcance de interação, colisão dos pés e decisões permanecem iguais; tigelas das celas recebem limites menores compatíveis com a arte. A escala é aplicada apenas na renderização do mapa, sem alterar retratos nem o prólogo.
+4. Visual e som: sprites com saturação 0,78, brilho 0,92, contraste 0,96 e pigmento ocre no térreo/violeta no subterrâneo; transparência e quadros originais preservados. Som não alterado. Pinturas editadas com image_gen integrada: exec-b2e3ed4e-ce29-4e21-afac-b3aeca220085.png e exec-003235a3-bcef-4241-8ee7-652427083fe7.png. Instrução: preservar geometria e pontos narrativos; reduzir objetos portáteis e assentos em relação à referência humana de 64 px.
+5. Impacto: paredes, grandes móveis, escadas, grades, provas e seis finais preservados. Backup em backups/antes-proporcoes-paleta-20261114.
+6. Tamanho: duas pinturas, tratamento dos sprites em cache no renderer e ajuste das colisões das tigelas.
+7. Testes: 133 testes aprovados; build estático concluído. Navegador em computador, celular e horizontal: sem erros, escadas, trancas das celas e arquivos preservados. Capturas examinadas do dormitório e lavanderia confirmam objetos menores que os personagens e leitura de identidade. Clareza atende na revisão visual e de acesso; pistas/escolhas e finais atendem por preservação e regressão. Não houve teste com participante novo.

@@ -11,7 +11,15 @@ function paintedFrame(kind,dir,step,images,idleSeconds){
  return {painted:true,spec:{height:source.displayHeight,sourceHeight:source.sourceHeight},img,track:{anchor:f.anchor,bounds:[0,0,f.rect[2],f.rect[3]],frames:frames.map(f=>f.rect),durations},rect:f.rect,index};
 }
 function resolve(kind,dir,step,images,idleSeconds=0){images=images||root.GameArt?.images||{};if(Object.keys(images).some(k=>k.startsWith('painted_')))return paintedFrame(kind,dir,step,images,idleSeconds);const spec=data[kind],img=(images||root.GameArt?.images||{})[spec?.image];if(!spec||!img)return null;const idle=spec.idles?.[dir]||spec.idles?.down;const track=step<=0&&idle?idle:(spec.directions[dir]||spec.directions.down);let index=0;const elapsed=step>0?step*400:spec.idleAnimated?idleSeconds*1000:0;if(elapsed>0){const total=track.durations.reduce((a,b)=>a+b,0);let t=elapsed%total;while(index<track.frames.length-1&&t>=track.durations[index])t-=track.durations[index++];}return {spec,img,track,rect:track.frames[index],index};}
-function draw(c,x,y,kind='kali',dir='down',step=0,idle=0,images){const frame=resolve(kind,dir,step,images,idle);if(!frame)return false;const{spec,img,track,rect}=frame,scale=spec.height/spec.sourceHeight;c.save();c.imageSmoothingEnabled=!!frame.painted;c.imageSmoothingQuality='high';c.drawImage(img,...rect,Math.round(x-track.anchor[0]*scale),Math.round(y-track.anchor[1]*scale),rect[2]*scale,rect[3]*scale);c.restore();return true;}
+function draw(c,x,y,kind='kali',dir='down',step=0,idle=0,images,paint){
+ const frame=resolve(kind,dir,step,images,idle);if(!frame)return false;
+ const {spec,img,track,rect}=frame,scale=spec.height/spec.sourceHeight;
+ const painted=frame.painted&&paint?.(img,rect,scale);
+ const source=painted?[painted,0,0,painted.width,painted.height]:[img,...rect];
+ c.save();c.imageSmoothingEnabled=!!frame.painted;c.imageSmoothingQuality='high';
+ c.drawImage(...source,Math.round(x-track.anchor[0]*scale),Math.round(y-track.anchor[1]*scale),rect[2]*scale,rect[3]*scale);
+ c.restore();return true;
+}
 function portrait(c,w,h,kind,images){const f=resolve(kind,'down',0,images,0);if(!f)return false;const b=f.track.bounds,sw=b[2]-b[0],sh=(b[3]-b[1])*(kind==='mel'?1:.66),scale=Math.min(w*.90/sw,h*.96/sh);c.save();c.imageSmoothingEnabled=!!f.painted;c.drawImage(f.img,f.rect[0]+b[0],f.rect[1]+b[1],sw,sh,(w-sw*scale)/2,h-sh*scale,sw*scale,sh*scale);c.restore();return true;}
 const api={data,resolve,draw,portrait};root.CharacterSprites=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

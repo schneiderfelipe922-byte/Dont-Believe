@@ -1,0 +1,11 @@
+{
+  "tool": "image_gen integrada",
+  "date": "2026-11-13",
+  "prompt": "Use case: stylized-concept. Create a transparent sprite sheet with TWO matching wooden nightstand LOWER FRONT sections, closed drawer left and open drawer right, evenly spaced in two equal horizontal cells. References: family painting for bold dry gouache brushwork and broken ink only, map for wooden furniture color and slightly overhead RPG camera. This is a replacement overlay for only the lower front of existing nightstands: NO tabletop, NO candle, NO background, NO ground shadow, no text. Each sprite is a squat nearly rectangular cabinet front with two short legs, width:height about 27:24. Closed has one broad drawer with a small ochre knob. Open has the same fixed body silhouette, same legs and anchor, but drawer interior visible from above and two small old ivory paper scraps inside, no writing or symbols. Keep extension within same overall bounds. Mood quiet worn orphanage, muted burnt ochre wood with dusty plum shadows and aged ivory papers. Handmade opaque gouache, large angular organic color masses, selective irregular charcoal ink, no glossy rendering, no pixel art, no photorealistic wood grain. Front face readable when reduced to 27x24 game pixels. Both objects same dimensions, centered on equal cells, same baseline, fully isolated alpha transparency.",
+  "source": "assets/exploracao/fontes/gavetas-guache-v1.png",
+  "atlas": "assets/exploracao/gavetas-guache-v1.png",
+  "references": [
+    "assets/fotos/kali-familia-guache-v3.png",
+    "assets/cenarios/expansao/mapa-terreo-completo-v1.png"
+  ]
+}

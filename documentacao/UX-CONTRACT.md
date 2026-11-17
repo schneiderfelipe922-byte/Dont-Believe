@@ -81,3 +81,11 @@ A câmera acompanha o corpo de Kali e mostra uma parte do cômodo. O enquadramen
 
 
 Moldura horizontal (desenho de 19/10): mesma altura na leitura e nas escolhas, faixa de 94–96% da largura e retrato acima da borda direita. Outros assuntos integra o cabeçalho; o rodapé reúne navegação e saída. A paginação de opções reserva espaço para a confirmação sem aumentar a altura.
+
+## Qualidade de vida — 14/11/2026
+
+Propósito: reduzir atrito nas consultas, leitura e controle móvel. Experiência: acessos diretos a Diário/Mapa, instruções conforme entrada, texto padrão/ampliado e posição de leitura por aba na sessão. Regras: direcional permite deslizar entre setas; cancelar ou pausar interrompe movimento; furtividade indica seu estado. Retomada oferece consulta opcional do próximo passo. Salvamento informa falha e permite tentar novamente, recuperando o indicador quando a gravação funciona; caminhada não repete avisos de sucesso.
+
+Visual e som: tema existente preservado, controles de toque com mínimo de 48px e redução do retrato em telas baixas; sem áudio novo. Impacto: preferências recebem largeText, progresso permanece topdown.v2; nenhuma regra narrativa ou condição de final alterada. Implementação: alterações locais na interface, entrada e apresentação do salvamento.
+
+Testes e conclusão: suíte Node e build estático exercitados; teste de recuperação após falha de armazenamento acrescentado. Ensaio de navegador bloqueado por ausência do módulo playwright. Layout, texto ampliado, multitouch e conforto em celular físico ainda precisam de validação. Clareza: melhorias implementadas, compreensão ainda pendente. Pistas/escolhas e finais: regras preservadas; regressão técnica não comprova compreensão por jogadores novos.

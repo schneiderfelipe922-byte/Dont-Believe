@@ -56,3 +56,19 @@ test('Mel tem nome e retrato ilustrado horizontal inteiro, com reserva sem arte'
  assert.deepEqual(calls[0],[art,0,0,1152,768]);
  assert.equal(UI.portrait(ctx,1152,768,'mel',{}),false);
 });
+
+test('fala intercalada com atribuição e ações recebe blocos separados sem inventar falantes',()=>{
+ assert.deepEqual(UI.segments('Kali se aproxima. — Qual caminho? — pergunta Kali.\nMira aponta. — Pela passagem.'),[
+  {kind:'narration',text:'Kali se aproxima.'},{kind:'speech',text:'Qual caminho?'},{kind:'narration',text:'pergunta Kali.'},
+  {kind:'narration',text:'Mira aponta.'},{kind:'speech',text:'Pela passagem.'}
+ ]);
+ const source='— Na luz encontramos a ordem — recita o vigia.\n— A disciplina purifica — respondem os moradores.';
+ assert.equal(UI.segments(source).map(b=>b.text).join(' '),source.replace(/—/g,'').replace(/\s+/g,' ').trim());
+});
+test('nome da fala usa apenas atribuição explícita, nunca o retrato da cena',()=>{
+ let blocks=UI.segments('— Na luz encontramos a ordem — recita o vigia.');
+ assert.equal(UI.speechLabel(blocks,0),'Fala · Vigia');
+ blocks=UI.segments('Noah murmura: — Diga que não entendeu.');
+ assert.equal(UI.speechLabel(blocks,1),'Fala · Noah');
+ assert.equal(UI.speechLabel(UI.segments('— Qual caminho?'),0),'Fala');
+});

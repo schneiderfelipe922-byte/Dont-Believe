@@ -34,7 +34,7 @@ test('E faz carinho em Mel, mostra diálogo e não altera a história; é repet�
  for(let i=0;i<2;i++){
   h.tick();assert.equal(h.get('near-label').textContent,'Fazer carinho em Mel');
   h.key('KeyE','e');assert.equal(h.get('dialogue').hidden,false);assert.equal(h.get('dialogue-title').textContent,'Mel');
-  assert.equal(h.get('dialogue-text').children[0].textContent,'Você faz carinho em Mel. Ela não responde, mas gosta de você.');
+  assert.equal(h.get('dialogue-text').children[0].children[1].textContent,'Você faz carinho em Mel. Ela não responde, mas gosta de você.');
   h.key('KeyE','e');assert.equal(h.get('dialogue').hidden,true);
  }
  const after=h.snapshot().story;
@@ -79,7 +79,7 @@ test('Mel permanece parada enquanto um diálogo está aberto',()=>{
  const after=h.snapshot().world.mel;
  assert.equal(after.x,before.x);assert.equal(after.y,before.y);assert.equal(after.step,0);
 });
-function advancePages(h){for(let i=0;i<12;i++){const buttons=h.get('choices').children;if(buttons.length!==1||buttons[0].children[1]?.textContent!=='Continuar')return;h.key('KeyE','e');}}
+function advancePages(h){for(let i=0;i<12;i++){const buttons=h.get('choices').children;if(buttons.length!==1||! /^(Continuar|Ver as \d+ respostas)/.test(buttons[0].children[1]?.textContent))return;h.key('KeyE','e');}}
 function chooseText(h,text){advancePages(h);const b=h.get('choices').children.find(b=>b.children[1]?.textContent.includes(text));assert(b,'Opção ausente: '+text);b.click();}
 test('aceitar, recolher e entregar um pedido atualiza inventário, relação e salvamento',()=>{
  const h=boot((s,w,c)=>{s.scene='altar';w.player={...c.GameWorld.positions.mira,dir:'up',step:0};});
@@ -134,4 +134,12 @@ test('diálogo aplica tema, setas trocam a seleção e Enter confirma exatamente
  let actions=0;options[available[1]].events.click=[()=>{actions++;}];h.key('Enter');assert.equal(actions,1);
  h.key('ArrowUp');assert.equal(options[available[0]].dataset.selected,'true');
  h.key('Space');assert.equal(actions,1);
+});
+
+test('salvamento recupera o estado após falha de armazenamento',()=>{
+ const app=boot(),write=app.c.localStorage.setItem;
+ app.c.localStorage.setItem=()=>{throw Error('quota');};
+ app.snapshot();assert.equal(app.get('save-status').textContent,'SALVAMENTO INDISPONÍVEL');
+ app.c.localStorage.setItem=write;app.snapshot();
+ assert.equal(app.get('save-status').textContent,'✓ PROGRESSO SALVO');
 });

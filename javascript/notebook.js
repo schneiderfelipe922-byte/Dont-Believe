@@ -1,6 +1,7 @@
 /* Caderno de Kali: texto real sobre uma ilustração, sem alterar o estado ao consultar. */
 (function(root){
 'use strict';
+const positions={};
 const tabs=[['investigation','Investigação','J'],['objects','Objetos','I'],['requests','Pedidos','T']];
 function open(ctx,tab='investigation',focusTab=false){
  const {document:doc,state:s,world:w,G,A,S,D,F,V,modal,button,track,trackErrand,openPhoto}=ctx;
@@ -33,6 +34,7 @@ function open(ctx,tab='investigation',focusTab=false){
    entry('Antes do último sino',s.flags.tomasTransferred?'Tomas foi transferido. Ainda posso ajudar quem ficou.':s.flags.tomasRescued?'Tomas saiu da cela. Agora preciso preparar a saída.':'Restam '+s.danger.turns+' ações antes da transferência de Tomas. Caminhar e consultar estas páginas não gastam ações.');
    entry('O preço de agir','Escolhas e preparações custam uma ação; revistas custam duas. Destruir a ordem dá mais três. Confirmar o confronto encerra minha preparação.');
   }
+  if(s.scene==='preparar')entry('Como iniciar a fuga','Quando terminar os preparativos, volte ao ponto de planejamento no quarto abandonado de Elias. Use E e escolha “Estou pronto: iniciar a fuga”. Isso encerra a preparação livre e inicia o confronto.');
   const notes=V.notes(s);content.append(el('h4','O que observei','notebook-divider'));
   if(!notes.facts.length)entry('Ainda estou procurando',A.act(s)>=1?'Tomas não respondeu à chamada. Posso ouvir os moradores e observar o que ficou no dormitório.':'O primeiro sino marca a rotina de OldHood. Preciso ouvir os moradores e observar antes de tirar conclusões.');
   for(const [name,text]of notes.facts)entry(name,text);
@@ -85,7 +87,8 @@ function open(ctx,tab='investigation',focusTab=false){
  shell.notebookArtProbe=image;
  image.addEventListener('error',()=>{if(shell.notebookArtProbe===image)shell.dataset.art='missing';});
  image.addEventListener('load',()=>{if(shell.notebookArtProbe===image&&image.naturalWidth)shell.dataset.art='ready';});
- left.append(image);image.src='assets/diario/caderno-kali.png';
+ left.append(image);image.src='assets/diario/caderno-kali-guache-v2.png';
+ content.scrollTop=positions[tab]||0;content.addEventListener('scroll',()=>positions[tab]=content.scrollTop);
  if(focusTab)selected.focus({preventScroll:true});else content.focus({preventScroll:true});
 }
 root.GameNotebook={open,tabs};if(typeof module!=='undefined')module.exports=root.GameNotebook;

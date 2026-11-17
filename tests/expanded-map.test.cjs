@@ -8,3 +8,13 @@ test('chave opcional do armazém não abre celas nem arquivos e não duplica rec
 test('observações do cenário registram uma vez sem converter indícios em prova ou resgate',()=>{const {s,w}=setup();s.danger.turns=10;for(const id of ['washer','laundryBook','warehouseObjects','eliasRoom']){M.examine(id,s,w);M.examine(id,s,w);}assert.equal(s.history.length,4);assert.equal(s.danger.turns,10);assert(!s.flags.proof);assert(!s.flags.tomasRescued);assert(!s.flags.eliasDeathConfirmed);});
 test('todos os novos pontos de interação e chegadas são alcançáveis sem entrar em móveis',()=>{const {s,w}=setup();s.flags.tunnel=s.flags.cellOpen=s.flags.warehouseOpen=true;for(const p of [...M.sceneryPoints(s,w),...M.transitions,...M.transitions.map(t=>t.to)]){const start=p.y>=1200?{x:155,y:1830}:w.player;assert(M.walkable(p.x,p.y,7,s,w),JSON.stringify(p));assert(M.path(start,p,s,w).length,JSON.stringify(p));}});
 test('retomar nos dois andares preserva inventário, decisões, prazo e posição',()=>{for(const p of [{x:1430,y:275},{x:720,y:1900},{x:1350,y:1640}]){const {s,w}=setup();s.flags.tunnel=true;s.flags.protectedEron=true;s.inventory.push('Arame');s.danger.turns=7;Object.assign(w.player,p);const before=JSON.stringify(s);M.normalizeWorld(w,s);const copy=JSON.parse(JSON.stringify(w));M.normalizeWorld(copy,s);assert.equal(JSON.stringify(s),before);assert.deepEqual(copy.player,w.player);assert.equal(w.player.area,p.y>=1200?'basement':'ground');}});
+
+test('celas compactas preservam acesso e recuperam saves na alvenaria nova',()=>{
+ const {s,w}=setup();s.flags.cellOpen=true;
+ for(const p of [M.positions.miraCell,M.positions.tomas]){
+ assert(M.walkable(p.x,p.y,7,s,w));assert(M.path({x:435,y:1830},p,s,w).length);
+ }
+ assert(!M.walkable(335,1600,7,s,w));
+ Object.assign(w.player,{x:335,y:1600});M.normalizeWorld(w,s);
+ assert(M.walkable(w.player.x,w.player.y,7,s,w));assert.equal(w.player.area,'basement');
+});
