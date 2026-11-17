@@ -17,3 +17,7 @@ Mudanças puramente visuais ou técnicas não precisam criar pistas ou alterar f
 Ao apresentar uma alteração, informe brevemente como ela atende aos critérios e quais verificações sustentam a conclusão. Testes técnicos não substituem avaliar a experiência de alguém que desconhece a intenção do autor.
 
 Use também o roteiro de sete seções da base: propósito; experiência do jogador; regras; visual e som; impacto existente; tamanho da implementação; testes e conclusão. Aplique-o proporcionalmente ao escopo, aproveitando informações já disponíveis no projeto e na conversa. Pergunte apenas o que faltar e for essencial. Exemplos no roteiro não são pedidos de implementação.
+
+# Destino permanente dos envios ao Git
+
+Por solicitação explícita do usuário em 17/11/2026, os envios deste projeto devem usar a branch `Atualizacao` do repositório `schneiderfelipe922-byte/Dont-Believe`. Não usar `Versao-1` como destino padrão. Preservar o histórico remoto; não fazer force push.

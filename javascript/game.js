@@ -57,7 +57,7 @@ function showEnding(id,preview=false){const scene=G.scenes[id],theme=window.Endi
 function leaveEnding(){if(!endPreview){save();atHome();return;}const back=endReturn;hideEnding();if(back?.id)showEnding(back.id);else if(back?.home)atHome();else{$('mission').hidden=!playing;}showEndings();}
 function say(title,text,actions=null,who=['KALI','kali']){clearMovement();dialogue={type:'lore',title,pages:pages([text]),page:0,speaker:who,actions};showDialogue();}
 function dialogueOptions(d){
- if(d.type==='consequence')return [{label:'Voltar à exploração',fn:()=>{state.pending=null;closeDialogue();objective();save();if(G.scenes[state.scene].ending)openStory();else if(window.GameRevelations?.normalize(state).current)revelations?.show();}}];
+ if(d.type==='consequence')return [{label:G.scenes[state.scene].ending?'Ver o desfecho':'Voltar à exploração',fn:()=>{state.pending=null;closeDialogue();objective();save();if(G.scenes[state.scene].ending)openStory();else if(window.GameRevelations?.normalize(state).current)revelations?.show();}}];
  if(d.type==='story')return G.choices(state).map((c,i)=>({label:c.label,lock:c.requires?.(state),hint:choiceHint(c),fn:()=>select(i)}));
  if(d.type==='ending')return [{label:'Ver os finais descobertos',fn:showEndings},{label:'Voltar ao menu',fn:()=>{closeDialogue();save();atHome();}}];
  return d.actions||[{label:'Voltar à exploração',fn:closeDialogue}];
@@ -68,61 +68,51 @@ function choiceButton(c,index,label=c.label){
  if(label===c.label){if(c.lock)text.append(element('small',c.lock));else if(c.hint)text.append(element('small',c.hint,'choice-hint'));}
  b.append(text,element('span',c.lock?'—':'↗'));b.disabled=!!c.lock;return b;
 }
-function moveChoicePage(delta){if(!dialogue)return;dialogue.choicePage=Math.max(0,Math.min((dialogue.choiceGroups?.length||1)-1,(dialogue.choicePage||0)+delta));dialogue.detailPage=0;showDialogue();}
+function updateDialogueScrollHint(){
+ const scroll=document.querySelector('.dialogue-scroll');
+ const more=scroll.scrollHeight-scroll.clientHeight-scroll.scrollTop>8;
+ $('dialogue-scroll-hint').hidden=!more;
+ $('dialogue-scroll-hint').textContent=dialogue?.readComplete?'↓ Há mais respostas abaixo · role para comparar':'↓ Continue a leitura abaixo';
+}
 function showDialogue(keepChoice=false){
  const d=dialogue;if(!d)return;
- const selected=keepChoice&&d.readComplete&&!d.detailOpen?Number($('choices').querySelector('[data-selected=true]')?.dataset.choiceNumber)-1:-1;
- d.detailOpen=false;
- d.sourceTexts??=d.pages.flat();document.body.classList.add('in-dialogue');$('dialogue').hidden=false;resize();
+ const selected=keepChoice&&d.readComplete?Number($('choices').querySelector('[data-selected=true]')?.dataset.choiceNumber)-1:-1;
+ const scroll=document.querySelector('.dialogue-scroll'),oldScroll=scroll.scrollTop;
+ d.sourceTexts??=d.pages.flat();
+ d.pages=[d.sourceTexts.map(V.present)];d.page=0;
+ document.body.classList.add('in-dialogue');$('dialogue').hidden=false;resize();
  const shell=$('dialogue');shell.dataset.phase=d.readComplete?'choices':'text';
- $('interact-prompt').hidden=true;$('dialogue-title').textContent=d.title;$('speaker').textContent=window.DialogueUI.names[window.DialogueUI.speakerKey(d.speaker[1])]||d.speaker[0];shell.dataset.speaker=window.DialogueUI.speakerKey(d.speaker[1]);
- $('dismiss-dialogue').hidden=d.type==='ending'||d.type==='danger';$('dialogue-extra').hidden=!(d.type==='story'&&['mira','eron','noah'].includes(d.speaker[1]));
- $('consequence-list').replaceChildren();$('choices').replaceChildren();$('choice-pager').hidden=true;
- $('dialogue-note').textContent=d.readComplete?'↑ ↓ escolher · Enter confirmar':'E / Enter para continuar';
+ shell.dataset.speaker=window.DialogueUI.speakerKey(d.speaker[1]);
+ $('interact-prompt').hidden=true;$('dialogue-title').textContent=d.title;
+ $('speaker').textContent=d.readComplete?'Sua escolha':'Narração e falas';
+ $('dismiss-dialogue').hidden=d.type==='ending'||d.type==='danger';
+ $('dialogue-extra').hidden=!(d.type==='story'&&['mira','eron','noah'].includes(d.speaker[1]));
+ $('consequence-list').replaceChildren();$('choices').replaceChildren();$('dialogue-text').replaceChildren();
+ $('dialogue-note').textContent=d.readComplete?'↑ ↓ escolher · Enter confirmar':'E / Enter continuar';
  $('dialogue-back').hidden=!d.page&&!d.readComplete;
- const scroll=document.querySelector('.dialogue-scroll'),head=document.querySelector('.dialogue-head'),text=$('dialogue-text');
- const renderText=parts=>text.replaceChildren(...parts.map(t=>element('p',t,t.startsWith('—')?'speech':'')));
- const measured=!!scroll?.clientHeight;
- const capacity=Math.max(24,(scroll?.clientHeight||240)-(head?.offsetHeight||20)-12);
- const fit=(parts,height)=>{renderText(parts);return measured?text.scrollHeight<=height:parts.join(' ').length<=300;};
- const signature=[scroll?.clientWidth,capacity,fontRevision,JSON.stringify(d.changes||[])].join(':');
- if(!d.readComplete&&d.layoutSignature!==signature){
-  const notes=[...d.sourceTexts,...(d.note?[d.note]:[]),...(d.changes||[])].map(V.present);
-  // O botão Continuar fica no rodapé; toda a área de leitura cabe dentro da moldura.
-  const words=parts=>parts.join(' ').trim().split(/\s+/).filter(Boolean).length;
-  const offset=d.layoutSignature?words(d.pages.slice(0,d.page).flat()):0;
-  d.pages=window.DialogueUI.paginate(notes,p=>fit(p,capacity));
-  let consumed=0;d.page=0;
-  while(d.page<d.pages.length-1&&consumed+words(d.pages[d.page])<=offset){consumed+=words(d.pages[d.page]);d.page++;}
-  d.layoutSignature=signature;
- }
+ $('dialogue-back').textContent=d.readComplete?'← Reler diálogo':'← Anterior';
  paintPortrait(d.speaker[1]);
  if(!d.readComplete){
-  renderText(d.pages[d.page]||d.pages[0]);
-  const next=d.type==='lore'&&!d.actions&&d.pages.length===1?dialogueOptions(d)[0]:{label:'Continuar',fn:()=>{if(d.page<d.pages.length-1)d.page++;else{d.readComplete=true;d.choicePage=0;}showDialogue();}};
-  $('choices').append(choiceButton(next,0));
-  $('page-count').textContent=String(d.page+1).padStart(2,'0')+' / '+String(d.pages.length).padStart(2,'0');
- }else{
-  renderText([]);const options=dialogueOptions(d),budget=capacity;
-  const samples=options.map((c,i)=>choiceButton(c,i));$('choices').append(...samples);
-  const groups=[];let group=[],height=0;
-  samples.forEach((b,i)=>{const h=measured?b.offsetHeight+2:44;if(group.length&&measured&&height+h>budget){groups.push(group);group=[];height=0;}group.push(i);height+=h;});if(group.length)groups.push(group);
-  d.choiceGroups=groups;const selectedPage=groups.findIndex(group=>group.includes(selected));
-  d.choicePage=selectedPage>=0?selectedPage:Math.min(d.choicePage||0,groups.length-1);
-  const visible=groups[d.choicePage]||[];$('choices').replaceChildren(...visible.map(i=>samples[i]));
-  // Opções excepcionalmente longas também são lidas em páginas antes de confirmar.
-  if(measured&&visible.length===1&&samples[visible[0]].offsetHeight>budget){
-   d.detailOpen=true;const index=visible[0],c=options[index];$('choices').replaceChildren();
-   const details=window.DialogueUI.paginate([c.label,c.lock||c.hint||''],p=>fit(p,Math.max(24,capacity-52)));
-   d.detailPage=Math.min(d.detailPage||0,details.length-1);renderText(details[d.detailPage]);
-   if(d.detailPage<details.length-1)$('choices').append(choiceButton({label:'Continuar',fn:()=>{d.detailPage++;showDialogue();}},0));
-   else $('choices').append(choiceButton(c,index,c.lock?'Escolha indisponível':'Confirmar esta escolha'));
+  const blocks=d.pages[0].flatMap(t=>window.DialogueUI.segments(t));
+  for(const t of [...(d.note?[d.note]:[]),...(d.changes||[])])blocks.push({kind:'notice',text:V.present(t)});
+  for(const [blockIndex,block] of blocks.entries()){
+   const node=element('div',undefined,'dialogue-block '+block.kind);
+   node.append(element('small',block.kind==='speech'?window.DialogueUI.speechLabel(blocks,blockIndex):block.kind==='notice'?'Consequência / orientação':'Narração'),element('p',block.text));
+   $('dialogue-text').append(node);
   }
-  $('page-count').textContent='Opções '+(d.choicePage+1)+' / '+groups.length;
-  $('choice-pager').hidden=groups.length<=1;$('choices-previous').disabled=d.choicePage===0;$('choices-next').disabled=d.choicePage===groups.length-1;
+  const last=d.page===d.pages.length-1,options=dialogueOptions(d);
+  const next=(d.type==='consequence'||d.type==='lore'&&!d.actions)&&last?options[0]:{label:last?(options.length>1?'Ver as '+options.length+' respostas':'Continuar'):'Continuar leitura',fn:()=>{if(!last)d.page++;else d.readComplete=true;showDialogue();}};
+  $('choices').append(choiceButton(next,0));
+  $('page-count').textContent='Diálogo completo';
+ }else{
+  const options=dialogueOptions(d);
+  $('choices').append(...options.map((c,i)=>choiceButton(c,i)));
+  $('page-count').textContent=options.length+(options.length===1?' resposta':' respostas')+' · lista completa';
  }
- shell.scrollTop=0;if(scroll)scroll.scrollTop=0;dialogueChoices=window.DialogueUI.bindChoices($('choices'));
- if(selected>=0&&!d.detailOpen){const index=[...$('choices').querySelectorAll('button')].findIndex(b=>Number(b.dataset.choiceNumber)===selected+1);if(index>=0)dialogueChoices.select(index,true);}
+ scroll.scrollTop=keepChoice?oldScroll:0;
+ dialogueChoices=window.DialogueUI.bindChoices($('choices'));
+ if(selected>=0)dialogueChoices.select(selected,true,true);
+ updateDialogueScrollHint();
 }
 
 function paintPortrait(kind){
@@ -136,7 +126,7 @@ function closeDialogue(){if(dialogue?.type==='danger'&&state.danger?.encounter)r
 function choiceHint(c){const prefix=D.storyCost(state,G.choices(state).indexOf(c))?'Custo: 1 ação do prazo. ':'';const e=G.value(c.effect,state)||{};if((state.scene==='fechadura'||dialogue?.sideId==='gate')&&(e.suspicion||0)+state.suspicion>=7&&e.flags?.cellOpen&&(e.suspicion||0)>0)return 'VIGILÂNCIA CRÍTICA: este método termina em captura. Volte para buscar ajuda ou a chave.';return prefix+(c.hint||c.note||'');}
 function select(index){const previous=state.scene;state=G.take(state,index);world.tracked=null;if(state.flags.tunnel)world.tunnelOpen=true;if(previous==='subsolo'&&state.scene==='arquivo'){Object.assign(world.player,M.place({x:1575,y:1735}));world.player.dir='up';}world.alert=0;closeDialogue();objective();save();if(state.pending||G.scenes[state.scene].ending)openStory();else notice('Anotei meu próximo passo no caderno.');}
 
-function openEncounter(){clearMovement();const final=state.danger.encounter.kind==='checkpoint';dialogue={type:'danger',title:final?'O cerco do portão':'Pare. Esvazie os bolsos.',pages:pages([final?'O vigia bloqueia a última curva. — O líder deixou você passar. Eu não. Kali precisa sacrificar um recurso ou arriscar o próprio corpo. A preparação ainda pode se desfazer aqui.':'Uma mão prende o ombro de Kali. — Outra vez fora do quarto. O vigia estende a palma. Não existe resposta sem custo. Na próxima detecção após três advertências, ou com vigilância 8, haverá captura.']),page:0,speaker:['VIGIA DA ACTRAS','guard'],note:D.status(state)+' · A revista custa 2 ações do prazo.',actions:D.options(state).map(c=>({...c,fn:()=>{state=D.resolve(state,c.id);closeDialogue();objective();save();openStory();}}))};showDialogue();}
+function openEncounter(){clearMovement();const final=state.danger.encounter.kind==='checkpoint';dialogue={type:'danger',title:final?'O cerco do portão':'Pare. Esvazie os bolsos.',pages:pages([final?'O vigia bloqueia a última curva. — O líder deixou você passar. Eu não.\nKali precisa sacrificar um recurso ou arriscar o próprio corpo. A preparação ainda pode se desfazer aqui.':'Uma mão prende o ombro de Kali. — Outra vez fora do quarto.\nO vigia estende a palma. Não existe resposta sem custo. Na próxima detecção após três advertências, ou com vigilância 8, haverá captura.']),page:0,speaker:['VIGIA DA ACTRAS','guard'],note:D.status(state)+' · A revista custa 2 ações do prazo.',actions:D.options(state).map(c=>({...c,fn:()=>{state=D.resolve(state,c.id);closeDialogue();objective();save();openStory();}}))};showDialogue();}
 
 function openSide(id){if(!A.available(id,state)){notice('Esta ação já foi concluída ou a preparação terminou.');return;}const action=A.actions[id],opts=A.sideChoices(id,state);dialogue={type:'lore',sideId:id,title:action.title,pages:pages([G.value(action.text,state)]),page:0,speaker:[action.who.toUpperCase(),action.who],actions:opts.map((c,i)=>({label:c.label,lock:c.lock,hint:((id==='gate')&&(c.effect?.suspicion||0)+state.suspicion>=7&&c.effect?.flags?.cellOpen&&(c.effect?.suspicion||0)>0)?'VIGILÂNCIA CRÍTICA: este método termina em captura.':A.act(state)>=3?'Custo: 1 ação do prazo de Tomas.':null,fn:()=>{const result=A.perform(state,id,i);state=result.state;world.tracked=null;world.alert=0;objective();save();if(G.scenes[state.scene].ending){closeDialogue();openStory();return;}say(action.title,result.text,null,[action.who.toUpperCase(),action.who]);dialogue.changes=result.changes;showDialogue();}})).concat([{label:'Voltar à exploração.',fn:closeDialogue}])};clearMovement();showDialogue();}
 function interact(){if(!playing||endView||$('modal').open)return;if(revelations?.active){revelations.advance();return;}if(prologue?.active){prologue.advance();return;}if(dialogue){dialogueChoices?.activate();return;}
@@ -271,7 +261,7 @@ document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.tar
  if(e.repeat){if(nativeActivate.has(e.code))e.preventDefault();return;}
  if(e.code==='KeyE'||nativeActivate.has(e.code)){if(nativeActivate.has(e.code)&&e.target?.closest?.('#prologue-screen button:not(:disabled)'))return;e.preventDefault();prologue.advance();return;}
  if(e.code==='Escape'){e.preventDefault();controls();}return;
- }if(dialogue){if(!e.repeat){const sections={KeyJ:'investigation',KeyI:'objects',KeyT:'requests'};if(sections[e.code]){e.preventDefault();openNotebook(sections[e.code],true);return;}if(e.code==='KeyM'){e.preventDefault();showMap();return;}}if(e.code==='Tab'){const buttons=[...$('dialogue').querySelectorAll('button:not([hidden]):not(:disabled)')].filter(b=>b.getClientRects().length);if(buttons.length){e.preventDefault();const i=buttons.indexOf(document.activeElement);buttons[(i+(e.shiftKey?-1:1)+buttons.length)%buttons.length].focus();}return;}if(e.repeat){if(nativeActivate.has(e.code))e.preventDefault();return;}if(e.code==='Escape'&&dialogue.type!=='ending'){e.preventDefault();closeDialogue();return;}if(dialogue.readComplete&&['ArrowLeft','ArrowRight'].includes(e.code)){e.preventDefault();moveChoicePage(e.code==='ArrowLeft'?-1:1);return;}if(['ArrowUp','ArrowDown'].includes(e.code)){e.preventDefault();dialogueChoices?.move(e.code==='ArrowUp'?-1:1);return;}if(e.code==='KeyE'||nativeActivate.has(e.code)){if(nativeActivate.has(e.code)&&e.target?.closest?.('#dialogue button:not(:disabled)')&&!e.target.closest('#choices'))return;e.preventDefault();dialogueChoices?.activate();return;}if(/^[1-9]$/.test(e.key)){e.preventDefault();[...$('choices').querySelectorAll('button')].find(b=>b.dataset.choiceNumber===e.key)?.click();}return;}if(!playing)return;if(directions[e.code]){e.preventDefault();keys.add(directions[e.code]);return;}if(e.repeat)return;if(e.code==='KeyE'||e.code==='Space'){e.preventDefault();interact();}if(e.code==='KeyM'){e.preventDefault();showMap();}if(e.code==='KeyJ')showJournal();if(e.code==='KeyI')showInventory();if(e.code==='KeyT')showTasks();if(e.code==='Escape')pause();});
+ }if(dialogue){if(!e.repeat){const sections={KeyJ:'investigation',KeyI:'objects',KeyT:'requests'};if(sections[e.code]){e.preventDefault();openNotebook(sections[e.code],true);return;}if(e.code==='KeyM'){e.preventDefault();showMap();return;}}if(e.code==='Tab'){const buttons=[...$('dialogue').querySelectorAll('button:not([hidden]):not(:disabled)')].filter(b=>b.getClientRects().length);if(buttons.length){e.preventDefault();const i=buttons.indexOf(document.activeElement);buttons[(i+(e.shiftKey?-1:1)+buttons.length)%buttons.length].focus();}return;}if(e.repeat){if(nativeActivate.has(e.code))e.preventDefault();return;}if(e.code==='Escape'&&dialogue.type!=='ending'){e.preventDefault();closeDialogue();return;}if(['ArrowUp','ArrowDown'].includes(e.code)){e.preventDefault();if(dialogue.readComplete)dialogueChoices?.move(e.code==='ArrowUp'?-1:1);else document.querySelector('.dialogue-scroll').scrollTop+=e.code==='ArrowUp'?-60:60;return;}if(e.code==='KeyE'||nativeActivate.has(e.code)){if(nativeActivate.has(e.code)&&e.target?.closest?.('#dialogue button:not(:disabled)')&&!e.target.closest('#choices'))return;e.preventDefault();dialogueChoices?.activate();return;}if(/^[1-9]$/.test(e.key)){e.preventDefault();[...$('choices').querySelectorAll('button')].find(b=>b.dataset.choiceNumber===e.key)?.click();}return;}if(!playing)return;if(directions[e.code]){e.preventDefault();keys.add(directions[e.code]);return;}if(e.repeat)return;if(e.code==='KeyE'||e.code==='Space'){e.preventDefault();interact();}if(e.code==='KeyM'){e.preventDefault();showMap();}if(e.code==='KeyJ')showJournal();if(e.code==='KeyI')showInventory();if(e.code==='KeyT')showTasks();if(e.code==='Escape')pause();});
 document.addEventListener('keyup',e=>{if(directions[e.code])keys.delete(directions[e.code]);});function suspend(){clearMovement();if(playing&&!endView&&!dialogue&&!$('modal').open)controls();else if(playing)save();}
 window.addEventListener('blur',suspend);window.addEventListener('resize',()=>{resize();prologue?.resize();if(dialogue)showDialogue(true);});document.fonts?.addEventListener('loadingdone',()=>{fontRevision++;if(dialogue)showDialogue(true);});window.addEventListener('pagehide',()=>{if(playing)save();});document.addEventListener('visibilitychange',()=>{clearMovement();if(audio)gain.gain.setTargetAtTime(soundOn&&!document.hidden?.15:0,audio.currentTime,.2);if(document.hidden)suspend();});
 const pad=$('dpad');
@@ -285,6 +275,6 @@ function inputHint(mode){inputMode=mode;document.body.dataset.input=mode;const h
 document.addEventListener('pointerdown',e=>inputHint(e.pointerType==='touch'?'touch':'keyboard'),true);document.addEventListener('keydown',()=>inputHint('keyboard'),true);inputHint(inputMode);
 document.body.classList[prefs.largeText?'add':'remove']('large-text');
 $('ending-menu').addEventListener('click',leaveEnding);$('ending-restart').addEventListener('click',newGame);$('ending-collection').addEventListener('click',showEndings);
-$('sneak-touch').addEventListener('click',()=>{touchSneak=!touchSneak;$('sneak-touch').setAttribute('aria-pressed',touchSneak);$('sneak-touch').textContent=touchSneak?'Furtivo ligado':'Furtivo desligado';});$('interact-touch').addEventListener('click',interact);$('start').addEventListener('click',newGame);$('resume').addEventListener('click',resume);$('menu-btn').addEventListener('click',pause);$('controls-home').addEventListener('click',()=>{if(playing)save();closeModal();atHome();});$('controls-resume').addEventListener('click',closeModal);$('map-btn').addEventListener('click',showMap);$('journal').addEventListener('click',showJournal);$('inventory').addEventListener('click',showInventory);$('tasks').addEventListener('click',showTasks);$('endings-btn').addEventListener('click',showEndings);$('chapters').addEventListener('click',()=>{modal('Capítulo único — O Obelisco');para('Explore o orfanato OldHood e encontre a verdade por trás da Actras. Cinco atos, investigação com pistas conectadas, preparações opcionais e seis desfechos com consequências registradas.');$('modal-content').append(button(saved?'CONTINUAR O CAPÍTULO':'COMEÇAR O CAPÍTULO',()=>{closeModal();saved?resume():start();}));});$('options-home').addEventListener('click',controls);$('credits').addEventListener('click',()=>{modal('Créditos');para('Pesquisa: Enzo Raphael dos Reis Pessoa.');para('Ideia, História e Arte: Felipe Bertol Schneider.');para('Desenvolvimento: Enzo Raphael dos Reis Pessoa, Felipe Bertol Schneider.');});$('exit-home').addEventListener('click',()=>{modal('Até o próximo sino');para('O progresso já salvo foi mantido. Você pode fechar esta aba ou voltar ao menu.');$('modal-content').append(button('VOLTAR AO MENU',closeModal));});$('help').addEventListener('click',help);$('sound').addEventListener('click',sound);$('close-modal').addEventListener('click',closeModal);$('dismiss-dialogue').addEventListener('click',closeDialogue);$('choices-previous').addEventListener('click',()=>moveChoicePage(-1));$('choices-next').addEventListener('click',()=>moveChoicePage(1));$('dialogue-back').addEventListener('click',()=>{if(!dialogue)return;if(dialogue.readComplete){dialogue.readComplete=false;dialogue.page=dialogue.pages.length-1;}else dialogue.page=Math.max(0,dialogue.page-1);showDialogue();});$('dialogue-extra').addEventListener('click',()=>{if(dialogue)openCharacter(dialogue.speaker[1]);});$('modal').addEventListener('close',clearMovement);$('modal').addEventListener('cancel',e=>{e.preventDefault();closeModal();});
+$('sneak-touch').addEventListener('click',()=>{touchSneak=!touchSneak;$('sneak-touch').setAttribute('aria-pressed',touchSneak);$('sneak-touch').textContent=touchSneak?'Furtivo ligado':'Furtivo desligado';});$('interact-touch').addEventListener('click',interact);$('start').addEventListener('click',newGame);$('resume').addEventListener('click',resume);$('menu-btn').addEventListener('click',pause);$('controls-home').addEventListener('click',()=>{if(playing)save();closeModal();atHome();});$('controls-resume').addEventListener('click',closeModal);$('map-btn').addEventListener('click',showMap);$('journal').addEventListener('click',showJournal);$('inventory').addEventListener('click',showInventory);$('tasks').addEventListener('click',showTasks);$('endings-btn').addEventListener('click',showEndings);$('chapters').addEventListener('click',()=>{modal('Capítulo único — O Obelisco');para('Explore o orfanato OldHood e encontre a verdade por trás da Actras. Cinco atos, investigação com pistas conectadas, preparações opcionais e seis desfechos com consequências registradas.');$('modal-content').append(button(saved?'CONTINUAR O CAPÍTULO':'COMEÇAR O CAPÍTULO',()=>{closeModal();saved?resume():start();}));});$('options-home').addEventListener('click',controls);$('credits').addEventListener('click',()=>{modal('Créditos');para('Pesquisa: Enzo Raphael dos Reis Pessoa.');para('Ideia, História e Arte: Felipe Bertol Schneider.');para('Desenvolvimento: Enzo Raphael dos Reis Pessoa, Felipe Bertol Schneider.');});$('exit-home').addEventListener('click',()=>{modal('Até o próximo sino');para('O progresso já salvo foi mantido. Você pode fechar esta aba ou voltar ao menu.');$('modal-content').append(button('VOLTAR AO MENU',closeModal));});$('help').addEventListener('click',help);$('sound').addEventListener('click',sound);$('close-modal').addEventListener('click',closeModal);$('dismiss-dialogue').addEventListener('click',closeDialogue);document.querySelector('.dialogue-scroll').addEventListener('scroll',updateDialogueScrollHint);$('dialogue-back').addEventListener('click',()=>{if(!dialogue)return;if(dialogue.readComplete){dialogue.readComplete=false;dialogue.page=dialogue.pages.length-1;}else dialogue.page=Math.max(0,dialogue.page-1);showDialogue();});$('dialogue-extra').addEventListener('click',()=>{if(dialogue)openCharacter(dialogue.speaker[1]);});$('modal').addEventListener('close',clearMovement);$('modal').addEventListener('cancel',e=>{e.preventDefault();closeModal();});
 window.GameArt?.ready.then(()=>{renderer.refreshArt();if(dialogue)paintPortrait(dialogue.speaker[1]);if(endView)window.EndingScreens.draw($('ending-art'),endView);if(window.GameArt.status.failed.length)notice('Algumas artes não carregaram. Extraia o ZIP inteiro antes de abrir index.html.');});resize();atHome();requestAnimationFrame(frame);
 })();

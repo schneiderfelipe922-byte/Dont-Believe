@@ -19,6 +19,28 @@ function paginate(texts,fits){
  }
  if(current.length)result.push(current);return result.length?result:[['…']];
 }
+// Travessões delimitam fala; atribuições entre travessões continuam como narração.
+// Não deduzimos o falante a partir do retrato da cena.
+function segments(text){
+ const result=[];
+ for(const line of String(text).split('\n').filter(t=>t.trim())){
+  const parts=line.split('—');
+  if(parts[0].trim())result.push({kind:'narration',text:parts[0].trim()});
+  for(let i=1;i<parts.length;i++)if(parts[i].trim())result.push({kind:i%2?'speech':'narration',text:parts[i].trim()});
+ }
+ return result;
+}
+function speechLabel(blocks,index){
+ const names='Kali|Noah|Mira|Eron|Tomas|Daty|Inauri|Mel|o vigia|o adulto|o líder|os moradores';
+ const verbs='diz|pergunta|responde|respondem|recita|murmura|avisa|lembra|conta|ordena|grita|sussurra';
+ const after=blocks[index+1]?.kind==='narration'?blocks[index+1].text:'';
+ const before=blocks[index-1]?.kind==='narration'?blocks[index-1].text:'';
+ const found=after.match(new RegExp('^(?:'+verbs+') ('+names+')\\b','i'))||before.match(new RegExp('('+names+') (?:'+verbs+'):\\s*$','i'));
+ if(!found)return 'Fala';
+ const name=found[1].replace(/^(?:o|os) /i,'');
+ return 'Fala · '+name.charAt(0).toUpperCase()+name.slice(1);
+}
+
 function portrait(context,width,height,kind,images){
  const art=images?.[portraitKeys[speakerKey(kind)]];
  if(!art||!art.width||!art.height)return false;
@@ -45,6 +67,6 @@ function bindChoices(container){
  return {select,move(delta){if(!buttons.some(b=>!b.disabled))return;for(let step=1;step<=buttons.length;step++){const next=(current+delta*step+buttons.length*2)%buttons.length;if(select(next,true,true))return;}},activate(){buttons[current]?.click();},get selectedIndex(){return current;}};
 }
 const names={kali:'Kali',noah:'Noah',mira:'Mira',eron:'Eron',tomas:'Tomas',vigia:'Vigia',lider:'Líder',daty:'Daty',inauri:'Inauri',mel:'Mel'};
-const api={people,names,speakerKey,portraitKeys,portrait,bindChoices,paginate};
+const api={people,names,speakerKey,portraitKeys,portrait,bindChoices,paginate,segments,speechLabel};
 if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.DialogueUI=api;
 })(typeof window==='undefined'?globalThis:window);

@@ -68,3 +68,13 @@ Propósito: exploração mais íntima, suspense e visão clara da expansão. Exp
 ## Validação
 
 114 testes automatizados aprovados, incluindo visibilidade de salas e soleiras e aviso de vigia próximo sem revelar vigias distantes. Navegador local: avisos e transição de dormitório para corredor em computador, celular e horizontal, sem erros de JavaScript. Capturas revisadas em `previas/visao-sala`. Build estático concluído. Ainda sem teste com jogador novo; o áudio foi implementado, mas não avaliado auditivamente nesta rodada.
+
+## Planejamento no quarto abandonado — 17/11/2026
+
+1. **Propósito:** transferir a confirmação da fuga da cozinha para o quarto abandonado de Elias, conforme escolha do usuário, e esclarecer como encerrar os preparativos.
+2. **Experiência:** objetivo, mapa e diário apontam para o quarto; o diário explica a interação com E e a opção “Estou pronto: iniciar a fuga”. A revisão de tarefas permite continuar explorando.
+3. **Regras:** o ponto de planejamento usa piso livre em (1060, 800). Durante `preparar`, Eron aguarda em (1040, 825), exceto quando denunciado. Confirmar mantém o compromisso irreversível e leva ao confronto. Nenhuma chave, prova ou condição nova foi exigida.
+4. **Visual e som:** cenário e artes existentes preservados; Eron usa o sprite atual. Sem áudio novo. O texto mantém o aviso de que os corredores são vigiados, sem prometer segurança absoluta.
+5. **Impacto:** posição do objetivo, rotina de Eron, orientações e referências do diário atualizadas. Resgates, pistas, custos e condições dos seis finais preservados. Cópias anteriores em `backups/antes-plano-elias-20261117`.
+6. **Tamanho:** alteração localizada em adventure.js, residents.js e notebook.js; revisões de cache atualizadas em index.html. Sem mudança na localização de Mira ou Tomas após o resgate.
+7. **Testes e conclusão:** 135 testes automatizados aprovados, incluindo caminhos físicos, planejamento sem chave/prova obrigatória, Eron aguardando ou preso conforme denúncia, revisão/compromisso e regressão dos finais. Clareza: atende à revisão das instruções e do acesso, com confirmação explicitamente nomeada. Pistas/escolhas: atende por preservação dos efeitos e das observações do quarto. Finais: atende por preservação das condições e testes das rotas. Não houve teste visual no navegador nem sessão com participante novo nesta alteração; compreensão do novo fluxo ainda deve ser observada em jogo.
