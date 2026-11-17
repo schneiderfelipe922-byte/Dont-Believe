@@ -30,9 +30,11 @@ function scenePaint(tint){
   return frame;
  };
 }
+// Escala apenas visual: mantém as âncoras dos pés e as regras de interação.
+const actorScale=1.2,actorSizeRatio=actorScale/1.6;
 const groundPaint=scenePaint('rgba(153,99,73,.20)'),basementPaint=scenePaint('rgba(105,74,122,.24)');
 function actorShadow(c,x,y,pet,underground){
- c.save();c.translate(Math.round(x),Math.round(y)-1);c.scale(pet?10:16,pet?3:5);
+ c.save();c.translate(Math.round(x),Math.round(y)-1);c.scale((pet?10:16)*actorSizeRatio,(pet?3:5)*actorSizeRatio);
  const shadow=c.createRadialGradient(0,0,.18,0,0,1);
  shadow.addColorStop(0,underground?'rgba(15,11,27,.65)':'rgba(36,18,30,.58)');
  shadow.addColorStop(1,'transparent');c.fillStyle=shadow;c.fillRect(-1,-1,2,2);c.restore();
@@ -87,7 +89,7 @@ function draw(state,world,guards,options={}){
   if(layer.drawer){scenery.drawDrawer(ctx,layer.drawer,!!world.drawers?.[layer.drawer.id],art);return;}
   if(layer.door){drawDoor(ctx,layer.door,{...state,_px:player.x,_py:player.y},world,options.reduced);return;}
   if(layer.scenery){const p=layer.scenery;ctx.imageSmoothingEnabled=true;ctx.drawImage(map,p.x,p.y,p.w,p.h,p.x,p.y,p.w,p.h);ctx.imageSmoothingEnabled=false;return;}
-  const p=layer.actor;actorShadow(ctx,p.x,p.y,p.kind==='mel',underground);ctx.save();ctx.translate(p.x,p.y);ctx.scale(1.6,1.6);sprite(ctx,0,0,p.kind,p.dir||'down',p.step||0,options.reduced?0:(world.animTime||0)+p.x*.01,paint);ctx.restore();if(p.kind==='kali'&&state.flags.cover)rect(ctx,p.x-16,p.y-37,9,6,'#b29063');
+  const p=layer.actor;actorShadow(ctx,p.x,p.y,p.kind==='mel',underground);ctx.save();ctx.translate(p.x,p.y);ctx.scale(actorScale,actorScale);sprite(ctx,0,0,p.kind,p.dir||'down',p.step||0,options.reduced?0:(world.animTime||0)+p.x*.01,paint);ctx.restore();if(p.kind==='kali'&&state.flags.cover)rect(ctx,p.x-16*actorSizeRatio,p.y-37*actorSizeRatio,9*actorSizeRatio,6*actorSizeRatio,'#b29063');
  });
  if(options.labels!==false)actors.forEach(p=>{if(p.name&&Math.hypot(p.x-player.x,p.y-player.y)<100)label(ctx,p.name,p.x,p.y+13,p.kind==='tomas'?'#93b5cf':'#c5b6a5',7);});
  // Ambient darkness is pierced by nearby candles; the player stays legible.

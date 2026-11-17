@@ -78,3 +78,13 @@ Personagens em guache aplicados pelo renderer, incluindo caminhada de seis frame
 5. Impacto: paredes, grandes móveis, escadas, grades, provas e seis finais preservados. Backup em backups/antes-proporcoes-paleta-20261114.
 6. Tamanho: duas pinturas, tratamento dos sprites em cache no renderer e ajuste das colisões das tigelas.
 7. Testes: 133 testes aprovados; build estático concluído. Navegador em computador, celular e horizontal: sem erros, escadas, trancas das celas e arquivos preservados. Capturas examinadas do dormitório e lavanderia confirmam objetos menores que os personagens e leitura de identidade. Clareza atende na revisão visual e de acesso; pistas/escolhas e finais atendem por preservação e regressão. Não houve teste com participante novo.
+
+## Redução dos personagens no mapa — 17/11/2026
+
+1. Propósito: corrigir o tamanho excessivo relatado pelo usuário, reduzindo a escala do mapa de 1,6× para 1,2× (25% em largura e altura).
+2. Experiência: silhuetas menores deixam mais cenário visível; nomes, orientação e comandos de interação mantidos. Revisão das capturas do dormitório em computador e celular confirma reconhecimento dos personagens e passagem visível.
+3. Regras: âncoras dos pés, posições, alcance, colisões e velocidade preservados; sombras e indicador de disfarce acompanham a redução.
+4. Visual e som: artes, diferenças de estatura, expressões, paleta e som preservados. Retratos e prólogo não usam esta escala.
+5. Impacto: alteração restrita ao renderer do mapa; sem mudanças em pistas, escolhas, progresso salvo ou condições dos seis finais. Revisão do script no HTML atualizada para evitar cache antigo.
+6. Tamanho: ajuste de renderização, atualização de cache e regeneração da distribuição estática.
+7. Testes e conclusão: 137 testes aprovados; build de 94 arquivos concluído. Ensaio em Chromium em 1280×800, 390×844 e 844×390 sem erros JavaScript, com movimento, escadas, cela fechada/aberta e mapa. Capturas em `previas/personagens-menores/`. Clareza: atende na revisão visual de nomes, personagens e passagem e na regressão das interações. Pistas/escolhas: atende por preservação de conteúdo e regras. Finais: atende por preservação das condições e regressão automatizada. Não houve teste com participante novo.
