@@ -25,8 +25,8 @@ const stages=new Set(['opening','road','loss','aftermath']);
 const spawn={x:1060,y:535,dir:'up',step:0};
 const car={x:1115,y:380,range:92};
 const bounds={w:1672,h:941};
-// Recortes do alpha da fonte. Evitam ler pixels de arquivos file:// no navegador.
-const childFrames=[[[160,10,146,266],[447,13,145,270],[721,13,149,270],[1007,13,145,271]],[[159,313,147,270],[444,314,152,271],[722,313,149,272],[1002,313,152,272]],[[155,609,151,271],[440,610,153,272],[716,609,154,274],[1008,609,153,274]],[[162,910,142,268],[441,906,148,272],[720,906,149,274],[1007,909,146,270]]];
+// Prancha 4 × 4 normalizada. O apoio dos pés é comum a todos os quadros.
+const childSprite={width:96,height:144,footY:134,scale:58/128};
 function normalize(state){
  const old=state.prologue&&typeof state.prologue==='object'&&!Array.isArray(state.prologue)?state.prologue:{},phase=stages.has(old.phase)?old.phase:'opening';
  const script=phase==='opening'?opening:phase==='loss'?loss:aftermath;
@@ -100,9 +100,17 @@ function create({document,art,getState,save,finish,clearMovement,pause,reduced})
   const scale=Math.max(w/bounds.w,h/bounds.h,portrait?w/660:h/800);
   const vw=w/scale,vh=h/scale,focusX=(p.x+car.x)/2,focusY=(p.y+car.y)/2+35;
   const x=Math.max(0,Math.min(bounds.w-vw,focusX-vw/2)),y=Math.max(0,Math.min(bounds.h-vh,focusY-vh/2));
-  ctx.fillStyle='#080b12';ctx.fillRect(0,0,w,h);ctx.save();ctx.scale(scale,scale);ctx.translate(-x,-y);ctx.imageSmoothingEnabled=true;ctx.drawImage(bg,0,0,bounds.w,bounds.h);ctx.imageSmoothingEnabled=false;
-  const row={down:0,left:1,right:2,up:3}[p.dir],col=p.step?Math.floor(p.step)%4:0,frame=childFrames[row][col];
-  if(frame){const [sx,sy,sw,sh]=frame,dh=58,dw=sw/sh*dh;ctx.fillStyle='#0006';ctx.beginPath();ctx.ellipse(p.x,p.y-1,15,4,0,0,Math.PI*2);ctx.fill();ctx.drawImage(art.images.prologueChild,sx,sy,sw,sh,p.x-dw/2,p.y-dh,dw,dh);}
+  ctx.fillStyle='#080b12';ctx.fillRect(0,0,w,h);ctx.save();ctx.scale(scale,scale);ctx.translate(-x,-y);ctx.imageSmoothingEnabled=true;ctx.drawImage(bg,0,0,bounds.w,bounds.h);
+  const child=art.images.prologueChild;
+  if(child){
+   const row={down:0,left:1,right:2,up:3}[p.dir],col=p.step?Math.floor(p.step)%4:0;
+   const {width,height,footY,scale:s}=childSprite;
+   ctx.save();ctx.translate(p.x,p.y-1);ctx.scale(15,4);
+   const shadow=ctx.createRadialGradient(0,0,.12,0,0,1);
+   shadow.addColorStop(0,'#21162c9c');shadow.addColorStop(1,'#21162c00');
+   ctx.fillStyle=shadow;ctx.fillRect(-1,-1,2,2);ctx.restore();
+   ctx.drawImage(child,col*width,row*height,width,height,p.x-width*s/2,p.y-footY*s,width*s,height*s);
+  }
   // Luz sutil do incêndio, com pulsação desativada em movimento reduzido.
   const pulse=isReduced()?1:.95+Math.sin(clock*.003)*.05,glow=ctx.createRadialGradient(1110,315,5,1110,315,170);
   glow.addColorStop(0,'#ffad1820');glow.addColorStop(1,'#ff6f0000');ctx.globalAlpha=pulse;ctx.fillStyle=glow;ctx.fillRect(940,145,340,340);ctx.restore();

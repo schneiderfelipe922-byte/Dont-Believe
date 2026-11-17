@@ -1,4 +1,14 @@
-# Artes do prólogo — 30/10/2026
+# Artes do prólogo
+
+## Kali criança em guache — 17/11/2026
+
+`kali-crianca-guache-v1.png` é a prancha ativa na estrada. O guache seco, as sombras ameixa e a expressão apreensiva aproximam Kali do cenário do acidente. A prancha mantém as quatro direções e quatro quadros por direção, na ordem frente, esquerda, direita e costas. Os quadros transparentes de 96 × 144 px usam a mesma escala e apoiam os pés em y = 134. A prancha anterior permanece disponível como referência.
+
+A ferramenta ImageGen integrada repintou a prancha anterior usando a estrada do prólogo e a foto aprovada da família como referências. A saída foi recortada e alinhada antes da integração. Prompt usado:
+
+> Style-transfer edit for a production 2D browser RPG sprite sheet. Image 1 is the entire edit target and pose/layout blueprint; image 2 is the nighttime road palette and brushwork reference only; image 3 is the approved character/medium reference only (Kali is the short red-haired child at center). Repaint the 16 isolated poses from image 1 as exactly four equally spaced columns and four equally spaced rows with generous, completely transparent gutters, square canvas. Row 1 faces viewer, row 2 faces screen left, row 3 faces screen right, row 4 shows only back, away from viewer. Column 1 in every row is a true stationary two-foot stance; columns 2–4 form a readable walking loop with opposite foot contacts in columns 2 and 4 and passing pose in column 3. Keep each pose fully inside its own grid cell, identical child proportions, lens angle, baseline, scale, costume and face from frame to frame. Slightly overhead RPG camera, whole body. Kali is a small frightened child reaching the crashed car at night, tense brow, subdued mouth, recognizable angular red tousled hair in a few large uneven masses, clearly visible rectangular black glasses from front and side, matte dark charcoal-plum T-shirt over ivory sleeves, dark trousers, pale sole tips and tiny pendant in front. Broad, angular flat planes of opaque dry gouache, few broad broken brush marks inside shapes, selective irregular near-plum ink contours, simple small eyes. Dusk violet shadows, muted brick red, small warm ochre highlights, aged ivory; clear against a dark purple road. Match painterly rough-edged map, no anime sheen, thin hatchwork, large glossy eyes or extreme chibi distortion. Fully transparent background between and behind every figure, no shadows, floor, labels, grid lines, extra poses, border, or scenery. Output one consistent 4-by-4 transparent animation atlas.
+
+## Histórico — 30/10/2026 e 01/11/2026
 
 Geradas com a ferramenta integrada image_gen. Referências: mapa atual, foto da família e atlas de sprites do projeto. A integração atual está descrita em `../../documentacao/ATUALIZACAO-30-10-2026.md`.
 
